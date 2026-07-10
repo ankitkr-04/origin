@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const FREEZE_OUT_MS = 240;
@@ -10,9 +10,18 @@ const FREEZE_OUT_MS = 240;
  * (CSS keyframes), freezes shut: closing plays the 240ms freeze-out first,
  * then router.back() — router.back() itself can't animate, so the exit
  * has to run before navigation. Escape, backdrop, and ✕ all close.
+ *
+ * Dismissal is pathname-based: after back-navigation Next.js can leave the
+ * stale @modal slot mounted (URL returns to /projects but the intercepted
+ * content stays), so once the route no longer matches the one this modal
+ * opened on, it renders nothing.
  */
 export function ProjectModal({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
+  const openedOnRef = useRef(pathname);
+  const dismissed = pathname !== openedOnRef.current;
+
   const panelRef = useRef<HTMLDivElement>(null);
   const [closing, setClosing] = useState(false);
   const closingRef = useRef(false);
@@ -32,6 +41,7 @@ export function ProjectModal({ children }: { children: React.ReactNode }) {
   }, [router]);
 
   useEffect(() => {
+    if (dismissed) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") close();
     };
@@ -42,12 +52,14 @@ export function ProjectModal({ children }: { children: React.ReactNode }) {
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
     };
-  }, [close]);
+  }, [close, dismissed]);
+
+  if (dismissed) return null;
 
   return (
     // biome-ignore lint/a11y/noStaticElementInteractions: backdrop click-to-close duplicates the Escape key and close button
     <div
-      className={`modal-backdrop fixed inset-0 z-[60] overflow-y-auto bg-void/80 ${
+      className={`modal-backdrop fixed inset-0 z-60 overflow-y-auto bg-void/80 ${
         closing ? "modal-closing" : ""
       }`}
       onClick={(event) => {
