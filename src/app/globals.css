@@ -70,6 +70,14 @@ body {
   }
 }
 
+/* Never hide content in print/PDF output, where scrolling can't reveal it */
+@media print {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* View Transitions — page-level cross-fade, typed "nav" (see <PageTransition/>) */
 :root {
   --duration-exit: 150ms;
