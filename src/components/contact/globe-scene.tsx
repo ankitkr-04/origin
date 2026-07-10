@@ -171,7 +171,7 @@ export default function GlobeScene({
 }: GlobeSceneProps) {
   return (
     <Canvas
-      camera={{ position: [0, 0, 5.6], fov: 42 }}
+      camera={{ position: [0, 0, 7.1], fov: 42 }}
       dpr={[1, maxDpr]}
       frameloop={animate ? "always" : "demand"}
       gl={{
