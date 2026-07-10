@@ -70,6 +70,76 @@ body {
   }
 }
 
+/* View Transitions — page-level cross-fade, typed "nav" (see <PageTransition/>) */
+:root {
+  --duration-exit: 150ms;
+  --duration-enter: 210ms;
+}
+
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+::view-transition-old(.page-exit) {
+  animation: var(--duration-exit) ease-in vt-fade reverse;
+}
+
+::view-transition-new(.page-enter) {
+  animation: var(--duration-enter) ease-out var(--duration-exit) both vt-fade;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    /* biome-ignore lint/complexity/noImportantStyles: must outrank the UA's view-transition animations */
+    animation-duration: 0s !important;
+    /* biome-ignore lint/complexity/noImportantStyles: must outrank the UA's view-transition animations */
+    animation-delay: 0s !important;
+  }
+}
+
+/* Project modal (intercepted route) */
+@keyframes modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(1rem) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.modal-backdrop {
+  animation: modal-backdrop-in 0.25s ease-out both;
+}
+
+.modal-panel {
+  animation: modal-panel-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop,
+  .modal-panel {
+    animation: none;
+  }
+}
+
 /* Hairline rule that fades out toward the right — used under section eyebrows */
 .rule-fade {
   background: linear-gradient(to right, var(--color-line), transparent);
