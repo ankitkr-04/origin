@@ -145,7 +145,7 @@ interface StrataSceneProps {
 export default function StrataScene({ animate, maxDpr }: StrataSceneProps) {
   return (
     <Canvas
-      camera={{ position: [0, 0.5, 6.4], fov: 40 }}
+      camera={{ position: [0, 0.5, 7.3], fov: 40 }}
       dpr={[1, maxDpr]}
       frameloop={animate ? "always" : "demand"}
       gl={{
