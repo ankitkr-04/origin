@@ -106,6 +106,55 @@ body {
   padding-right: 0.06em; /* italic overshoot escapes the clip box otherwise */
 }
 
+/* Ambient layers — reader bar, heat lens, grain (see src/components/thermal/) */
+.reader-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 95;
+  background: var(--seam);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+.heat-lens {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 540px;
+  height: 540px;
+  border-radius: 50%;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 107, 61, 0.08),
+    rgba(192, 132, 252, 0.05) 45%,
+    transparent 72%
+  );
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+.heat-lens-on {
+  opacity: 1;
+}
+
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='.5'/></svg>");
+}
+
 /* Scroll-triggered reveal (driven by <Reveal/>) */
 [data-reveal] {
   opacity: 0;

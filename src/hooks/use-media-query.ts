@@ -17,3 +17,4 @@ export function useMediaQuery(query: string): boolean {
 
 export const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
 export const SMALL_SCREEN = "(max-width: 767px)";
+export const POINTER_FINE = "(pointer: fine)";

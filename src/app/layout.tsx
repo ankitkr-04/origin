@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Grain } from "@/components/thermal/grain";
+import { HeatLens } from "@/components/thermal/heat-lens";
+import { ReaderBar } from "@/components/thermal/reader-bar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,8 +64,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable}`}
     >
       <body className="bg-void text-polar antialiased">
+        <ReaderBar />
+        <HeatLens />
         {children}
         {modal}
+        <Grain />
       </body>
     </html>
   );
