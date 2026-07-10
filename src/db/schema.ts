@@ -1,0 +1,88 @@
+import {
+  index,
+  integer,
+  pgTable,
+  text,
+  timestamp,
+  varchar,
+} from "drizzle-orm/pg-core";
+import type { ProjectStatus, ProjectTier } from "@/types/content";
+
+const createdAt = () =>
+  timestamp("created_at", { withTimezone: true }).defaultNow().notNull();
+const updatedAt = () =>
+  timestamp("updated_at", { withTimezone: true })
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull();
+
+/**
+ * Portfolio projects — one row per case study. `slug` is the natural key and
+ * the public URL segment (/projects/[slug]).
+ */
+export const projects = pgTable(
+  "projects",
+  {
+    slug: varchar("slug", { length: 64 }).primaryKey(),
+    name: text("name").notNull(),
+    /** Display tier: flagship rows get the wide editorial layout */
+    tier: varchar("tier", { length: 16 }).$type<ProjectTier>().notNull(),
+    status: varchar("status", { length: 16 }).$type<ProjectStatus>().notNull(),
+    year: varchar("year", { length: 8 }).notNull(),
+    stack: text("stack").notNull(),
+    tagline: text("tagline").notNull(),
+    summary: text("summary").notNull(),
+    /** Long-form case-study paragraphs, in reading order */
+    story: text("story").array().notNull(),
+    highlights: text("highlights").array().notNull(),
+    /** Verified figures rendered as mono data chips */
+    metrics: text("metrics").array().notNull(),
+    repoUrl: text("repo_url").notNull(),
+    demoUrl: text("demo_url"),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [index("projects_tier_sort_idx").on(t.tier, t.sortOrder)],
+);
+
+export const achievements = pgTable("achievements", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  value: text("value").notNull(),
+  context: text("context").notNull(),
+  note: text("note").notNull(),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: createdAt(),
+  updatedAt: updatedAt(),
+});
+
+export const experiences = pgTable("experiences", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  company: text("company").notNull(),
+  role: text("role").notNull(),
+  period: text("period").notNull(),
+  summary: text("summary").notNull(),
+  highlights: text("highlights").array().notNull(),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: createdAt(),
+  updatedAt: updatedAt(),
+});
+
+export const certifications = pgTable("certifications", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  title: text("title").notNull(),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: createdAt(),
+  updatedAt: updatedAt(),
+});
+
+export type ProjectRow = typeof projects.$inferSelect;
+export type AchievementRow = typeof achievements.$inferSelect;
+export type ExperienceRow = typeof experiences.$inferSelect;
+export type CertificationRow = typeof certifications.$inferSelect;
