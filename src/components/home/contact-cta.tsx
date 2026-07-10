@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Reveal } from "@/components/reveal";
+import { ThermalButton } from "@/components/thermal/thermal-button";
 
 export function ContactCta() {
   return (
@@ -16,14 +16,10 @@ export function ContactCta() {
           </h2>
         </Reveal>
         <Reveal delay={200}>
-          <div className="mt-10">
-            <Link
-              href="/contact"
-              transitionTypes={["nav"]}
-              className="inline-block rounded-full bg-ember px-8 py-4 font-mono text-sm font-medium text-void transition-transform hover:scale-[1.03] active:scale-[0.98]"
-            >
+          <div className="mt-10 flex justify-center">
+            <ThermalButton variant="ignite" href="/contact">
               Get in touch →
-            </Link>
+            </ThermalButton>
           </div>
         </Reveal>
       </div>

@@ -1,3 +1,4 @@
+import { ThermalButton } from "@/components/thermal/thermal-button";
 import type { Project } from "@/types/content";
 
 /**
@@ -60,23 +61,13 @@ export function ProjectDetail({ project }: { project: Project }) {
       </ul>
 
       <div className="mt-10 flex flex-wrap gap-4">
-        <a
-          href={project.repoUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rounded-full bg-ember px-6 py-3 font-mono text-sm font-medium text-void transition-transform hover:scale-[1.03] active:scale-[0.98]"
-        >
+        <ThermalButton variant="ignite" href={project.repoUrl}>
           Read the source ↗
-        </a>
+        </ThermalButton>
         {project.demoUrl ? (
-          <a
-            href={project.demoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full border border-line px-6 py-3 font-mono text-sm text-polar transition-colors hover:border-ember hover:text-ember"
-          >
+          <ThermalButton variant="frost" href={project.demoUrl}>
             Live demo ↗
-          </a>
+          </ThermalButton>
         ) : null}
       </div>
     </article>

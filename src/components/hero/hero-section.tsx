@@ -1,5 +1,6 @@
 import { HeroCanvas } from "@/components/hero/hero-canvas";
 import { Reveal } from "@/components/reveal";
+import { ThermalButton } from "@/components/thermal/thermal-button";
 import { achievementStats, identity } from "@/lib/profile";
 
 export function HeroSection() {
@@ -40,20 +41,12 @@ export function HeroSection() {
 
         <Reveal delay={300}>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <a
-              href="#work"
-              className="rounded-full bg-ember px-6 py-3 font-mono text-sm font-medium text-void transition-transform hover:scale-[1.03] active:scale-[0.98]"
-            >
+            <ThermalButton variant="ignite" href="#work">
               View the work
-            </a>
-            <a
-              href={identity.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full border border-line px-6 py-3 font-mono text-sm text-polar transition-colors hover:border-ember hover:text-ember"
-            >
+            </ThermalButton>
+            <ThermalButton variant="frost" href={identity.githubUrl}>
               github/ankitkr-04 ↗
-            </a>
+            </ThermalButton>
           </div>
         </Reveal>
       </div>

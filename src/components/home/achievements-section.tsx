@@ -20,7 +20,10 @@ export async function AchievementsSection() {
         <div className="grid gap-5 md:grid-cols-2">
           {achievements.map((achievement, i) => (
             <Reveal key={achievement.value} delay={i * 100}>
-              <article className="h-full rounded-lg border border-line/70 bg-abyss p-8">
+              <article
+                className="warm-card h-full rounded-lg border border-line/70 bg-abyss p-8"
+                data-warm=""
+              >
                 <p className="font-display text-3xl font-bold text-flame md:text-4xl">
                   {achievement.value}
                 </p>

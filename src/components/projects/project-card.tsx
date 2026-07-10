@@ -4,7 +4,10 @@ import type { Project } from "@/types/content";
 /** Compact grid card for notable/archive projects — opens the case study. */
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="group relative flex h-full flex-col rounded-lg border border-line/70 bg-abyss p-6 transition-colors hover:border-ember/40">
+    <article
+      className="warm-card group relative flex h-full flex-col rounded-lg border border-line/70 bg-abyss p-6"
+      data-warm=""
+    >
       <div className="flex items-baseline justify-between gap-3">
         <h3 className="font-display text-xl font-semibold">
           <Link

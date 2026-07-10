@@ -1,7 +1,7 @@
-import Link from "next/link";
 import { ProjectCase } from "@/components/projects/project-case";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
+import { ThermalButton } from "@/components/thermal/thermal-button";
 import { getProjects } from "@/db/queries";
 
 export async function FeaturedWork() {
@@ -25,13 +25,9 @@ export async function FeaturedWork() {
         </div>
 
         <Reveal className="mt-14">
-          <Link
-            href="/projects"
-            transitionTypes={["nav"]}
-            className="inline-block rounded-full border border-line px-6 py-3 font-mono text-sm text-polar transition-colors hover:border-ember hover:text-ember"
-          >
+          <ThermalButton variant="frost" href="/projects">
             All projects — including the early ones →
-          </Link>
+          </ThermalButton>
         </Reveal>
       </div>
     </section>
