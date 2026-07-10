@@ -11,8 +11,9 @@ export function ContactCta() {
           </p>
         </Reveal>
         <Reveal delay={100}>
-          <h2 className="mx-auto mt-6 max-w-2xl font-display text-4xl font-bold tracking-tight text-balance md:text-6xl">
-            Let's build something that holds up under load.
+          <h2 className="type-cool mx-auto mt-6 max-w-2xl text-4xl text-balance md:text-6xl">
+            Let's build something that holds up{" "}
+            <span className="type-molten">under load</span>.
           </h2>
         </Reveal>
         <Reveal delay={200}>

@@ -16,7 +16,7 @@ export function SectionHeading({ index, label, title }: SectionHeadingProps) {
         </span>
         <div className="rule-fade flex-1" />
       </div>
-      <h2 className="mt-5 font-display text-3xl font-semibold tracking-tight text-balance md:text-5xl">
+      <h2 className="type-frozen mt-5 text-2xl text-balance md:text-4xl">
         {title}
       </h2>
     </Reveal>

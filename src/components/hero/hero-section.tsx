@@ -28,8 +28,10 @@ export function HeroSection() {
         </Reveal>
 
         <Reveal delay={100}>
-          <h1 className="mt-6 max-w-3xl font-display text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-6xl md:text-7xl">
-            {identity.headline}
+          <h1 className="type-cool mt-6 max-w-3xl text-4xl leading-[1.08] text-balance sm:text-6xl md:text-7xl">
+            {identity.headlineParts[0]}
+            <span className="type-molten">{identity.headlineParts[1]}</span>
+            {identity.headlineParts[2]}
           </h1>
         </Reveal>
 

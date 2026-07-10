@@ -3,6 +3,13 @@ import type { AchievementStat, SocialLink } from "@/types/content";
 export const identity = {
   name: "Ankit Kumar",
   headline: "I build storage engines and the systems underneath them.",
+  // Same sentence split for temperature typography: the middle segment is
+  // the one molten phrase on the hero (engines run hot).
+  headlineParts: [
+    "I build ",
+    "storage engines",
+    " and the systems underneath them.",
+  ],
   positioning:
     "Final-year CS student and Codeforces Expert focused on backend and systems engineering — high-throughput servers, storage internals, and infrastructure with measured performance.",
   location: "Bhopal, India",
