@@ -49,3 +49,12 @@ next-env.d.ts
 .claude/*
 CLAUDE.md
 .mcp.json
+
+#private
+private/*
+# playwright artifacts
+.playwright-mcp/
+*.jpeg
+*.png
+!public/**
+!src/app/**
