@@ -68,7 +68,7 @@ export function ThermalInteractions() {
       ).onfinish = () => ring.remove();
 
       const colors = icy ? ICE_SPARKS : FIRE_SPARKS;
-      for (let i = 0; i < 9; i++) {
+      for (let i = 0; i < 7; i++) {
         const spark = document.createElement("span");
         spark.className = `cast-spark${icy ? " cast-spark-crystal" : ""}`;
         spark.style.left = `${x}px`;
@@ -78,10 +78,10 @@ export function ThermalInteractions() {
         spark.style.boxShadow = `0 0 8px ${color}`;
         el.appendChild(spark);
         const angle = Math.random() * Math.PI * 2;
-        const dist = 34 + Math.random() * 46;
+        const dist = 24 + Math.random() * 34;
         const dx = Math.cos(angle) * dist;
         // Fire sparks drift upward like real embers; crystals scatter flat.
-        const dy = Math.sin(angle) * dist - (icy ? 4 : 16);
+        const dy = Math.sin(angle) * dist - (icy ? 3 : 12);
         spark.animate(
           [
             { transform: "translate(-50%,-50%) scale(1)", opacity: 1 },

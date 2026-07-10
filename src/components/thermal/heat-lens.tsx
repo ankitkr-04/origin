@@ -54,23 +54,10 @@ export function HeatLens() {
       }
     };
 
-    const onDown = () => {
-      lens.animate(
-        [
-          { opacity: 1, scale: "1" },
-          { opacity: 1, scale: "1.22" },
-          { opacity: 1, scale: "1" },
-        ],
-        { duration: 500, easing: "ease-out" },
-      );
-    };
-
     window.addEventListener("pointermove", onMove, { passive: true });
-    window.addEventListener("pointerdown", onDown, { passive: true });
     raf = requestAnimationFrame(tick);
     return () => {
       window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerdown", onDown);
       cancelAnimationFrame(raf);
     };
   }, [active]);
