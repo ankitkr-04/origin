@@ -230,10 +230,37 @@ export const projects: Project[] = [
   },
 ];
 
-export function getProject(slug: string): Project | undefined {
-  return projects.find((project) => project.slug === slug);
-}
+export const achievements = [
+  {
+    value: "Global Rank 15",
+    context: "TCS CodeVita Season 13 — out of 669,000+ participants worldwide",
+    note: "Top 0.003% in one of the world's largest coding competitions",
+  },
+  {
+    value: "Expert · 1655",
+    context: "Codeforces competitive rating",
+    note: "Externally verifiable, earned across rated contests",
+  },
+];
 
-export const flagshipProjects = projects.filter((p) => p.tier === "flagship");
-export const notableProjects = projects.filter((p) => p.tier === "notable");
-export const archiveProjects = projects.filter((p) => p.tier === "archive");
+export const experiences = [
+  {
+    company: "ControlShift Talent",
+    role: "Engineering Intern",
+    period: "Feb — May 2025",
+    summary:
+      "Built the real-time backbone of a live AI interviewing platform — the infrastructure between a candidate on video and the AI on the other end.",
+    highlights: [
+      "Architected WebRTC signaling and a WebSocket layer with heartbeat, room management, and reconnection for candidate–AI video sessions",
+      "Built a collaborative code editor over WebSocket, syncing client state live during interviews",
+      "Moved blocking email I/O to BullMQ + Redis job queues with retry and dead-letter handling",
+      "Chunked live interview recordings into an async cheat-detection AI pipeline",
+      "Shipped 30+ REST endpoints with input validation and centralized error handling, backed by 25+ unit tests on auth and booking paths",
+    ],
+  },
+];
+
+export const certifications = [
+  "Oracle Cloud Infrastructure 2025 Developer Professional (1Z0-1084-25)",
+  "AWS Academy — Cloud Foundations",
+];
