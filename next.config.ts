@@ -3,10 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
-  experimental:{
+  experimental: {
     viewTransition: true,
     webVitalsAttribution: ["CLS", "FCP", "FID", "LCP", "TTFB"],
-  }
+  },
 };
 
 export default nextConfig;
