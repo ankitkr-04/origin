@@ -1,4 +1,4 @@
-import { identity, socialLinks } from "@/lib/content";
+import { identity, socialLinks } from "@/lib/profile";
 
 export function SiteFooter() {
   return (

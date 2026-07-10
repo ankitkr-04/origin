@@ -1,23 +1,22 @@
-import { ContactSection } from "@/components/contact/contact-section";
-import { ExperienceSection } from "@/components/experience/experience-section";
 import { HeroSection } from "@/components/hero/hero-section";
-import { ProofSection } from "@/components/proof/proof-section";
+import { AchievementsSection } from "@/components/home/achievements-section";
+import { ContactCta } from "@/components/home/contact-cta";
+import { FeaturedWork } from "@/components/home/featured-work";
+import { PageTransition } from "@/components/page-transition";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
-import { WorkSection } from "@/components/work/work-section";
 
 export default function HomePage() {
   return (
-    <>
+    <PageTransition>
       <SiteNav />
       <main>
         <HeroSection />
-        <WorkSection />
-        <ExperienceSection />
-        <ProofSection />
-        <ContactSection />
+        <FeaturedWork />
+        <AchievementsSection />
+        <ContactCta />
       </main>
       <SiteFooter />
-    </>
+    </PageTransition>
   );
 }

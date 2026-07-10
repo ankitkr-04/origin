@@ -1,25 +1,23 @@
 /** Shared view models for portfolio content. */
 
+export type ProjectTier = "flagship" | "notable" | "archive";
 export type ProjectStatus = "active" | "stable";
 
-export interface FeaturedProject {
-  /** Zero-padded index used by the numbered-doc section styling. */
-  id: string;
+export interface Project {
+  slug: string;
   name: string;
+  tier: ProjectTier;
+  status: ProjectStatus;
+  year: string;
   stack: string;
   tagline: string;
-  description: string;
+  /** Card-length copy. */
+  summary: string;
+  /** Long-form paragraphs for the detail view. */
+  story: string[];
   highlights: string[];
   /** Short verified figures rendered as mono data chips. */
   metrics: string[];
-  repoUrl: string;
-  status: ProjectStatus;
-}
-
-export interface SecondaryProject {
-  name: string;
-  stack: string;
-  description: string;
   repoUrl: string;
   demoUrl?: string;
 }
@@ -32,10 +30,16 @@ export interface Experience {
   highlights: string[];
 }
 
-export interface ProofItem {
+export interface AchievementStat {
   value: string;
   label: string;
   detail?: string;
+}
+
+export interface Achievement {
+  value: string;
+  context: string;
+  note: string;
 }
 
 export interface SocialLink {

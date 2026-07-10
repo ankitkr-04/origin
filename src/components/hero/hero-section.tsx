@@ -1,6 +1,6 @@
 import { HeroCanvas } from "@/components/hero/hero-canvas";
 import { Reveal } from "@/components/reveal";
-import { identity, proofItems } from "@/lib/content";
+import { achievementStats, identity } from "@/lib/profile";
 
 export function HeroSection() {
   return (
@@ -61,7 +61,7 @@ export function HeroSection() {
       {/* Proof strip — verified numbers only */}
       <div className="relative z-10 border-t border-line/60 bg-ink/60 backdrop-blur-sm">
         <dl className="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-5 px-5 py-6 md:grid-cols-4 md:px-8">
-          {proofItems.map((item, i) => (
+          {achievementStats.map((item, i) => (
             <Reveal key={item.label} delay={i * 80}>
               <div>
                 <dd className="font-display text-2xl font-bold text-amber md:text-3xl">
