@@ -4,6 +4,7 @@ import "./globals.css";
 import { Grain } from "@/components/thermal/grain";
 import { HeatLens } from "@/components/thermal/heat-lens";
 import { ReaderBar } from "@/components/thermal/reader-bar";
+import { ThermalInteractions } from "@/components/thermal/thermal-interactions";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -66,6 +67,7 @@ export default function RootLayout({
       <body className="bg-void text-polar antialiased">
         <ReaderBar />
         <HeatLens />
+        <ThermalInteractions />
         {children}
         {modal}
         <Grain />

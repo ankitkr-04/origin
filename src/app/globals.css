@@ -155,19 +155,303 @@ body {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='.5'/></svg>");
 }
 
-/* Scroll-triggered reveal (driven by <Reveal/>) */
+/* ====================================================================
+   THERMAL interaction primitives.
+   The law: ignition is fast (~180ms in), cooling is slow (~450ms out) —
+   hover transitions override their resting duration on :hover.
+   Elements opt in with data-warm (pointer-local bloom via --mx/--my) and
+   data-cast="fire|ice" (spell-press) — both driven by one delegated
+   listener in <ThermalInteractions/>.
+   ==================================================================== */
+
+[data-cast] {
+  position: relative;
+}
+
+/* Shockwave ring + sparks spawned on press by <ThermalInteractions/> */
+.cast-ring {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+  transform: translate(-50%, -50%) scale(0.06);
+}
+
+.cast-ring-fire {
+  border: 1.5px solid rgba(255, 175, 95, 0.9);
+  box-shadow:
+    0 0 22px rgba(255, 107, 61, 0.55),
+    inset 0 0 16px rgba(255, 107, 61, 0.3);
+}
+
+.cast-ring-ice {
+  border: 1.5px solid rgba(160, 226, 255, 0.9);
+  box-shadow:
+    0 0 22px rgba(125, 211, 252, 0.5),
+    inset 0 0 16px rgba(125, 211, 252, 0.28);
+}
+
+.cast-spark {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.cast-spark-crystal {
+  border-radius: 1px;
+}
+
+/* Ignite button — the primary. Dark ember core; warmth blooms from where
+   the cursor enters; pressing casts fire. */
+.ignite-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  border-radius: 999px;
+  padding: 0.8rem 1.5rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #ffe9dc;
+  cursor: pointer;
+  background: linear-gradient(180deg, #2a1209, #170b05);
+  border: 1px solid color-mix(in srgb, var(--color-ember) 45%, transparent);
+  transition:
+    transform 0.45s ease,
+    border-color 0.45s ease,
+    box-shadow 0.45s ease;
+}
+
+.ignite-btn > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ignite-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    140px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 125, 64, 0.5),
+    rgba(255, 107, 61, 0) 65%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.ignite-btn:hover {
+  transition-duration: 0.16s;
+  transform: translateY(-2px);
+  border-color: rgba(255, 165, 105, 0.85);
+  box-shadow:
+    0 6px 32px -6px rgba(255, 107, 61, 0.45),
+    inset 0 0 14px rgba(255, 107, 61, 0.16);
+}
+
+.ignite-btn:hover::before {
+  opacity: 1;
+  transition-duration: 0.16s;
+}
+
+.ignite-btn:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 0.07s;
+}
+
+/* Frost button — the secondary. Quiet cold surface; a crystal glint
+   sweeps across on hover; pressing casts ice. */
+.frost-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  border-radius: 999px;
+  padding: 0.8rem 1.5rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-mist);
+  cursor: pointer;
+  background: color-mix(in srgb, var(--color-ice) 4%, transparent);
+  border: 1px solid var(--color-line);
+  overflow: clip;
+  transition:
+    transform 0.45s ease,
+    border-color 0.45s ease,
+    color 0.45s ease,
+    box-shadow 0.45s ease;
+}
+
+.frost-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 32%,
+    rgba(234, 243, 255, 0.17) 48%,
+    rgba(125, 211, 252, 0.13) 52%,
+    transparent 68%
+  );
+  background-size: 250% 100%;
+  background-position: 130% 0;
+  transition: background-position 0.7s ease;
+}
+
+.frost-btn:hover {
+  transition-duration: 0.16s;
+  transform: translateY(-2px);
+  color: var(--color-polar);
+  border-color: color-mix(in srgb, var(--color-ice) 45%, transparent);
+  box-shadow: 0 6px 26px -8px rgba(125, 211, 252, 0.25);
+}
+
+.frost-btn:hover::after {
+  background-position: -40% 0;
+  transition-duration: 0.55s;
+}
+
+.frost-btn:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 0.07s;
+}
+
+/* Embedded button elements — a living flame / a glinting crystal */
+.btn-glyph {
+  flex: none;
+  transition: transform 0.3s ease;
+}
+
+@keyframes flame-flicker {
+  0%,
+  100% {
+    transform: scale(1) rotate(-1deg);
+  }
+  30% {
+    transform: scale(1.08, 1.12) rotate(1.5deg);
+  }
+  60% {
+    transform: scale(0.95, 1.04) rotate(-2deg);
+  }
+}
+
+.ignite-btn:hover .btn-glyph {
+  animation: flame-flicker 0.9s ease-in-out infinite;
+  transform-origin: 50% 90%;
+}
+
+.frost-btn:hover .btn-glyph {
+  transform: rotate(10deg) scale(1.08);
+}
+
+/* Melt link — underline melts across, ice-cast text warms on contact */
+.melt {
+  color: var(--color-flame);
+  text-decoration: none;
+  padding-bottom: 2px;
+  background:
+    linear-gradient(90deg, var(--color-flame), var(--color-ember)) no-repeat 0
+    100% / 0% 1.5px;
+  transition:
+    background-size 0.5s cubic-bezier(0.6, 0, 0.3, 1),
+    color 0.45s ease;
+}
+
+.melt:hover {
+  background-size: 100% 1.5px;
+  color: #ffd9c2;
+  transition-duration: 0.25s;
+}
+
+/* Warm card — lifts and warms toward the pointer */
+.warm-card {
+  position: relative;
+  transition:
+    transform 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.warm-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 20%),
+    rgba(255, 107, 61, 0.09),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.warm-card:hover {
+  transition-duration: 0.18s;
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--color-ember) 36%, transparent);
+  box-shadow: 0 22px 60px -24px rgba(255, 107, 61, 0.35);
+}
+
+.warm-card:hover::before {
+  opacity: 1;
+  transition-duration: 0.18s;
+}
+
+/* Heat row — an ember strip slides in on the row you're on */
+.heat-row {
+  position: relative;
+  transition: background 0.45s ease;
+}
+
+.heat-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 18%;
+  bottom: 18%;
+  width: 2px;
+  background: linear-gradient(180deg, var(--color-flame), var(--color-ember));
+  transform: scaleY(0);
+  transition: transform 0.4s ease;
+}
+
+.heat-row:hover {
+  background: rgba(255, 107, 61, 0.05);
+  transition-duration: 0.16s;
+}
+
+.heat-row:hover::before {
+  transform: scaleY(1);
+}
+
+/* Scroll-triggered thaw (driven by <Reveal/>) — elements arrive frozen
+   (blurred, desaturated) and thaw to full clarity */
 [data-reveal] {
   opacity: 0;
   transform: translateY(1.5rem);
+  filter: blur(7px) saturate(0.65);
   transition:
     opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.7s ease;
   transition-delay: var(--reveal-delay, 0ms);
 }
 
 [data-reveal="visible"] {
   opacity: 1;
   transform: none;
+  filter: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -178,6 +462,7 @@ body {
   [data-reveal] {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
   }
 }
@@ -187,6 +472,7 @@ body {
   [data-reveal] {
     opacity: 1;
     transform: none;
+    filter: none;
   }
 }
 
