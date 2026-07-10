@@ -4,13 +4,8 @@ import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
-import {
-  aboutNarrative,
-  certifications,
-  education,
-  experience,
-  identity,
-} from "@/lib/profile";
+import { getCertifications, getExperiences } from "@/db/queries";
+import { aboutNarrative, education, identity } from "@/lib/profile";
 
 export const metadata: Metadata = {
   title: "About — Ankit Kumar",
@@ -18,7 +13,12 @@ export const metadata: Metadata = {
     "Final-year CS student building storage engines, servers, and high-concurrency backends.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const [experiences, certifications] = await Promise.all([
+    getExperiences(),
+    getCertifications(),
+  ]);
+
   return (
     <PageTransition>
       <SiteNav />
@@ -74,37 +74,47 @@ export default function AboutPage() {
               label="Experience"
               title="Real-time infrastructure, in production"
             />
-            <div className="grid gap-8 md:grid-cols-[1fr_1.4fr]">
-              <Reveal>
-                <div>
-                  <h3 className="font-display text-2xl font-bold">
-                    {experience.company}
-                  </h3>
-                  <p className="mt-1 font-mono text-sm text-amber">
-                    {experience.role}
-                  </p>
-                  <p className="mt-1 font-mono text-xs text-faint">
-                    {experience.period}
-                  </p>
-                  <p className="mt-5 leading-relaxed text-muted">
-                    {experience.summary}
-                  </p>
-                </div>
-              </Reveal>
-              <Reveal delay={120}>
-                <ul className="space-y-4">
-                  {experience.highlights.map((highlight) => (
-                    <li key={highlight} className="flex gap-3 leading-relaxed">
-                      <span
-                        className="mt-[9px] size-1 shrink-0 rounded-full bg-amber/70"
-                        aria-hidden
-                      />
-                      <span className="text-sm text-text/80">{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-            </div>
+            {experiences.map((experience) => (
+              <div
+                key={`${experience.company}-${experience.period}`}
+                className="grid gap-8 md:grid-cols-[1fr_1.4fr]"
+              >
+                <Reveal>
+                  <div>
+                    <h3 className="font-display text-2xl font-bold">
+                      {experience.company}
+                    </h3>
+                    <p className="mt-1 font-mono text-sm text-amber">
+                      {experience.role}
+                    </p>
+                    <p className="mt-1 font-mono text-xs text-faint">
+                      {experience.period}
+                    </p>
+                    <p className="mt-5 leading-relaxed text-muted">
+                      {experience.summary}
+                    </p>
+                  </div>
+                </Reveal>
+                <Reveal delay={120}>
+                  <ul className="space-y-4">
+                    {experience.highlights.map((highlight) => (
+                      <li
+                        key={highlight}
+                        className="flex gap-3 leading-relaxed"
+                      >
+                        <span
+                          className="mt-[9px] size-1 shrink-0 rounded-full bg-amber/70"
+                          aria-hidden
+                        />
+                        <span className="text-sm text-text/80">
+                          {highlight}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </Reveal>
+              </div>
+            ))}
           </div>
         </section>
 

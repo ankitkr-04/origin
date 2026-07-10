@@ -6,11 +6,7 @@ import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
-import {
-  archiveProjects,
-  flagshipProjects,
-  notableProjects,
-} from "@/lib/projects";
+import { getProjects } from "@/db/queries";
 
 export const metadata: Metadata = {
   title: "Projects — Ankit Kumar",
@@ -18,7 +14,12 @@ export const metadata: Metadata = {
     "Storage engines, servers, and systems: StrataDB, Axiom, TicketLedger, and the rest of the shelf.",
 };
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await getProjects();
+  const flagshipProjects = projects.filter((p) => p.tier === "flagship");
+  const notableProjects = projects.filter((p) => p.tier === "notable");
+  const archiveProjects = projects.filter((p) => p.tier === "archive");
+
   return (
     <PageTransition>
       <SiteNav />

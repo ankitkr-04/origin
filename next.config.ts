@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
+  cacheComponents: true, // required for 'use cache' in src/db/queries.ts
   experimental: {
     viewTransition: true,
     webVitalsAttribution: ["CLS", "FCP", "FID", "LCP", "TTFB"],

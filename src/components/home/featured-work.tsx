@@ -2,9 +2,13 @@ import Link from "next/link";
 import { ProjectCase } from "@/components/projects/project-case";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
-import { flagshipProjects } from "@/lib/projects";
+import { getProjects } from "@/db/queries";
 
-export function FeaturedWork() {
+export async function FeaturedWork() {
+  const flagshipProjects = (await getProjects()).filter(
+    (project) => project.tier === "flagship",
+  );
+
   return (
     <section id="work" className="scroll-mt-14 py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-5 md:px-8">

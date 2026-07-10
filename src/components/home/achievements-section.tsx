@@ -1,8 +1,10 @@
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
-import { achievements } from "@/lib/profile";
+import { getAchievements } from "@/db/queries";
 
-export function AchievementsSection() {
+export async function AchievementsSection() {
+  const achievements = await getAchievements();
+
   return (
     <section
       id="achievements"
