@@ -73,12 +73,22 @@ export default async function AboutPage() {
               index="002"
               label="Experience"
               title="Real-time infrastructure, in production"
+              readout="θ RECENCY = WARMTH"
             />
-            {experiences.map((experience) => (
-              <div
-                key={`${experience.company}-${experience.period}`}
-                className="grid gap-8 md:grid-cols-[1fr_1.4fr]"
-              >
+            <div className="thermal-rail space-y-14">
+              {experiences.map((experience) => (
+                <div
+                  key={`${experience.company}-${experience.period}`}
+                  className="relative grid gap-8 md:grid-cols-[1fr_1.4fr]"
+                >
+                  <span
+                    className={`thermal-node ${
+                      /present|current|now/i.test(experience.period)
+                        ? "thermal-node-hot"
+                        : "thermal-node-cold"
+                    }`}
+                    aria-hidden
+                  />
                 <Reveal>
                   <div>
                     <h3 className="font-display text-2xl font-bold">
@@ -113,14 +123,20 @@ export default async function AboutPage() {
                     ))}
                   </ul>
                 </Reveal>
-              </div>
-            ))}
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
         <section className="py-16 md:py-24">
           <div className="mx-auto max-w-6xl px-5 md:px-8">
-            <SectionHeading index="003" label="Education" title="Credentials" />
+            <SectionHeading
+              index="003"
+              label="Education"
+              title="Credentials"
+              readout="θ IMMUTABLE RECORD"
+            />
             <div className="grid gap-5 md:grid-cols-2">
               <Reveal>
                 <div className="h-full rounded-lg border border-line/70 bg-abyss p-8">

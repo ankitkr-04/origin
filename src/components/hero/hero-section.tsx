@@ -1,5 +1,4 @@
 import { HeroCanvas } from "@/components/hero/hero-canvas";
-import { Reveal } from "@/components/reveal";
 import { ThermalButton } from "@/components/thermal/thermal-button";
 import { achievementStats, identity } from "@/lib/profile";
 
@@ -21,58 +20,67 @@ export function HeroSection() {
       />
 
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-5 pt-24 pb-16 md:px-8">
-        <Reveal>
-          <p className="font-mono text-xs tracking-[0.25em] text-flame uppercase">
-            {identity.location} · {identity.education}
-          </p>
-        </Reveal>
+        {/* Cold open: staged ignition instead of scroll reveals — the page
+            wakes frozen and the copy emerges by fire */}
+        <p
+          className="hero-ignite font-mono text-xs tracking-[0.25em] text-flame uppercase"
+          style={{ animationDelay: "0.25s" }}
+        >
+          {identity.location} · {identity.education}
+        </p>
 
-        <Reveal delay={100}>
-          <h1 className="type-cool mt-6 max-w-3xl text-4xl leading-[1.08] text-balance sm:text-6xl md:text-7xl">
-            {identity.headlineParts[0]}
-            <span className="type-molten">{identity.headlineParts[1]}</span>
-            {identity.headlineParts[2]}
-          </h1>
-        </Reveal>
+        <h1
+          className="hero-ignite type-cool mt-6 max-w-3xl text-4xl leading-[1.08] text-balance sm:text-6xl md:text-7xl"
+          style={{ animationDelay: "0.4s" }}
+        >
+          {identity.headlineParts[0]}
+          <span className="type-molten">{identity.headlineParts[1]}</span>
+          {identity.headlineParts[2]}
+        </h1>
 
-        <Reveal delay={200}>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-mist md:text-lg">
-            {identity.positioning}
-          </p>
-        </Reveal>
+        <p
+          className="hero-ignite mt-6 max-w-xl text-base leading-relaxed text-mist md:text-lg"
+          style={{ animationDelay: "0.6s" }}
+        >
+          {identity.positioning}
+        </p>
 
-        <Reveal delay={300}>
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <ThermalButton variant="ignite" href="#work">
-              View the work
-            </ThermalButton>
-            <ThermalButton variant="frost" href={identity.githubUrl}>
-              github/ankitkr-04 ↗
-            </ThermalButton>
-          </div>
-        </Reveal>
+        <div
+          className="hero-ignite mt-10 flex flex-wrap items-center gap-4"
+          style={{ animationDelay: "0.8s" }}
+        >
+          <ThermalButton variant="ignite" href="#work">
+            View the work
+          </ThermalButton>
+          <ThermalButton variant="frost" href={identity.githubUrl}>
+            github/ankitkr-04 ↗
+          </ThermalButton>
+        </div>
       </div>
 
       {/* Proof strip — verified numbers only */}
       <div className="relative z-10 border-t border-line/60 bg-void/60 backdrop-blur-sm">
-        <dl className="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-5 px-5 py-6 md:grid-cols-4 md:px-8">
-          {achievementStats.map((item, i) => (
-            <Reveal key={item.label} delay={i * 80}>
-              <div>
-                <dd className="font-display text-2xl font-bold text-flame md:text-3xl">
-                  {item.value}
-                </dd>
-                <dt className="mt-1 font-mono text-[11px] tracking-wide text-mist uppercase">
-                  {item.label}
-                </dt>
-                {item.detail ? (
-                  <p className="mt-0.5 text-xs text-faint">{item.detail}</p>
-                ) : null}
-              </div>
-            </Reveal>
+        <dl
+          className="hero-ignite mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-5 px-5 py-6 md:grid-cols-4 md:px-8"
+          style={{ animationDelay: "1s" }}
+        >
+          {achievementStats.map((item) => (
+            <div key={item.label}>
+              <dd className="font-display text-2xl font-bold text-flame md:text-3xl">
+                {item.value}
+              </dd>
+              <dt className="mt-1 font-mono text-[11px] tracking-wide text-mist uppercase">
+                {item.label}
+              </dt>
+              {item.detail ? (
+                <p className="mt-0.5 text-xs text-faint">{item.detail}</p>
+              ) : null}
+            </div>
           ))}
         </dl>
       </div>
+
+      <div className="cold-open-veil" aria-hidden />
     </section>
   );
 }

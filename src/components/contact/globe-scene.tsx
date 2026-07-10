@@ -5,12 +5,38 @@ import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
 /**
- * A geodesic earth: subdividing an icosahedron packs its vertices in the same
- * hex-with-12-pentagons pattern as a honeycomb sphere — rendered as points,
- * with pulsing "nodes" and great-circle arcs between them.
+ * A geodesic earth with THERMAL physics: the dot-sphere stays glacial
+ * (data at rest is cold), the network arcs burn ember (data in flight is
+ * hot), node endpoints pulse warm on arrival, and a faint aurora ring —
+ * teal shading into plasma — circles the pole.
  */
 
 const RADIUS = 2;
+
+/** Thin vertex-colored ring above the pole, shifting teal ↔ plasma. */
+function useAuroraRing(segments = 96) {
+  return useMemo(() => {
+    const positions = new Float32Array((segments + 1) * 3);
+    const colors = new Float32Array((segments + 1) * 3);
+    const teal = new THREE.Color("#5eead4");
+    const plasma = new THREE.Color("#c084fc");
+    const c = new THREE.Color();
+    const lat = (55 * Math.PI) / 180;
+    const y = Math.sin(lat) * RADIUS * 1.03;
+    const r = Math.cos(lat) * RADIUS * 1.03;
+    for (let i = 0; i <= segments; i++) {
+      const theta = (i / segments) * Math.PI * 2;
+      positions[i * 3] = Math.cos(theta) * r;
+      positions[i * 3 + 1] = y;
+      positions[i * 3 + 2] = Math.sin(theta) * r;
+      c.lerpColors(teal, plasma, (Math.sin(theta * 3) + 1) / 2).toArray(
+        colors,
+        i * 3,
+      );
+    }
+    return { positions, colors };
+  }, [segments]);
+}
 
 /** Unique vertices of a subdivided icosahedron — hexagonally packed dots. */
 function useGeodesicDots(detail: number) {
@@ -60,6 +86,7 @@ function Globe({ animate, dotCount }: { animate: boolean; dotCount: number }) {
   const spin = useRef(0);
 
   const dots = useGeodesicDots(dotCount);
+  const aurora = useAuroraRing();
 
   const { nodePositions, arcs } = useMemo(() => {
     const endpoints: THREE.Vector3[] = [];
@@ -114,9 +141,9 @@ function Globe({ animate, dotCount }: { animate: boolean; dotCount: number }) {
         </bufferGeometry>
         <pointsMaterial
           size={0.028}
-          color="#e8a33d"
+          color="#7dd3fc"
           transparent
-          opacity={0.55}
+          opacity={0.5}
           sizeAttenuation
           depthWrite={false}
         />
@@ -131,7 +158,7 @@ function Globe({ animate, dotCount }: { animate: boolean; dotCount: number }) {
         </bufferGeometry>
         <pointsMaterial
           size={0.085}
-          color="#ffd28a"
+          color="#ffb454"
           transparent
           opacity={0.9}
           sizeAttenuation
@@ -146,13 +173,29 @@ function Globe({ animate, dotCount }: { animate: boolean; dotCount: number }) {
             <bufferAttribute attach="attributes-position" args={[arc, 3]} />
           </bufferGeometry>
           <lineBasicMaterial
-            color="#b4552d"
+            color="#ff6b3d"
             transparent
-            opacity={0.5}
+            opacity={0.55}
             depthWrite={false}
           />
         </line>
       ))}
+
+      <line>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            args={[aurora.positions, 3]}
+          />
+          <bufferAttribute attach="attributes-color" args={[aurora.colors, 3]} />
+        </bufferGeometry>
+        <lineBasicMaterial
+          vertexColors
+          transparent
+          opacity={0.45}
+          depthWrite={false}
+        />
+      </line>
     </group>
   );
 }

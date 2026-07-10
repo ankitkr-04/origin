@@ -445,6 +445,142 @@ body {
   transform: scaleY(1);
 }
 
+/* Homepage cold open — the page wakes frozen; warm light arrives; the
+   headline emerges by fire (see hero-section.tsx) */
+@keyframes cold-open {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.cold-open-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(16, 34, 58, 0.9),
+    rgba(4, 7, 13, 0.55)
+  );
+  animation: cold-open 1.15s ease-out 0.1s both;
+}
+
+@keyframes ignite-text {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(8px) saturate(0.4) brightness(1.5);
+  }
+  55% {
+    opacity: 1;
+    filter: blur(0) saturate(1.08) brightness(1.12);
+    text-shadow: 0 0 32px rgba(255, 107, 61, 0.32);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    text-shadow: 0 0 0 rgba(255, 107, 61, 0);
+  }
+}
+
+.hero-ignite {
+  animation: ignite-text 0.9s cubic-bezier(0.22, 0.9, 0.32, 1) both;
+}
+
+/* Loading — compaction in progress */
+@keyframes thermal-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.thermal-ring {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex: none;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 28%,
+    #7dd3fc 44%,
+    #c084fc 62%,
+    #ff6b3d 80%,
+    transparent 80%
+  );
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 4px),
+    #000 calc(100% - 3px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 4px),
+    #000 calc(100% - 3px)
+  );
+  animation: thermal-spin 1.1s linear infinite;
+}
+
+/* Thermal rail — recency is warmth: the line cools from ember at the
+   top (now) through plasma down to ice (earlier) */
+.thermal-rail {
+  position: relative;
+  padding-left: 30px;
+}
+
+.thermal-rail::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    var(--color-ember),
+    var(--color-plasma) 45%,
+    var(--color-ice)
+  );
+}
+
+.thermal-node {
+  position: absolute;
+  left: -30px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.thermal-node-hot {
+  background: var(--color-ember);
+  animation: node-pulse 2.4s infinite;
+}
+
+.thermal-node-cold {
+  border: 2px solid color-mix(in srgb, var(--color-ice) 55%, transparent);
+  background: var(--color-abyss);
+}
+
+@keyframes node-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 61, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(255, 107, 61, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 61, 0);
+  }
+}
+
 /* Scroll-triggered thaw (driven by <Reveal/>) — elements arrive frozen
    (blurred, desaturated) and thaw to full clarity */
 [data-reveal] {
@@ -474,6 +610,16 @@ body {
     transform: none;
     filter: none;
     transition: none;
+  }
+
+  .cold-open-veil {
+    display: none;
+  }
+
+  .hero-ignite,
+  .thermal-ring,
+  .thermal-node-hot {
+    animation: none;
   }
 }
 

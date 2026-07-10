@@ -30,6 +30,7 @@ export default async function ProjectsPage() {
               index="001"
               label="Flagship"
               title="The systems shelf"
+              readout="θ HOT · IN ACTIVE MEMORY"
             />
             <div>
               {flagshipProjects.map((project, i) => (
@@ -45,6 +46,7 @@ export default async function ProjectsPage() {
               index="002"
               label="Notable"
               title="Built to solve something specific"
+              readout="θ WARM · CACHED"
             />
             <div className="grid gap-5 md:grid-cols-2">
               {notableProjects.map((project, i) => (
@@ -62,6 +64,7 @@ export default async function ProjectsPage() {
               index="003"
               label="Earlier"
               title="Where it started"
+              readout="θ COLD · IMMUTABLE"
             />
             <div className="grid gap-5 md:grid-cols-3">
               {archiveProjects.map((project, i) => (
