@@ -1,13 +1,33 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 /**
  * Reading-progress line at the very top of the viewport — the seam gradient
  * (ice → plasma → ember) revealing left to right as you scroll the page.
+ * Flashes briefly on navigation: the seam ignites to mark the handoff.
  */
 export function ReaderBar() {
   const barRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const bar = barRef.current;
+    if (!bar || !pathname) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    bar.animate(
+      [
+        { filter: "brightness(1)", boxShadow: "0 0 0 rgba(255,107,61,0)" },
+        {
+          filter: "brightness(1.9)",
+          boxShadow: "0 0 14px rgba(255,107,61,0.8)",
+        },
+        { filter: "brightness(1)", boxShadow: "0 0 0 rgba(255,107,61,0)" },
+      ],
+      { duration: 650, easing: "ease-out" },
+    );
+  }, [pathname]);
 
   useEffect(() => {
     const bar = barRef.current;

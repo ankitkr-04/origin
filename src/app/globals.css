@@ -476,27 +476,46 @@ body {
   }
 }
 
-/* View Transitions — page-level cross-fade, typed "nav" (see <PageTransition/>) */
+/* View Transitions — typed "nav" (see <PageTransition/>).
+   Leaving a page quenches it: a fast blue-white flash-freeze (blur up,
+   brighten, desaturate). The next page kindles in: rises, thaws, passes
+   through a brief warm overshoot before settling. */
 :root {
-  --duration-exit: 150ms;
-  --duration-enter: 210ms;
+  --duration-exit: 240ms;
+  --duration-enter: 400ms;
 }
 
-@keyframes vt-fade {
+@keyframes vt-quench {
+  to {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.985);
+    filter: blur(6px) brightness(1.35) saturate(0.55);
+  }
+}
+
+@keyframes vt-kindle {
   from {
     opacity: 0;
+    transform: translateY(12px);
+    filter: blur(8px) brightness(0.75) saturate(1.5);
+  }
+  60% {
+    filter: blur(0) brightness(1.07) saturate(1.15);
   }
   to {
     opacity: 1;
+    transform: none;
+    filter: none;
   }
 }
 
 ::view-transition-old(.page-exit) {
-  animation: var(--duration-exit) ease-in vt-fade reverse;
+  animation: var(--duration-exit) ease-in vt-quench both;
 }
 
 ::view-transition-new(.page-enter) {
-  animation: var(--duration-enter) ease-out var(--duration-exit) both vt-fade;
+  animation: var(--duration-enter) cubic-bezier(0.22, 0.9, 0.32, 1)
+    var(--duration-exit) both vt-kindle;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -510,38 +529,76 @@ body {
   }
 }
 
-/* Project modal (intercepted route) */
-@keyframes modal-backdrop-in {
+/* Project modal (intercepted route) — ignites open, freezes shut.
+   The backdrop crystallizes (blur ramps in like frost on glass); the
+   panel strikes like a match: a warm inner flare that settles into the
+   resting frost border. Closing is a fast 240ms freeze-out. */
+@keyframes modal-frost-in {
   from {
     opacity: 0;
+    backdrop-filter: blur(0px);
   }
   to {
     opacity: 1;
+    backdrop-filter: blur(10px);
   }
 }
 
-@keyframes modal-panel-in {
-  from {
+@keyframes modal-ignite-in {
+  0% {
     opacity: 0;
-    transform: translateY(1rem) scale(0.97);
+    transform: translateY(18px) scale(0.96);
+    box-shadow: 0 0 0 rgba(255, 107, 61, 0);
   }
-  to {
+  45% {
+    opacity: 1;
+    box-shadow:
+      0 0 60px -8px rgba(255, 107, 61, 0.45),
+      inset 0 0 0 1px rgba(255, 150, 90, 0.5);
+  }
+  100% {
     opacity: 1;
     transform: none;
+    box-shadow: 0 40px 110px -30px rgba(0, 0, 0, 0.85);
+  }
+}
+
+@keyframes modal-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modal-freeze-out {
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.975);
+    filter: blur(5px) brightness(1.45) saturate(0.5);
   }
 }
 
 .modal-backdrop {
-  animation: modal-backdrop-in 0.25s ease-out both;
+  animation: modal-frost-in 0.45s ease-out both;
+  backdrop-filter: blur(10px);
 }
 
 .modal-panel {
-  animation: modal-panel-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+  animation: modal-ignite-in 0.55s cubic-bezier(0.22, 0.9, 0.32, 1) both;
+}
+
+.modal-closing {
+  animation: modal-fade-out 0.24s ease-in both;
+}
+
+.modal-closing .modal-panel {
+  animation: modal-freeze-out 0.24s ease-in both;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .modal-backdrop,
-  .modal-panel {
+  .modal-panel,
+  .modal-closing,
+  .modal-closing .modal-panel {
     animation: none;
   }
 }

@@ -1,19 +1,39 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+const FREEZE_OUT_MS = 240;
 
 /**
- * Overlay shell for the intercepted /projects/[slug] route. Closes back to
- * the grid via router.back() on backdrop click, Escape, or the close button.
+ * Overlay shell for the intercepted /projects/[slug] route. Ignites open
+ * (CSS keyframes), freezes shut: closing plays the 240ms freeze-out first,
+ * then router.back() — router.back() itself can't animate, so the exit
+ * has to run before navigation. Escape, backdrop, and ✕ all close.
  */
 export function ProjectModal({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const panelRef = useRef<HTMLDivElement>(null);
+  const [closing, setClosing] = useState(false);
+  const closingRef = useRef(false);
+
+  const close = useCallback(() => {
+    if (closingRef.current) return;
+    closingRef.current = true;
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (reducedMotion) {
+      router.back();
+      return;
+    }
+    setClosing(true);
+    window.setTimeout(() => router.back(), FREEZE_OUT_MS);
+  }, [router]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") router.back();
+      if (event.key === "Escape") close();
     };
     document.addEventListener("keydown", onKeyDown);
     document.body.style.overflow = "hidden";
@@ -22,14 +42,16 @@ export function ProjectModal({ children }: { children: React.ReactNode }) {
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
     };
-  }, [router]);
+  }, [close]);
 
   return (
     // biome-ignore lint/a11y/noStaticElementInteractions: backdrop click-to-close duplicates the Escape key and close button
     <div
-      className="modal-backdrop fixed inset-0 z-[60] overflow-y-auto bg-void/80 backdrop-blur-sm"
+      className={`modal-backdrop fixed inset-0 z-[60] overflow-y-auto bg-void/80 ${
+        closing ? "modal-closing" : ""
+      }`}
       onClick={(event) => {
-        if (event.target === event.currentTarget) router.back();
+        if (event.target === event.currentTarget) close();
       }}
       role="presentation"
     >
@@ -39,11 +61,11 @@ export function ProjectModal({ children }: { children: React.ReactNode }) {
           role="dialog"
           aria-modal="true"
           tabIndex={-1}
-          className="modal-panel relative w-full max-w-3xl rounded-xl border border-line bg-abyss p-6 shadow-2xl shadow-black/60 outline-none md:p-10"
+          className="modal-panel relative w-full max-w-3xl rounded-xl border border-line bg-abyss p-6 outline-none md:p-10"
         >
           <button
             type="button"
-            onClick={() => router.back()}
+            onClick={close}
             aria-label="Close project"
             className="absolute top-4 right-4 flex size-9 items-center justify-center rounded-full border border-line font-mono text-sm text-mist transition-colors hover:border-ember hover:text-ember"
           >

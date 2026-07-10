@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import { Grain } from "@/components/thermal/grain";
 import { HeatLens } from "@/components/thermal/heat-lens";
@@ -65,7 +66,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable}`}
     >
       <body className="bg-void text-polar antialiased">
-        <ReaderBar />
+        {/* usePathname (for the nav flash) is request data under
+            cacheComponents — it must resolve inside a Suspense boundary */}
+        <Suspense fallback={null}>
+          <ReaderBar />
+        </Suspense>
         <HeatLens />
         <ThermalInteractions />
         {children}

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { ThermalButton } from "@/components/thermal/thermal-button";
 
 export default function NotFound() {
   return (
@@ -13,12 +13,11 @@ export default function NotFound() {
         The address you followed doesn't exist here. Head back to the top-level
         index.
       </p>
-      <Link
-        href="/"
-        className="mt-10 rounded-full bg-ember px-6 py-3 font-mono text-sm font-medium text-void transition-transform hover:scale-[1.03]"
-      >
-        Back home
-      </Link>
+      <div className="mt-10">
+        <ThermalButton variant="ignite" href="/">
+          Back home
+        </ThermalButton>
+      </div>
     </main>
   );
 }
