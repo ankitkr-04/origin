@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
+import { Archivo, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,9 +12,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+// Display face. The wdth axis (62–125%) is what enables temperature
+// typography: expanded-light "frozen" headings, condensed-black "molten"
+// emphasis — see .type-frozen / .type-molten in globals.css.
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
+  axes: ["wdth"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -43,7 +48,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0c10",
+  themeColor: "#04070d",
 };
 
 export default function RootLayout({
@@ -53,9 +58,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable}`}
     >
-      <body className="bg-ink text-text antialiased">
+      <body className="bg-void text-polar antialiased">
         {children}
         {modal}
       </body>

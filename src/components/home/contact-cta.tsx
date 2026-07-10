@@ -6,7 +6,7 @@ export function ContactCta() {
     <section className="py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-5 text-center md:px-8">
         <Reveal>
-          <p className="font-mono text-xs tracking-[0.25em] text-amber uppercase">
+          <p className="font-mono text-xs tracking-[0.25em] text-flame uppercase">
             003 / Next
           </p>
         </Reveal>
@@ -20,7 +20,7 @@ export function ContactCta() {
             <Link
               href="/contact"
               transitionTypes={["nav"]}
-              className="inline-block rounded-full bg-amber px-8 py-4 font-mono text-sm font-medium text-ink transition-transform hover:scale-[1.03] active:scale-[0.98]"
+              className="inline-block rounded-full bg-ember px-8 py-4 font-mono text-sm font-medium text-void transition-transform hover:scale-[1.03] active:scale-[0.98]"
             >
               Get in touch →
             </Link>

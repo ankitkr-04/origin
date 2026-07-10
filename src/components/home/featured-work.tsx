@@ -28,7 +28,7 @@ export async function FeaturedWork() {
           <Link
             href="/projects"
             transitionTypes={["nav"]}
-            className="inline-block rounded-full border border-line px-6 py-3 font-mono text-sm text-text transition-colors hover:border-amber hover:text-amber"
+            className="inline-block rounded-full border border-line px-6 py-3 font-mono text-sm text-polar transition-colors hover:border-ember hover:text-ember"
           >
             All projects — including the early ones →
           </Link>

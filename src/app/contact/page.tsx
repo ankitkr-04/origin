@@ -25,13 +25,13 @@ export default function ContactPage() {
           <GlobeCanvas />
         </div>
         <div
-          className="absolute inset-0 bg-gradient-to-b from-ink via-ink/40 to-ink/80 md:bg-gradient-to-r md:from-ink md:via-ink/50 md:to-transparent"
+          className="absolute inset-0 bg-gradient-to-b from-void via-void/40 to-void/80 md:bg-gradient-to-r md:from-void md:via-void/50 md:to-transparent"
           aria-hidden
         />
 
         <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-5 py-16 md:px-8">
           <Reveal>
-            <p className="font-mono text-xs tracking-[0.25em] text-amber uppercase">
+            <p className="font-mono text-xs tracking-[0.25em] text-flame uppercase">
               001 / Contact
             </p>
           </Reveal>
@@ -41,7 +41,7 @@ export default function ContactPage() {
             </h1>
           </Reveal>
           <Reveal delay={200}>
-            <p className="mt-6 max-w-xl text-muted md:text-lg">
+            <p className="mt-6 max-w-xl text-mist md:text-lg">
               Graduating May 2026, looking for backend and systems engineering
               roles. If your team cares about correctness and performance, I'd
               like to talk.
@@ -51,7 +51,7 @@ export default function ContactPage() {
             <div className="mt-10 flex flex-col items-start gap-6">
               <a
                 href={`mailto:${identity.email}`}
-                className="rounded-full bg-amber px-8 py-4 font-mono text-sm font-medium text-ink transition-transform hover:scale-[1.03] active:scale-[0.98]"
+                className="rounded-full bg-ember px-8 py-4 font-mono text-sm font-medium text-void transition-transform hover:scale-[1.03] active:scale-[0.98]"
               >
                 {identity.email}
               </a>
@@ -62,7 +62,7 @@ export default function ContactPage() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-mono text-xs text-muted transition-colors hover:text-amber"
+                    className="font-mono text-xs text-mist transition-colors hover:text-ember"
                   >
                     {link.label} ↗
                   </a>

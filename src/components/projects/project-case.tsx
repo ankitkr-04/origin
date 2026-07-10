@@ -19,8 +19,8 @@ export function ProjectCase({
               {String(index + 1).padStart(3, "0")}
             </span>
             {project.status === "active" ? (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-amber/30 px-2.5 py-0.5 font-mono text-[10px] tracking-wider text-amber uppercase">
-                <span className="size-1.5 animate-pulse rounded-full bg-amber" />
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-ember/30 px-2.5 py-0.5 font-mono text-[10px] tracking-wider text-flame uppercase">
+                <span className="size-1.5 animate-pulse rounded-full bg-ember" />
                 Active development
               </span>
             ) : null}
@@ -28,13 +28,13 @@ export function ProjectCase({
           <h3 className="mt-3 font-display text-3xl font-bold tracking-tight md:text-4xl">
             <Link
               href={`/projects/${project.slug}`}
-              className="transition-colors group-hover:text-amber"
+              className="transition-colors group-hover:text-ember"
             >
               {project.name}
             </Link>
           </h3>
-          <p className="mt-2 font-mono text-xs text-muted">{project.stack}</p>
-          <p className="mt-4 text-lg text-balance text-text/90">
+          <p className="mt-2 font-mono text-xs text-mist">{project.stack}</p>
+          <p className="mt-4 text-lg text-balance text-polar/90">
             {project.tagline}
           </p>
 
@@ -42,7 +42,7 @@ export function ProjectCase({
             {project.metrics.map((metric) => (
               <span
                 key={metric}
-                className="rounded border border-line bg-surface px-2.5 py-1 font-mono text-[11px] text-amber"
+                className="rounded border border-line bg-abyss px-2.5 py-1 font-mono text-[11px] text-flame"
               >
                 {metric}
               </span>
@@ -52,7 +52,7 @@ export function ProjectCase({
           <div className="mt-8 flex gap-6">
             <Link
               href={`/projects/${project.slug}`}
-              className="font-mono text-sm text-amber underline decoration-amber/40 underline-offset-4 transition-colors hover:decoration-amber"
+              className="font-mono text-sm text-flame underline decoration-ember/40 underline-offset-4 transition-colors hover:decoration-ember"
             >
               Case study →
             </Link>
@@ -60,7 +60,7 @@ export function ProjectCase({
               href={project.repoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-sm text-muted underline decoration-line underline-offset-4 transition-colors hover:text-amber hover:decoration-amber"
+              className="font-mono text-sm text-mist underline decoration-line underline-offset-4 transition-colors hover:text-ember hover:decoration-ember"
             >
               Source ↗
             </a>
@@ -68,7 +68,7 @@ export function ProjectCase({
         </div>
 
         <div>
-          <p className="leading-relaxed text-muted">{project.summary}</p>
+          <p className="leading-relaxed text-mist">{project.summary}</p>
           <ul className="mt-6 space-y-3">
             {project.highlights.map((highlight) => (
               <li
@@ -76,10 +76,10 @@ export function ProjectCase({
                 className="flex gap-3 text-sm leading-relaxed"
               >
                 <span
-                  className="mt-[7px] size-1 shrink-0 rounded-full bg-amber/70"
+                  className="mt-[7px] size-1 shrink-0 rounded-full bg-ember/70"
                   aria-hidden
                 />
-                <span className="text-text/80">{highlight}</span>
+                <span className="text-polar/80">{highlight}</span>
               </li>
             ))}
           </ul>

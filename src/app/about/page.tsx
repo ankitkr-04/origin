@@ -32,7 +32,7 @@ export default async function AboutPage() {
                   {aboutNarrative.map((paragraph) => (
                     <p
                       key={paragraph}
-                      className="text-lg leading-relaxed text-muted"
+                      className="text-lg leading-relaxed text-mist"
                     >
                       {paragraph}
                     </p>
@@ -40,18 +40,18 @@ export default async function AboutPage() {
                 </div>
               </Reveal>
               <Reveal delay={120}>
-                <dl className="space-y-4 rounded-lg border border-line/70 bg-surface p-6 font-mono text-sm">
+                <dl className="space-y-4 rounded-lg border border-line/70 bg-abyss p-6 font-mono text-sm">
                   <div>
                     <dt className="text-[11px] tracking-[0.2em] text-faint uppercase">
                       Location
                     </dt>
-                    <dd className="mt-1 text-text/90">{identity.location}</dd>
+                    <dd className="mt-1 text-polar/90">{identity.location}</dd>
                   </div>
                   <div>
                     <dt className="text-[11px] tracking-[0.2em] text-faint uppercase">
                       Focus
                     </dt>
-                    <dd className="mt-1 text-text/90">
+                    <dd className="mt-1 text-polar/90">
                       Backend · Systems · Concurrency
                     </dd>
                   </div>
@@ -59,7 +59,7 @@ export default async function AboutPage() {
                     <dt className="text-[11px] tracking-[0.2em] text-faint uppercase">
                       Available
                     </dt>
-                    <dd className="mt-1 text-amber">From May 2026</dd>
+                    <dd className="mt-1 text-flame">From May 2026</dd>
                   </div>
                 </dl>
               </Reveal>
@@ -67,7 +67,7 @@ export default async function AboutPage() {
           </div>
         </section>
 
-        <section className="border-t border-line/60 bg-surface/40 py-16 md:py-24">
+        <section className="border-t border-line/60 bg-abyss/40 py-16 md:py-24">
           <div className="mx-auto max-w-6xl px-5 md:px-8">
             <SectionHeading
               index="002"
@@ -84,13 +84,13 @@ export default async function AboutPage() {
                     <h3 className="font-display text-2xl font-bold">
                       {experience.company}
                     </h3>
-                    <p className="mt-1 font-mono text-sm text-amber">
+                    <p className="mt-1 font-mono text-sm text-flame">
                       {experience.role}
                     </p>
                     <p className="mt-1 font-mono text-xs text-faint">
                       {experience.period}
                     </p>
-                    <p className="mt-5 leading-relaxed text-muted">
+                    <p className="mt-5 leading-relaxed text-mist">
                       {experience.summary}
                     </p>
                   </div>
@@ -103,10 +103,10 @@ export default async function AboutPage() {
                         className="flex gap-3 leading-relaxed"
                       >
                         <span
-                          className="mt-[9px] size-1 shrink-0 rounded-full bg-amber/70"
+                          className="mt-[9px] size-1 shrink-0 rounded-full bg-ember/70"
                           aria-hidden
                         />
-                        <span className="text-sm text-text/80">
+                        <span className="text-sm text-polar/80">
                           {highlight}
                         </span>
                       </li>
@@ -123,33 +123,33 @@ export default async function AboutPage() {
             <SectionHeading index="003" label="Education" title="Credentials" />
             <div className="grid gap-5 md:grid-cols-2">
               <Reveal>
-                <div className="h-full rounded-lg border border-line/70 bg-surface p-8">
+                <div className="h-full rounded-lg border border-line/70 bg-abyss p-8">
                   <p className="font-display text-xl font-semibold">
                     {education.degree}
                   </p>
-                  <p className="mt-2 text-sm text-muted">
+                  <p className="mt-2 text-sm text-mist">
                     {education.institution}
                   </p>
                   <p className="mt-1 font-mono text-xs text-faint">
                     {education.period}
                   </p>
-                  <p className="mt-4 font-mono text-sm text-amber">
+                  <p className="mt-4 font-mono text-sm text-flame">
                     CGPA {education.cgpa}
                   </p>
                 </div>
               </Reveal>
               <Reveal delay={100}>
                 <div className="h-full rounded-lg border border-line/70 p-8">
-                  <p className="font-mono text-xs tracking-[0.25em] text-muted uppercase">
+                  <p className="font-mono text-xs tracking-[0.25em] text-mist uppercase">
                     Certifications
                   </p>
                   <ul className="mt-4 space-y-3">
                     {certifications.map((certification) => (
                       <li
                         key={certification}
-                        className="flex gap-3 text-sm text-text/80"
+                        className="flex gap-3 text-sm text-polar/80"
                       >
-                        <span className="text-amber" aria-hidden>
+                        <span className="text-flame" aria-hidden>
                           ✓
                         </span>
                         {certification}

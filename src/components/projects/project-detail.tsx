@@ -10,8 +10,8 @@ export function ProjectDetail({ project }: { project: Project }) {
       <div className="flex flex-wrap items-center gap-3">
         <span className="font-mono text-xs text-faint">{project.year}</span>
         {project.status === "active" ? (
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-amber/30 px-2.5 py-0.5 font-mono text-[10px] tracking-wider text-amber uppercase">
-            <span className="size-1.5 animate-pulse rounded-full bg-amber" />
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-ember/30 px-2.5 py-0.5 font-mono text-[10px] tracking-wider text-flame uppercase">
+            <span className="size-1.5 animate-pulse rounded-full bg-ember" />
             Active development
           </span>
         ) : null}
@@ -20,8 +20,8 @@ export function ProjectDetail({ project }: { project: Project }) {
       <h1 className="mt-3 font-display text-3xl font-bold tracking-tight md:text-5xl">
         {project.name}
       </h1>
-      <p className="mt-2 font-mono text-xs text-muted">{project.stack}</p>
-      <p className="mt-5 text-lg text-balance text-text/90 md:text-xl">
+      <p className="mt-2 font-mono text-xs text-mist">{project.stack}</p>
+      <p className="mt-5 text-lg text-balance text-polar/90 md:text-xl">
         {project.tagline}
       </p>
 
@@ -29,7 +29,7 @@ export function ProjectDetail({ project }: { project: Project }) {
         {project.metrics.map((metric) => (
           <span
             key={metric}
-            className="rounded border border-line bg-surface px-2.5 py-1 font-mono text-[11px] text-amber"
+            className="rounded border border-line bg-abyss px-2.5 py-1 font-mono text-[11px] text-flame"
           >
             {metric}
           </span>
@@ -38,23 +38,23 @@ export function ProjectDetail({ project }: { project: Project }) {
 
       <div className="mt-8 space-y-5">
         {project.story.map((paragraph) => (
-          <p key={paragraph} className="leading-relaxed text-muted">
+          <p key={paragraph} className="leading-relaxed text-mist">
             {paragraph}
           </p>
         ))}
       </div>
 
-      <h2 className="mt-10 font-mono text-xs tracking-[0.25em] text-muted uppercase">
+      <h2 className="mt-10 font-mono text-xs tracking-[0.25em] text-mist uppercase">
         Key decisions
       </h2>
       <ul className="mt-4 space-y-3">
         {project.highlights.map((highlight) => (
           <li key={highlight} className="flex gap-3 text-sm leading-relaxed">
             <span
-              className="mt-[7px] size-1 shrink-0 rounded-full bg-amber/70"
+              className="mt-[7px] size-1 shrink-0 rounded-full bg-ember/70"
               aria-hidden
             />
-            <span className="text-text/80">{highlight}</span>
+            <span className="text-polar/80">{highlight}</span>
           </li>
         ))}
       </ul>
@@ -64,7 +64,7 @@ export function ProjectDetail({ project }: { project: Project }) {
           href={project.repoUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-full bg-amber px-6 py-3 font-mono text-sm font-medium text-ink transition-transform hover:scale-[1.03] active:scale-[0.98]"
+          className="rounded-full bg-ember px-6 py-3 font-mono text-sm font-medium text-void transition-transform hover:scale-[1.03] active:scale-[0.98]"
         >
           Read the source ↗
         </a>
@@ -73,7 +73,7 @@ export function ProjectDetail({ project }: { project: Project }) {
             href={project.demoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full border border-line px-6 py-3 font-mono text-sm text-text transition-colors hover:border-amber hover:text-amber"
+            className="rounded-full border border-line px-6 py-3 font-mono text-sm text-polar transition-colors hover:border-ember hover:text-ember"
           >
             Live demo ↗
           </a>

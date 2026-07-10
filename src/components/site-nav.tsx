@@ -24,7 +24,7 @@ export function SiteNav() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-line/60 bg-ink/70 backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-line/60 bg-void/70 backdrop-blur-md">
       <nav
         aria-label="Primary"
         className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5 md:px-8"
@@ -35,7 +35,7 @@ export function SiteNav() {
           className="font-display text-lg font-bold tracking-tight"
           aria-label="Ankit Kumar — home"
         >
-          AK<span className="text-amber">.</span>
+          AK<span className="text-flame">.</span>
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
@@ -45,8 +45,8 @@ export function SiteNav() {
               href={link.href}
               transitionTypes={["nav"]}
               aria-current={isActive(link.href) ? "page" : undefined}
-              className={`font-mono text-xs tracking-[0.2em] uppercase transition-colors hover:text-text ${
-                isActive(link.href) ? "text-amber" : "text-muted"
+              className={`font-mono text-xs tracking-[0.2em] uppercase transition-colors hover:text-polar ${
+                isActive(link.href) ? "text-flame" : "text-mist"
               }`}
             >
               {link.label}
@@ -59,7 +59,7 @@ export function SiteNav() {
             href={identity.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full border border-line px-4 py-1.5 font-mono text-xs tracking-wider text-text transition-colors hover:border-amber hover:text-amber"
+            className="rounded-full border border-line px-4 py-1.5 font-mono text-xs tracking-wider text-polar transition-colors hover:border-ember hover:text-ember"
           >
             GitHub ↗
           </a>
@@ -72,10 +72,10 @@ export function SiteNav() {
             className="flex size-9 flex-col items-center justify-center gap-1.5 rounded-full border border-line md:hidden"
           >
             <span
-              className={`h-px w-4 bg-text transition-transform ${menuOpen ? "translate-y-[3.5px] rotate-45" : ""}`}
+              className={`h-px w-4 bg-polar transition-transform ${menuOpen ? "translate-y-[3.5px] rotate-45" : ""}`}
             />
             <span
-              className={`h-px w-4 bg-text transition-transform ${menuOpen ? "-translate-y-[3px] -rotate-45" : ""}`}
+              className={`h-px w-4 bg-polar transition-transform ${menuOpen ? "-translate-y-[3px] -rotate-45" : ""}`}
             />
           </button>
         </div>
@@ -91,7 +91,7 @@ export function SiteNav() {
                 transitionTypes={["nav"]}
                 aria-current={isActive(link.href) ? "page" : undefined}
                 className={`rounded px-2 py-3 font-mono text-sm tracking-[0.2em] uppercase ${
-                  isActive(link.href) ? "text-amber" : "text-muted"
+                  isActive(link.href) ? "text-flame" : "text-mist"
                 }`}
               >
                 {link.label}

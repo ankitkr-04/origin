@@ -17,7 +17,7 @@ export async function SiteFooter() {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-xs text-muted transition-colors hover:text-amber"
+              className="font-mono text-xs text-mist transition-colors hover:text-ember"
             >
               {link.label}
             </a>

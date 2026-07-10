@@ -4,11 +4,7 @@ import { ProjectDetail } from "@/components/projects/project-detail";
 import { ProjectModal } from "@/components/projects/project-modal";
 import { getProject } from "@/db/queries";
 
-async function ModalContent({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+async function ModalContent({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const project = await getProject(slug);
   if (!project) notFound();

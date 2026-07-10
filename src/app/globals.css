@@ -1,46 +1,109 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Strata palette — graphite ink + phosphor amber */
-  --color-ink: #0a0c10;
-  --color-surface: #10131a;
-  --color-raised: #171c26;
-  --color-line: #232a37;
-  --color-text: #e9e4d6;
-  --color-muted: #8e97a8;
-  --color-faint: #5c6472;
-  --color-amber: #e8a33d;
-  --color-ember: #b4552d;
+  /* THERMAL palette — cold is the resting state, heat is attention.
+     Ice tones carry structure; ember/flame are spent on interaction only. */
+  --color-void: #04070d;
+  --color-abyss: #0a1120;
+  --color-floe: #101a2c;
+  --color-line: #172b3a;
+  --color-polar: #eaf3ff;
+  --color-mist: #94a6c2;
+  --color-faint: #5b6a84;
+  --color-ice: #7dd3fc;
+  --color-aurora: #5eead4;
+  --color-ember: #ff6b3d;
+  --color-flame: #ffb454;
+  --color-plasma: #c084fc;
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-bricolage);
+  --font-display: var(--font-archivo);
 }
 
 :root {
   color-scheme: dark;
+
+  /* THE SEAM — ice to ember through plasma. Routed through violet on purpose:
+     naive blue→orange interpolation turns brown. */
+  --seam: linear-gradient(
+    90deg,
+    #7dd3fc,
+    #8b9cf9 30%,
+    #c084fc 50%,
+    #ff5f8f 70%,
+    #ff6b3d
+  );
 }
 
 html {
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-ice) 35%, transparent)
+    transparent;
+}
+
+/* Thin thermal scrollbar — frost at rest, warms under the pointer */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 99px;
+  border: 2px solid var(--color-void);
+  background: color-mix(in srgb, var(--color-ice) 30%, transparent);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--color-flame), var(--color-ember));
 }
 
 body {
-  background: var(--color-ink);
-  color: var(--color-text);
+  background: var(--color-void);
+  color: var(--color-polar);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
+/* Grabbing text is a hot act */
 ::selection {
-  background: color-mix(in srgb, var(--color-amber) 85%, transparent);
-  color: var(--color-ink);
+  background: color-mix(in srgb, var(--color-ember) 40%, transparent);
+  color: #fff7f2;
 }
 
+/* Attention is heat — focus rings are ember */
 :focus-visible {
-  outline: 2px solid var(--color-amber);
+  outline: 2px solid var(--color-ember);
   outline-offset: 3px;
   border-radius: 2px;
+}
+
+/* Temperature typography — one Archivo, two phases */
+.type-frozen {
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-weight: 215;
+  font-stretch: 125%;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.type-molten {
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 850;
+  font-stretch: 62%;
+  letter-spacing: 0;
+  text-transform: none;
+  background: linear-gradient(97deg, #ffb454 5%, #ff6b3d 55%, #ff5f8f 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 0.06em; /* italic overshoot escapes the clip box otherwise */
 }
 
 /* Scroll-triggered reveal (driven by <Reveal/>) */

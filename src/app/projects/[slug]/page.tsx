@@ -43,7 +43,7 @@ export default async function ProjectPage({
           <Link
             href="/projects"
             transitionTypes={["nav"]}
-            className="font-mono text-xs tracking-[0.2em] text-muted uppercase transition-colors hover:text-amber"
+            className="font-mono text-xs tracking-[0.2em] text-mist uppercase transition-colors hover:text-ember"
           >
             ← All projects
           </Link>

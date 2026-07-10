@@ -39,7 +39,7 @@ export default async function ProjectsPage() {
           </div>
         </section>
 
-        <section className="border-t border-line/60 bg-surface/40 py-16 md:py-24">
+        <section className="border-t border-line/60 bg-abyss/40 py-16 md:py-24">
           <div className="mx-auto max-w-6xl px-5 md:px-8">
             <SectionHeading
               index="002"

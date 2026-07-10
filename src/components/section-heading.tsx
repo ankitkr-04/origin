@@ -11,7 +11,7 @@ export function SectionHeading({ index, label, title }: SectionHeadingProps) {
   return (
     <Reveal className="mb-12 md:mb-16">
       <div className="flex items-center gap-4">
-        <span className="font-mono text-xs tracking-[0.25em] text-amber uppercase">
+        <span className="font-mono text-xs tracking-[0.25em] text-flame uppercase">
           {index} / {label}
         </span>
         <div className="rule-fade flex-1" />
