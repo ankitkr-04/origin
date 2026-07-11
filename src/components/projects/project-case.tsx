@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
 import type { Project } from "@/types/content";
