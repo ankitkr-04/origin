@@ -778,3 +778,46 @@ body {
   background: linear-gradient(to right, var(--color-line), transparent);
   height: 1px;
 }
+
+/* Page transition horizontal sweep line (ember sweep) */
+.sweep-line {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-flame),
+    var(--color-ember),
+    transparent
+  );
+}
+
+.sweep-go {
+  animation: sweep-viewport 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes sweep-viewport {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sweep-line {
+    display: none !important;
+  }
+}

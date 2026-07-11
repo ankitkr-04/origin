@@ -19,8 +19,9 @@ const FREEZE_OUT_MS = 240;
 export function ProjectModal({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const openedOnRef = useRef(pathname);
-  const dismissed = pathname !== openedOnRef.current;
+  const isProjectRoute =
+    pathname.startsWith("/projects/") && pathname !== "/projects";
+  const dismissed = !isProjectRoute;
 
   const panelRef = useRef<HTMLDivElement>(null);
   const [closing, setClosing] = useState(false);
@@ -48,17 +49,28 @@ export function ProjectModal({ children }: { children: React.ReactNode }) {
     window.setTimeout(() => router.back(), FREEZE_OUT_MS);
   }, [router]);
 
+  const scrollYRef = useRef(0);
+
   useEffect(() => {
     if (dismissed) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") close();
     };
     document.addEventListener("keydown", onKeyDown);
+
+    // Save scroll position of the background page
+    scrollYRef.current = window.scrollY;
     document.body.style.overflow = "hidden";
+
     panelRef.current?.focus();
     return () => {
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
+      // Restore scroll position after a short delay so Next.js scroll reset is bypassed
+      const savedScrollY = scrollYRef.current;
+      window.setTimeout(() => {
+        window.scrollTo(0, savedScrollY);
+      }, 0);
     };
   }, [close, dismissed]);
 
