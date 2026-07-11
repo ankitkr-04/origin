@@ -1,8 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { ViewTransition } from "react";
+import { useEffect, useRef, useState, ViewTransition } from "react";
 
 /**
  * Cross-fades page content on <Link transitionTypes={["nav"]}> navigations.

@@ -818,6 +818,6 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .sweep-line {
-    display: none !important;
+    display: none;
   }
 }

@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { SectionHeading } from "@/components/section-heading";
-import { Reveal } from "@/components/reveal";
 import { ProjectCard } from "@/components/projects/project-card";
 import { ProjectCase } from "@/components/projects/project-case";
-import { ProjectModal } from "@/components/projects/project-modal";
 import { ProjectDetail } from "@/components/projects/project-detail";
+import { ProjectModal } from "@/components/projects/project-modal";
+import { Reveal } from "@/components/reveal";
+import { SectionHeading } from "@/components/section-heading";
 import type { Project } from "@/types/content";
 
 export function ProjectList({ projects }: { projects: Project[] }) {

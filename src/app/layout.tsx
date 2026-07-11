@@ -2,9 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Archivo, Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
+import { PageTransition } from "@/components/page-transition";
 import { Grain } from "@/components/thermal/grain";
 import { HeatLens } from "@/components/thermal/heat-lens";
-import { PageTransition } from "@/components/page-transition";
 import { ReaderBar } from "@/components/thermal/reader-bar";
 import { ThermalInteractions } from "@/components/thermal/thermal-interactions";
 
