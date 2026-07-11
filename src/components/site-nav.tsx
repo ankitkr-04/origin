@@ -33,11 +33,13 @@ export function SiteNav() {
         <Link
           href="/"
           transitionTypes={["nav"]}
-          className="flex items-center gap-2 font-display text-lg font-bold tracking-tight"
+          className="flex items-center gap-2.5"
           aria-label="Ankit Kumar — home"
         >
           <BrandLogo />
-          <span className="hidden sm:inline">ANKIT KR</span>
+          <span className="type-frozen text-[13px] tracking-[0.16em] leading-none hidden sm:inline">
+            ANKIT KR
+          </span>
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
