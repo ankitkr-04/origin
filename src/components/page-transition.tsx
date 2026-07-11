@@ -16,13 +16,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
     const prev = prevPathnameRef.current;
     prevPathnameRef.current = pathname;
 
-    // Skip the transition sweep when opening/closing parallel route modals
-    const isModalTransition =
-      (pathname.startsWith("/projects/") && prev === "/projects") ||
-      (prev.startsWith("/projects/") && pathname === "/projects") ||
-      (pathname.startsWith("/projects/") && prev === "/");
-
-    if (isModalTransition) {
+    if (prev === pathname) {
       return;
     }
 
