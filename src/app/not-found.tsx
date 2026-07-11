@@ -1,21 +1,27 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { ThermalButton } from "@/components/thermal/thermal-button";
 
 export default function NotFound() {
+  const pathname = usePathname();
+
   return (
     <main className="flex min-h-svh flex-col items-center justify-center px-5 text-center">
-      <p className="font-mono text-xs tracking-[0.25em] text-ice uppercase">
-        404 / NOT FOUND
-      </p>
-      <h1 className="mt-6 font-display text-4xl font-bold tracking-tight md:text-6xl">
-        This page never made it past the WAL.
-      </h1>
-      <p className="mt-4 max-w-md text-mist">
-        The address you followed doesn't exist here. Head back to the top-level
-        index.
-      </p>
-      <div className="mt-10">
-        <ThermalButton variant="ignite" href="/">
-          Back home
+      <div className="w-full max-w-md rounded-2xl border border-line bg-abyss p-7 md:p-8 text-left relative overflow-hidden">
+        <div className="font-mono text-xs tracking-[0.25em] text-ice uppercase">
+          404 · <em className="not-italic text-aurora">COLD MISS</em>
+        </div>
+        <div className="font-display font-[190] text-5xl md:text-6xl tracking-widest leading-none my-3 bg-gradient-to-b from-[#eaf6ff] to-[#7dd3fc] bg-clip-text text-transparent">
+          404
+        </div>
+        <div className="font-mono text-[11.5px] leading-[1.9] text-faint tracking-wider mb-6 uppercase">
+          GET {pathname || "/this-page"} → MISS
+          <br />
+          object not found in any tier
+        </div>
+        <ThermalButton variant="frost" href="/">
+          Return to the hot path
         </ThermalButton>
       </div>
     </main>
