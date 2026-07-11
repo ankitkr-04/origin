@@ -74,7 +74,9 @@ export default function RootLayout({
         </Suspense>
         <HeatLens />
         <ThermalInteractions />
-        <PageTransition>{children}</PageTransition>
+        <Suspense fallback={children}>
+          <PageTransition>{children}</PageTransition>
+        </Suspense>
         {modal}
         <Grain />
       </body>
