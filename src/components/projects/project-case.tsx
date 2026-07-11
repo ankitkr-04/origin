@@ -2,14 +2,21 @@ import Link from "next/link";
 import { Reveal } from "@/components/reveal";
 import type { Project } from "@/types/content";
 
-/** Wide editorial row for flagship projects — links into the case study. */
-export function ProjectCase({
-  project,
-  index,
-}: {
+type ProjectCaseProps = {
   project: Project;
   index: number;
-}) {
+  onSelect?: (project: Project) => void;
+};
+
+/** Wide editorial row for flagship projects — links into the case study. */
+export function ProjectCase({ project, index, onSelect }: ProjectCaseProps) {
+  const handleClick = (e: React.MouseEvent) => {
+    if (onSelect) {
+      e.preventDefault();
+      onSelect(project);
+    }
+  };
+
   return (
     <Reveal>
       <article className="group relative grid gap-8 border-t border-line/60 py-12 md:grid-cols-[1fr_1.4fr] md:py-16">
@@ -28,6 +35,7 @@ export function ProjectCase({
           <h3 className="mt-3 font-display text-3xl font-bold tracking-tight md:text-4xl">
             <Link
               href={`/projects/${project.slug}`}
+              onClick={handleClick}
               className="transition-colors group-hover:text-ember"
             >
               {project.name}
@@ -52,6 +60,7 @@ export function ProjectCase({
           <div className="mt-8 flex gap-6">
             <Link
               href={`/projects/${project.slug}`}
+              onClick={handleClick}
               className="font-mono text-sm text-flame underline decoration-ember/40 underline-offset-4 transition-colors hover:decoration-ember"
             >
               Case study →

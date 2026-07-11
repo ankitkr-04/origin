@@ -1,8 +1,20 @@
 import Link from "next/link";
 import type { Project } from "@/types/content";
 
+type ProjectCardProps = {
+  project: Project;
+  onSelect?: (project: Project) => void;
+};
+
 /** Compact grid card for notable/archive projects — opens the case study. */
-export function ProjectCard({ project }: { project: Project }) {
+export function ProjectCard({ project, onSelect }: ProjectCardProps) {
+  const handleClick = (e: React.MouseEvent) => {
+    if (onSelect) {
+      e.preventDefault();
+      onSelect(project);
+    }
+  };
+
   return (
     <article
       className="warm-card group relative flex h-full flex-col rounded-lg border border-line/70 bg-abyss p-6"
@@ -12,6 +24,7 @@ export function ProjectCard({ project }: { project: Project }) {
         <h3 className="font-display text-xl font-semibold">
           <Link
             href={`/projects/${project.slug}`}
+            onClick={handleClick}
             className="after:absolute after:inset-0 after:content-[''] group-hover:text-ember transition-colors"
           >
             {project.name}
