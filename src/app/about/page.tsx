@@ -89,40 +89,40 @@ export default async function AboutPage() {
                     }`}
                     aria-hidden
                   />
-                <Reveal>
-                  <div>
-                    <h3 className="font-display text-2xl font-bold">
-                      {experience.company}
-                    </h3>
-                    <p className="mt-1 font-mono text-sm text-flame">
-                      {experience.role}
-                    </p>
-                    <p className="mt-1 font-mono text-xs text-faint">
-                      {experience.period}
-                    </p>
-                    <p className="mt-5 leading-relaxed text-mist">
-                      {experience.summary}
-                    </p>
-                  </div>
-                </Reveal>
-                <Reveal delay={120}>
-                  <ul className="space-y-4">
-                    {experience.highlights.map((highlight) => (
-                      <li
-                        key={highlight}
-                        className="flex gap-3 leading-relaxed"
-                      >
-                        <span
-                          className="mt-[9px] size-1 shrink-0 rounded-full bg-ember/70"
-                          aria-hidden
-                        />
-                        <span className="text-sm text-polar/80">
-                          {highlight}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </Reveal>
+                  <Reveal>
+                    <div>
+                      <h3 className="font-display text-2xl font-bold">
+                        {experience.company}
+                      </h3>
+                      <p className="mt-1 font-mono text-sm text-flame">
+                        {experience.role}
+                      </p>
+                      <p className="mt-1 font-mono text-xs text-faint">
+                        {experience.period}
+                      </p>
+                      <p className="mt-5 leading-relaxed text-mist">
+                        {experience.summary}
+                      </p>
+                    </div>
+                  </Reveal>
+                  <Reveal delay={120}>
+                    <ul className="space-y-4">
+                      {experience.highlights.map((highlight) => (
+                        <li
+                          key={highlight}
+                          className="flex gap-3 leading-relaxed"
+                        >
+                          <span
+                            className="mt-[9px] size-1 shrink-0 rounded-full bg-ember/70"
+                            aria-hidden
+                          />
+                          <span className="text-sm text-polar/80">
+                            {highlight}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </Reveal>
                 </div>
               ))}
             </div>

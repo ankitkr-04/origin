@@ -1,8 +1,8 @@
 // src/components/hero/strata-scene.tsx
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
 // THE SEAM — same 5 stops as the CSS token, reproduced as vertex color.
@@ -130,7 +130,12 @@ function SeamRibbon({
           roughness={0.26}
         />
       </mesh>
-      <pointLight ref={flare} position={[0, 0, 2.5]} intensity={9} color="#ffb454" />
+      <pointLight
+        ref={flare}
+        position={[0, 0, 2.5]}
+        intensity={9}
+        color="#ffb454"
+      />
       <SeamCurrent animate={animate} lowDetail={lowDetail} />
     </group>
   );
@@ -239,13 +244,21 @@ export interface StrataSceneProps {
   lowDetail: boolean;
 }
 
-export default function StrataScene({ animate, maxDpr, lowDetail }: StrataSceneProps) {
+export default function StrataScene({
+  animate,
+  maxDpr,
+  lowDetail,
+}: StrataSceneProps) {
   return (
     <Canvas
       camera={{ position: [0, 0.25, 6.4], fov: 32 }}
       dpr={[1, maxDpr]}
       frameloop={animate ? "always" : "demand"}
-      gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
+      gl={{
+        antialias: false,
+        alpha: true,
+        powerPreference: "high-performance",
+      }}
       className="pointer-events-none"
       aria-hidden
     >

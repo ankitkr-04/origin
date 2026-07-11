@@ -51,6 +51,7 @@ CLAUDE.md
 AGENTS.md
 .mcp.json
 .github/*
+.gemini/*
 
 #private
 private/*

@@ -98,7 +98,8 @@ function Globe({ animate, dotCount }: { animate: boolean; dotCount: number }) {
     );
     if (coreRef.current) {
       const material = coreRef.current.material as THREE.MeshStandardMaterial;
-      material.emissiveIntensity = 0.52 + Math.sin(state.clock.elapsedTime * 2.2) * 0.3;
+      material.emissiveIntensity =
+        0.52 + Math.sin(state.clock.elapsedTime * 2.2) * 0.3;
     }
     if (shellRef.current) {
       const material = shellRef.current.material as THREE.MeshStandardMaterial;
@@ -168,7 +169,10 @@ function Globe({ animate, dotCount }: { animate: boolean; dotCount: number }) {
             attach="attributes-position"
             args={[aurora.positions, 3]}
           />
-          <bufferAttribute attach="attributes-color" args={[aurora.colors, 3]} />
+          <bufferAttribute
+            attach="attributes-color"
+            args={[aurora.colors, 3]}
+          />
         </bufferGeometry>
         <lineBasicMaterial
           vertexColors

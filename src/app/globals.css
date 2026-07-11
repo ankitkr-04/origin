@@ -238,7 +238,7 @@ body {
     box-shadow 0.45s ease;
 }
 
-.ignite-btn > * {
+.ignite-btn > *:not(.cast-ring):not(.cast-spark) {
   position: relative;
   z-index: 1;
 }
@@ -506,7 +506,6 @@ body {
     transparent 70%
   );
 }
-
 
 /* Loading — compaction in progress */
 @keyframes thermal-spin {
@@ -779,6 +778,3 @@ body {
   background: linear-gradient(to right, var(--color-line), transparent);
   height: 1px;
 }
-
-
-
