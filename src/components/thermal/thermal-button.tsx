@@ -7,6 +7,7 @@ type ThermalButtonProps = {
   href?: string;
   children: React.ReactNode;
   className?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
 /** Living flame, embedded in every ignite button — flickers on hover. */
@@ -77,6 +78,7 @@ export function ThermalButton({
   href,
   children,
   className,
+  onClick,
 }: ThermalButtonProps) {
   const ignite = variant === "ignite";
   const cls = [ignite ? "ignite-btn" : "frost-btn", className]
@@ -114,7 +116,7 @@ export function ThermalButton({
     );
   }
   return (
-    <button type="button" {...thermalProps}>
+    <button type="button" onClick={onClick} {...thermalProps}>
       {body}
     </button>
   );
