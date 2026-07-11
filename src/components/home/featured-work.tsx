@@ -1,4 +1,4 @@
-import { ProjectCase } from "@/components/projects/project-case";
+import { FeaturedWorkList } from "@/components/home/featured-work-list";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import { ThermalButton } from "@/components/thermal/thermal-button";
@@ -18,11 +18,7 @@ export async function FeaturedWork() {
           title="Systems built from first principles"
         />
 
-        <div>
-          {flagshipProjects.map((project, i) => (
-            <ProjectCase key={project.slug} project={project} index={i} />
-          ))}
-        </div>
+        <FeaturedWorkList flagshipProjects={flagshipProjects} />
 
         <Reveal className="mt-14">
           <ThermalButton variant="frost" href="/projects">
