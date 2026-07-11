@@ -7,6 +7,7 @@ import { Grain } from "@/components/thermal/grain";
 import { HeatLens } from "@/components/thermal/heat-lens";
 import { ReaderBar } from "@/components/thermal/reader-bar";
 import { ThermalInteractions } from "@/components/thermal/thermal-interactions";
+import { siteConfig } from "@/lib/site-config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,27 +30,20 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  title: "Ankit Kumar — Systems & Backend Engineer",
-  description:
-    "Storage engines, Redis-compatible servers, and high-concurrency backends. TCS CodeVita global rank 15, Codeforces Expert. B.Tech CSE, class of 2026.",
-  keywords: [
-    "systems engineer",
-    "backend engineer",
-    "storage engine",
-    "C++",
-    "Java",
-    "concurrency",
-  ],
-  authors: [{ name: "Ankit Kumar", url: "https://github.com/ankitkr-04" }],
+  metadataBase: new URL(siteConfig.url),
+  title: siteConfig.title,
+  description: siteConfig.description,
+  keywords: siteConfig.keywords as unknown as string[],
+  authors: [{ name: siteConfig.name, url: siteConfig.github }],
   openGraph: {
-    title: "Ankit Kumar — Systems & Backend Engineer",
+    title: siteConfig.title,
     description:
       "Storage engines, Redis-compatible servers, and high-concurrency backends.",
     type: "website",
   },
   twitter: {
     card: "summary",
-    creator: "@AnkitKr_04",
+    creator: siteConfig.twitter,
   },
 };
 
