@@ -26,7 +26,7 @@ function seamColorAt(t: number, out: THREE.Color) {
       return out;
     }
   }
-  return out.copy(SEAM_STOPS.at(-1)![1]);
+  return out.copy(SEAM_STOPS[SEAM_STOPS.length - 1][1]);
 }
 
 // p=2,q=3 torus-knot radius — shared by the mesh and the particle path
@@ -69,7 +69,7 @@ function SeamRibbon({
       Q,
     );
     geo.computeBoundingBox();
-    const bbox = geo.boundingBox!;
+    const bbox = geo.boundingBox || new THREE.Box3();
     const pos = geo.getAttribute("position");
     const colors = new Float32Array(pos.count * 3);
     const c = new THREE.Color();
@@ -86,7 +86,7 @@ function SeamRibbon({
 
   useEffect(() => () => geometry.dispose(), [geometry]);
 
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     const dt = Math.min(delta, 0.05);
     if (group.current) {
       group.current.rotation.y = THREE.MathUtils.lerp(
@@ -186,7 +186,7 @@ function SeamCurrent({
     return { positions, colors, seeds, jitters };
   }, [count]);
 
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     if (!animate || !points.current) return;
     const geo = points.current.geometry;
     const posAttr = geo.getAttribute("position") as THREE.BufferAttribute;
