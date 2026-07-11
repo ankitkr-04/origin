@@ -1,3 +1,4 @@
+// src/components/contact/beacon-canvas.tsx
 "use client";
 
 import dynamic from "next/dynamic";
@@ -7,20 +8,20 @@ import {
   useMediaQuery,
 } from "@/hooks/use-media-query";
 
-const GlobeScene = dynamic(() => import("@/components/contact/globe-scene"), {
+const BeaconScene = dynamic(() => import("@/components/contact/beacon-scene"), {
   ssr: false,
 });
 
-/** Adaptive client boundary for the contact globe. */
-export function GlobeCanvas() {
+/** Adaptive client boundary for the contact beacon. */
+export function BeaconCanvas() {
   const reducedMotion = useMediaQuery(REDUCED_MOTION);
   const smallScreen = useMediaQuery(SMALL_SCREEN);
 
   return (
-    <GlobeScene
+    <BeaconScene
       animate={!reducedMotion}
       maxDpr={smallScreen ? 1.5 : 1.75}
-      detail={smallScreen ? 12 : 16}
+      lowDetail={smallScreen}
     />
   );
 }

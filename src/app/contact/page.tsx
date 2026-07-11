@@ -1,5 +1,6 @@
+// src/app/contact/page.tsx
 import type { Metadata } from "next";
-import { GlobeCanvas } from "@/components/contact/globe-canvas";
+import { BeaconCanvas } from "@/components/contact/beacon-canvas";
 import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
@@ -17,15 +18,19 @@ export default function ContactPage() {
     <>
       <SiteNav />
       <main className="relative flex min-h-svh flex-col overflow-hidden pt-14">
-        {/* Globe behind/beside the content */}
-        <div
-          className="absolute inset-x-0 bottom-[-20%] top-1/3 md:inset-y-0 md:left-2/5"
-          aria-hidden
-        >
-          <GlobeCanvas />
+        <div className="hero-glow absolute inset-0" aria-hidden />
+        <div className="absolute inset-0 md:left-2/5" aria-hidden>
+          <BeaconCanvas />
         </div>
+        {/* Same device-adaptive fade as the hero — vertical on mobile
+            (content stacks over the full-bleed scene), horizontal on
+            desktop (scene sits right, text reads over solid ground left) */}
         <div
-          className="absolute inset-0 bg-linear-to-b from-void via-void/40 to-void/80 md:bg-gradient-to-r md:from-void md:via-void/50 md:to-transparent"
+          className="absolute inset-0 bg-linear-to-b from-void via-void/58 to-void/30 md:hidden"
+          aria-hidden
+        />
+        <div
+          className="absolute inset-0 hidden bg-linear-to-r from-void via-void/68 to-transparent md:block"
           aria-hidden
         />
 
@@ -75,6 +80,19 @@ export default function ContactPage() {
               </div>
             </div>
           </Reveal>
+        </div>
+
+        <div
+          className="hero-ignite pointer-events-none absolute top-24 right-6 hidden flex-col items-end gap-1 text-right md:flex lg:right-14"
+          style={{ animationDelay: "1.1s" }}
+          aria-hidden
+        >
+          <span className="font-mono text-[10px] tracking-[0.28em] text-ice/70 uppercase">
+            θ / beacon
+          </span>
+          <span className="font-mono text-[10px] tracking-[0.2em] text-faint uppercase">
+            ice ⇄ ember
+          </span>
         </div>
       </main>
       <SiteFooter />
