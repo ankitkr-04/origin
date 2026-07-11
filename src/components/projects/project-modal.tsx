@@ -59,7 +59,7 @@ export function ProjectModal({ children }: { children: React.ReactNode }) {
   return (
     // biome-ignore lint/a11y/noStaticElementInteractions: backdrop click-to-close duplicates the Escape key and close button
     <div
-      className={`modal-backdrop fixed inset-0 z-60 overflow-y-auto bg-void/80 ${
+      className={`modal-backdrop fixed inset-0 z-60 flex items-center justify-center p-4 bg-void/80 ${
         closing ? "modal-closing" : ""
       }`}
       onClick={(event) => {
@@ -67,24 +67,22 @@ export function ProjectModal({ children }: { children: React.ReactNode }) {
       }}
       role="presentation"
     >
-      <div className="flex min-h-full items-start justify-center p-4 py-10 md:py-16">
-        <div
-          ref={panelRef}
-          role="dialog"
-          aria-modal="true"
-          tabIndex={-1}
-          className="modal-panel relative w-full max-w-3xl rounded-xl border border-line bg-abyss p-6 outline-none md:p-10"
+      <div
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        tabIndex={-1}
+        className="modal-panel relative flex flex-col w-full max-w-3xl max-h-[80vh] md:max-h-[85vh] rounded-xl border border-line bg-abyss outline-none"
+      >
+        <button
+          type="button"
+          onClick={close}
+          aria-label="Close project"
+          className="absolute top-4 right-4 z-10 flex size-9 items-center justify-center rounded-full border border-line bg-abyss/80 backdrop-blur-sm font-mono text-sm text-mist transition-colors hover:border-ember hover:text-ember"
         >
-          <button
-            type="button"
-            onClick={close}
-            aria-label="Close project"
-            className="absolute top-4 right-4 flex size-9 items-center justify-center rounded-full border border-line font-mono text-sm text-mist transition-colors hover:border-ember hover:text-ember"
-          >
-            ✕
-          </button>
-          {children}
-        </div>
+          ✕
+        </button>
+        <div className="overflow-y-auto p-6 md:p-10">{children}</div>
       </div>
     </div>
   );
