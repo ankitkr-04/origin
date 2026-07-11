@@ -3,8 +3,8 @@ import { ThermalButton } from "@/components/thermal/thermal-button";
 export default function NotFound() {
   return (
     <main className="flex min-h-svh flex-col items-center justify-center px-5 text-center">
-      <p className="font-mono text-xs tracking-[0.25em] text-flame uppercase">
-        404 / Key not found
+      <p className="font-mono text-xs tracking-[0.25em] text-ice uppercase">
+        404 / NOT FOUND
       </p>
       <h1 className="mt-6 font-display text-4xl font-bold tracking-tight md:text-6xl">
         This page never made it past the WAL.
