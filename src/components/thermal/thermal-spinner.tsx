@@ -8,9 +8,9 @@ export function ThermalSpinner({
   label?: string;
 }) {
   return (
-    <div className="flex items-center gap-3" role="status">
+    <output className="flex items-center gap-3">
       <span className="thermal-ring" aria-hidden />
       <span className="font-mono text-xs text-mist">{label}</span>
-    </div>
+    </output>
   );
 }
