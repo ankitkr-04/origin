@@ -37,12 +37,12 @@ export function ProjectModal({
       if (event.key === "Escape") handleClose();
     };
     document.addEventListener("keydown", onKeyDown);
-    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
     panelRef.current?.focus();
 
     return () => {
       document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, [handleClose, project]);
 

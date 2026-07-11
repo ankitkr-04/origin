@@ -69,6 +69,7 @@ body {
   color: var(--color-polar);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   overflow-x: clip;
+  scrollbar-gutter: stable;
 }
 
 /* Grabbing text is a hot act */
