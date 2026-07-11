@@ -25,7 +25,7 @@ export default function ContactPage() {
           <GlobeCanvas />
         </div>
         <div
-          className="absolute inset-0 bg-gradient-to-b from-void via-void/40 to-void/80 md:bg-gradient-to-r md:from-void md:via-void/50 md:to-transparent"
+          className="absolute inset-0 bg-linear-to-b from-void via-void/40 to-void/80 md:bg-gradient-to-r md:from-void md:via-void/50 md:to-transparent"
           aria-hidden
         />
 

@@ -46,7 +46,7 @@ export function ProjectList({ projects }: { projects: Project[] }) {
             label="Notable"
             title="Built to solve something specific"
             readout="θ WARM · CACHED"
-            />
+          />
           <div className="grid gap-5 md:grid-cols-2">
             {notableProjects.map((project, i) => (
               <Reveal key={project.slug} delay={i * 80}>
@@ -75,7 +75,10 @@ export function ProjectList({ projects }: { projects: Project[] }) {
         </div>
       </section>
 
-      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)}>
+      <ProjectModal
+        project={activeProject}
+        onClose={() => setActiveProject(null)}
+      >
         {activeProject ? <ProjectDetail project={activeProject} /> : null}
       </ProjectModal>
     </main>

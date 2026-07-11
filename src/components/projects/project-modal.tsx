@@ -11,7 +11,11 @@ type ProjectModalProps = {
   children: React.ReactNode;
 };
 
-export function ProjectModal({ project, onClose, children }: ProjectModalProps) {
+export function ProjectModal({
+  project,
+  onClose,
+  children,
+}: ProjectModalProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const [closing, setClosing] = useState(false);
   const closingRef = useRef(false);

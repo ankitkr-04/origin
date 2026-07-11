@@ -59,8 +59,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({
   children,
-  modal,
-}: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
@@ -77,7 +76,6 @@ export default function RootLayout({
         <Suspense fallback={children}>
           <PageTransition>{children}</PageTransition>
         </Suspense>
-        {modal}
         <Grain />
       </body>
     </html>
