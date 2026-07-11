@@ -272,7 +272,7 @@ body {
 }
 
 .ignite-btn:active {
-  transform: translateY(0) scale(0.97);
+  transform: translateY(0);
   transition-duration: 0.07s;
 }
 
@@ -331,8 +331,13 @@ body {
 }
 
 .frost-btn:active {
-  transform: translateY(0) scale(0.97);
+  transform: translateY(0);
   transition-duration: 0.07s;
+}
+
+.ignite-btn:focus-visible,
+.frost-btn:focus-visible {
+  transform: translateY(0);
 }
 
 /* Embedded button elements — a living flame / a glinting crystal */
@@ -492,6 +497,16 @@ body {
 .hero-ignite {
   animation: ignite-text 0.9s cubic-bezier(0.22, 0.9, 0.32, 1) both;
 }
+
+/* Ambient glow behind the hero canvas */
+.hero-glow {
+  background: radial-gradient(
+    ellipse 60% 50% at 70% 40%,
+    color-mix(in srgb, var(--color-ember) 14%, transparent),
+    transparent 70%
+  );
+}
+
 
 /* Loading — compaction in progress */
 @keyframes thermal-spin {
@@ -765,11 +780,5 @@ body {
   height: 1px;
 }
 
-/* Ambient glow behind the hero canvas */
-.hero-glow {
-  background: radial-gradient(
-    ellipse 60% 50% at 70% 40%,
-    color-mix(in srgb, var(--color-ember) 14%, transparent),
-    transparent 70%
-  );
-}
+
+

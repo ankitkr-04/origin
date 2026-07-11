@@ -5,10 +5,9 @@ import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
 /**
- * A geodesic earth with THERMAL physics: the dot-sphere stays glacial
- * (data at rest is cold), the network arcs burn ember (data in flight is
- * hot), node endpoints pulse warm on arrival, and a faint aurora ring —
- * teal shading into plasma — circles the pole.
+ * Contact page scene: an aurora core suspended in a cold field.
+ * It stays distinct from the homepage — no globe grid, just a warm
+ * handshake under a rotating cold shell.
  */
 
 const RADIUS = 2;
@@ -38,69 +37,39 @@ function useAuroraRing(segments = 96) {
   }, [segments]);
 }
 
-/** Unique vertices of a subdivided icosahedron — hexagonally packed dots. */
-function useGeodesicDots(detail: number) {
-  return useMemo(() => {
-    const geometry = new THREE.IcosahedronGeometry(RADIUS, detail);
-    const raw = geometry.getAttribute("position").array as Float32Array;
-    geometry.dispose();
-    const seen = new Set<string>();
-    const unique: number[] = [];
-    for (let i = 0; i < raw.length; i += 3) {
-      const key = `${raw[i].toFixed(3)},${raw[i + 1].toFixed(3)},${raw[i + 2].toFixed(3)}`;
-      if (!seen.has(key)) {
-        seen.add(key);
-        unique.push(raw[i], raw[i + 1], raw[i + 2]);
-      }
-    }
-    return new Float32Array(unique);
-  }, [detail]);
-}
-
-/** Arc between two surface points, lifted along the normal at its midpoint. */
-function arcBetween(a: THREE.Vector3, b: THREE.Vector3): Float32Array {
-  const mid = a.clone().add(b).multiplyScalar(0.5);
-  const lift = 1 + a.distanceTo(b) / (2 * RADIUS);
-  mid.setLength(RADIUS * lift);
-  const curve = new THREE.QuadraticBezierCurve3(a, mid, b);
-  const points = curve.getPoints(48);
-  const array = new Float32Array(points.length * 3);
-  points.forEach((p, i) => {
-    p.toArray(array, i * 3);
-  });
-  return array;
-}
-
-function randomSurfacePoint(): THREE.Vector3 {
-  return new THREE.Vector3()
-    .randomDirection()
-    .setLength(RADIUS)
-    .multiply(new THREE.Vector3(1, 0.72, 1)) // bias toward inhabited latitudes
-    .setLength(RADIUS);
+function randomSurfacePoint(radius: number): THREE.Vector3 {
+  return new THREE.Vector3().randomDirection().setLength(radius);
 }
 
 function Globe({ animate, dotCount }: { animate: boolean; dotCount: number }) {
   const group = useRef<THREE.Group>(null);
-  const nodesRef = useRef<THREE.Points>(null);
+  const coreRef = useRef<THREE.Mesh>(null);
+  const shellRef = useRef<THREE.Mesh>(null);
   const pointer = useRef({ x: 0, y: 0 });
   const spin = useRef(0);
 
-  const dots = useGeodesicDots(dotCount);
   const aurora = useAuroraRing();
 
-  const { nodePositions, arcs } = useMemo(() => {
-    const endpoints: THREE.Vector3[] = [];
-    for (let i = 0; i < 12; i++) endpoints.push(randomSurfacePoint());
-    const nodePositions = new Float32Array(endpoints.length * 3);
-    endpoints.forEach((p, i) => {
-      p.toArray(nodePositions, i * 3);
-    });
-    const arcs: Float32Array[] = [];
-    for (let i = 0; i < endpoints.length - 1; i += 2) {
-      arcs.push(arcBetween(endpoints[i], endpoints[i + 1]));
+  const { dots, shards, sparkColors } = useMemo(() => {
+    const dots = new Float32Array(dotCount * 3);
+    const shards = new Float32Array(72 * 3);
+    const sparkColors = new Float32Array(72 * 3);
+    const color = new THREE.Color();
+    for (let i = 0; i < dotCount; i++) {
+      randomSurfacePoint(RADIUS * 0.92).toArray(dots, i * 3);
     }
-    return { nodePositions, arcs };
-  }, []);
+    for (let i = 0; i < 72; i++) {
+      randomSurfacePoint(RADIUS * 1.5).toArray(shards, i * 3);
+      color
+        .lerpColors(
+          i % 3 === 0 ? new THREE.Color("#7dd3fc") : new THREE.Color("#ff6b3d"),
+          new THREE.Color("#c084fc"),
+          (i % 9) / 8,
+        )
+        .toArray(sparkColors, i * 3);
+    }
+    return { dots, shards, sparkColors };
+  }, [dotCount]);
 
   useEffect(() => {
     if (!animate) return;
@@ -127,9 +96,13 @@ function Globe({ animate, dotCount }: { animate: boolean; dotCount: number }) {
       0.35 + pointer.current.y * 0.12,
       0.06,
     );
-    if (nodesRef.current) {
-      const material = nodesRef.current.material as THREE.PointsMaterial;
-      material.opacity = 0.65 + Math.sin(state.clock.elapsedTime * 2.2) * 0.3;
+    if (coreRef.current) {
+      const material = coreRef.current.material as THREE.MeshStandardMaterial;
+      material.emissiveIntensity = 0.52 + Math.sin(state.clock.elapsedTime * 2.2) * 0.3;
+    }
+    if (shellRef.current) {
+      const material = shellRef.current.material as THREE.MeshStandardMaterial;
+      material.opacity = 0.14 + Math.sin(state.clock.elapsedTime * 0.9) * 0.04;
     }
   });
 
@@ -140,46 +113,54 @@ function Globe({ animate, dotCount }: { animate: boolean; dotCount: number }) {
           <bufferAttribute attach="attributes-position" args={[dots, 3]} />
         </bufferGeometry>
         <pointsMaterial
-          size={0.028}
+          size={0.03}
           color="#7dd3fc"
           transparent
-          opacity={0.5}
+          opacity={0.42}
           sizeAttenuation
           depthWrite={false}
         />
       </points>
 
-      <points ref={nodesRef}>
+      <points>
         <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[nodePositions, 3]}
-          />
+          <bufferAttribute attach="attributes-position" args={[shards, 3]} />
+          <bufferAttribute attach="attributes-color" args={[sparkColors, 3]} />
         </bufferGeometry>
         <pointsMaterial
-          size={0.085}
-          color="#ffb454"
+          size={0.06}
+          vertexColors
           transparent
-          opacity={0.9}
+          opacity={0.75}
           sizeAttenuation
           blending={THREE.AdditiveBlending}
           depthWrite={false}
         />
       </points>
 
-      {arcs.map((arc) => (
-        <line key={arc[0]}>
-          <bufferGeometry>
-            <bufferAttribute attach="attributes-position" args={[arc, 3]} />
-          </bufferGeometry>
-          <lineBasicMaterial
-            color="#ff6b3d"
-            transparent
-            opacity={0.55}
-            depthWrite={false}
-          />
-        </line>
-      ))}
+      <mesh ref={coreRef}>
+        <icosahedronGeometry args={[RADIUS * 0.95, 3]} />
+        <meshStandardMaterial
+          color="#0a1120"
+          emissive="#ff6b3d"
+          emissiveIntensity={0.52}
+          metalness={0.8}
+          roughness={0.32}
+        />
+      </mesh>
+
+      <mesh ref={shellRef}>
+        <sphereGeometry args={[RADIUS * 1.18, 32, 32]} />
+        <meshStandardMaterial
+          color="#101a2c"
+          emissive="#5eead4"
+          emissiveIntensity={0.12}
+          transparent
+          opacity={0.16}
+          metalness={0.2}
+          roughness={0.18}
+        />
+      </mesh>
 
       <line>
         <bufferGeometry>
