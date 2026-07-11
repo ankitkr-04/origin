@@ -26,6 +26,14 @@ export function ProjectModal({ children }: { children: React.ReactNode }) {
   const [closing, setClosing] = useState(false);
   const closingRef = useRef(false);
 
+  // Reset closing state when the modal route is reactivated
+  useEffect(() => {
+    if (!dismissed) {
+      setClosing(false);
+      closingRef.current = false;
+    }
+  }, [dismissed]);
+
   const close = useCallback(() => {
     if (closingRef.current) return;
     closingRef.current = true;
