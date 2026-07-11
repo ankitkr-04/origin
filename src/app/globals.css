@@ -41,6 +41,7 @@ html {
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--color-ice) 35%, transparent)
     transparent;
+  scrollbar-gutter: stable;
 }
 
 /* Thin thermal scrollbar — frost at rest, warms under the pointer */
@@ -618,8 +619,8 @@ body {
    brighten, desaturate). The next page kindles in: rises, thaws, passes
    through a brief warm overshoot before settling. */
 :root {
-  --duration-exit: 240ms;
-  --duration-enter: 400ms;
+  --duration-exit: 400ms;
+  --duration-enter: 650ms;
 }
 
 @keyframes vt-quench {
@@ -766,7 +767,7 @@ body {
 }
 
 .sweep-go {
-  animation: sweep-viewport 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: sweep-viewport 1.05s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 @keyframes sweep-viewport {

@@ -23,7 +23,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
     setSweep(true);
     const timer = setTimeout(() => {
       setSweep(false);
-    }, 650); // matches the transition animation duration
+    }, 1050); // matches the total transition animation duration (400ms exit + 650ms enter)
     return () => clearTimeout(timer);
   }, [pathname]);
 
