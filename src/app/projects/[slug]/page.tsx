@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PageTransition } from "@/components/page-transition";
 import { ProjectDetail } from "@/components/projects/project-detail";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
@@ -36,7 +35,7 @@ export default async function ProjectPage({
   if (!project) notFound();
 
   return (
-    <PageTransition>
+    <>
       <SiteNav />
       <main className="pt-14">
         <div className="mx-auto max-w-3xl px-5 py-16 md:px-8 md:py-24">
@@ -53,6 +52,6 @@ export default async function ProjectPage({
         </div>
       </main>
       <SiteFooter />
-    </PageTransition>
+    </>
   );
 }

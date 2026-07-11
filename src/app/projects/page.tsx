@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { PageTransition } from "@/components/page-transition";
 import { ProjectCard } from "@/components/projects/project-card";
 import { ProjectCase } from "@/components/projects/project-case";
 import { Reveal } from "@/components/reveal";
@@ -21,7 +20,7 @@ export default async function ProjectsPage() {
   const archiveProjects = projects.filter((p) => p.tier === "archive");
 
   return (
-    <PageTransition>
+    <>
       <SiteNav />
       <main className="pt-14">
         <section className="py-16 md:py-24">
@@ -77,6 +76,6 @@ export default async function ProjectsPage() {
         </section>
       </main>
       <SiteFooter />
-    </PageTransition>
+    </>
   );
 }

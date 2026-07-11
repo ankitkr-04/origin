@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { GlobeCanvas } from "@/components/contact/globe-canvas";
-import { PageTransition } from "@/components/page-transition";
 import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <PageTransition>
+    <>
       <SiteNav />
       <main className="relative flex min-h-svh flex-col overflow-hidden pt-14">
         {/* Globe behind/beside the content */}
@@ -79,6 +78,6 @@ export default function ContactPage() {
         </div>
       </main>
       <SiteFooter />
-    </PageTransition>
+    </>
   );
 }

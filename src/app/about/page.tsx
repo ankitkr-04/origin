@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { PageTransition } from "@/components/page-transition";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
@@ -20,7 +19,7 @@ export default async function AboutPage() {
   ]);
 
   return (
-    <PageTransition>
+    <>
       <SiteNav />
       <main className="pt-14">
         <section className="py-16 md:py-24">
@@ -179,6 +178,6 @@ export default async function AboutPage() {
         </section>
       </main>
       <SiteFooter />
-    </PageTransition>
+    </>
   );
 }

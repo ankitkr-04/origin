@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import { Grain } from "@/components/thermal/grain";
 import { HeatLens } from "@/components/thermal/heat-lens";
+import { PageTransition } from "@/components/page-transition";
 import { ReaderBar } from "@/components/thermal/reader-bar";
 import { ThermalInteractions } from "@/components/thermal/thermal-interactions";
 
@@ -73,7 +74,7 @@ export default function RootLayout({
         </Suspense>
         <HeatLens />
         <ThermalInteractions />
-        {children}
+        <PageTransition>{children}</PageTransition>
         {modal}
         <Grain />
       </body>

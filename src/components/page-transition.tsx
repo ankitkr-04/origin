@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ViewTransition } from "react";
 
 /**
@@ -11,8 +11,22 @@ import { ViewTransition } from "react";
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [sweep, setSweep] = useState(false);
+  const prevPathnameRef = useRef(pathname);
 
   useEffect(() => {
+    const prev = prevPathnameRef.current;
+    prevPathnameRef.current = pathname;
+
+    // Skip the transition sweep when opening/closing parallel route modals
+    const isModalTransition =
+      (pathname.startsWith("/projects/") && prev === "/projects") ||
+      (prev.startsWith("/projects/") && pathname === "/projects") ||
+      (pathname.startsWith("/projects/") && prev === "/");
+
+    if (isModalTransition) {
+      return;
+    }
+
     setSweep(true);
     const timer = setTimeout(() => {
       setSweep(false);
