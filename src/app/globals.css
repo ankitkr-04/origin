@@ -790,3 +790,31 @@ body {
     display: none;
   }
 }
+
+/* Shimmer utility in frost-blue (never gray) for local skeletons */
+@keyframes shimmer-blue-pulse {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-blue {
+  background: linear-gradient(
+    90deg,
+    rgba(16, 26, 44, 0.45) 25%,
+    rgba(125, 211, 252, 0.06) 37%,
+    rgba(16, 26, 44, 0.45) 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-blue-pulse 1.8s infinite linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer-blue {
+    animation: none;
+    background: rgba(16, 26, 44, 0.5);
+  }
+}
