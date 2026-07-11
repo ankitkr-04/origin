@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BrandLogo } from "@/components/brand-logo";
 import { identity } from "@/lib/profile";
 
 const navLinks = [
@@ -32,10 +33,11 @@ export function SiteNav() {
         <Link
           href="/"
           transitionTypes={["nav"]}
-          className="font-display text-lg font-bold tracking-tight"
+          className="flex items-center gap-2 font-display text-lg font-bold tracking-tight"
           aria-label="Ankit Kumar — home"
         >
-          AK<span className="text-flame">.</span>
+          <BrandLogo />
+          <span>AK</span>
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
