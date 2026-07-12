@@ -78,7 +78,7 @@ export function SiteNav({ githubUrl }: { githubUrl: string }) {
               className={`h-px w-4 bg-polar transition-transform ${menuOpen ? "translate-y-[3.5px] rotate-45" : ""}`}
             />
             <span
-              className={`h-px w-4 bg-polar transition-transform ${menuOpen ? "-translate-y-[3px] -rotate-45" : ""}`}
+              className={`h-px w-4 bg-polar transition-transform ${menuOpen ? "translate-y-[-3px] -rotate-45" : ""}`}
             />
           </button>
         </div>

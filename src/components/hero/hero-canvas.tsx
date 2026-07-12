@@ -9,6 +9,8 @@ import {
   useMediaQuery,
 } from "@/hooks/use-media-query";
 
+import { CanvasErrorBoundary } from "@/components/canvas-error-boundary";
+
 const StrataScene = dynamic<StrataSceneProps>(
   () => import("@/components/hero/strata-scene"),
   { ssr: false },
@@ -19,10 +21,12 @@ export function HeroCanvas() {
   const smallScreen = useMediaQuery(SMALL_SCREEN);
 
   return (
-    <StrataScene
-      animate={!reducedMotion}
-      maxDpr={smallScreen ? 1.5 : 1.75}
-      lowDetail={smallScreen}
-    />
+    <CanvasErrorBoundary>
+      <StrataScene
+        animate={!reducedMotion}
+        maxDpr={smallScreen ? 1.5 : 1.75}
+        lowDetail={smallScreen}
+      />
+    </CanvasErrorBoundary>
   );
 }
