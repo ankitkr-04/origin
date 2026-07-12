@@ -16,8 +16,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactPage() {
-  const identity = await getIdentity();
-  const socialLinks = await getSocialLinks();
+  const [identity, socialLinks] = await Promise.all([
+    getIdentity(),
+    getSocialLinks(),
+  ]);
 
   return (
     <>

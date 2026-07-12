@@ -32,8 +32,10 @@ const archivo = Archivo({
 import { getIdentity, getSocialLinks } from "@/db/queries";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const identity = await getIdentity();
-  const socialLinks = await getSocialLinks();
+  const [identity, socialLinks] = await Promise.all([
+    getIdentity(),
+    getSocialLinks(),
+  ]);
 
   const twitterLink =
     socialLinks.find(

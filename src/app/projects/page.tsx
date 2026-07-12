@@ -5,6 +5,7 @@ import { ProjectListSkeleton } from "@/components/projects/project-list-skeleton
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 import { getIdentity, getProjects } from "@/db/queries";
+import type { Project } from "@/types/content";
 
 export async function generateMetadata(): Promise<Metadata> {
   const identity = await getIdentity();
@@ -16,19 +17,24 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ProjectsPage() {
+  const projectsPromise = getProjects();
   const identity = await getIdentity();
   return (
     <>
       <SiteNav githubUrl={identity.githubUrl} />
       <Suspense fallback={<ProjectListSkeleton />}>
-        <ProjectsListContainer />
+        <ProjectsListContainer projectsPromise={projectsPromise} />
       </Suspense>
       <SiteFooter />
     </>
   );
 }
 
-async function ProjectsListContainer() {
-  const projects = await getProjects();
+async function ProjectsListContainer({
+  projectsPromise,
+}: {
+  projectsPromise: Promise<Project[]>;
+}) {
+  const projects = await projectsPromise;
   return <ProjectList projects={projects} />;
 }

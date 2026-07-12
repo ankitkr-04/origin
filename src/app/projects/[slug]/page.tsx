@@ -17,10 +17,11 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = await getProject(slug);
+  const [project, identity] = await Promise.all([
+    getProject(slug),
+    getIdentity(),
+  ]);
   if (!project) return {};
-
-  const identity = await getIdentity();
   return {
     title: `${project.name} — ${identity.name}`,
     description: project.tagline,
@@ -33,10 +34,11 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = await getProject(slug);
+  const [project, identity] = await Promise.all([
+    getProject(slug),
+    getIdentity(),
+  ]);
   if (!project) notFound();
-
-  const identity = await getIdentity();
 
   return (
     <>
