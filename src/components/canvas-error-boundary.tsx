@@ -40,8 +40,14 @@ export function CanvasErrorBoundary(props: Props) {
   useEffect(() => {
     const handleContextLost = (e: Event) => {
       e.preventDefault();
-      console.warn("WebGL context lost! Hiding canvas to prevent white flash.");
+      console.warn("WebGL context lost! Temporarily hiding canvas to recover...");
       setContextLost(true);
+      
+      // Attempt recovery after a short delay
+      setTimeout(() => {
+        console.log("Attempting to recover WebGL context...");
+        setContextLost(false);
+      }, 1000);
     };
 
     const container = containerRef.current;

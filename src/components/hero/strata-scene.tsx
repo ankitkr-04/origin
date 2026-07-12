@@ -244,6 +244,8 @@ export interface StrataSceneProps {
   lowDetail: boolean;
 }
 
+import { WebGLContextManager } from "@/components/webgl-context-manager";
+
 export default function StrataScene({
   animate,
   maxDpr,
@@ -262,6 +264,7 @@ export default function StrataScene({
       className="pointer-events-none"
       aria-hidden
     >
+      <WebGLContextManager />
       <ambientLight intensity={0.45} />
       <pointLight position={[4.5, 5, 5.5]} intensity={30} color="#ffb454" />
       <pointLight position={[-4, -2, 4]} intensity={18} color="#7dd3fc" />

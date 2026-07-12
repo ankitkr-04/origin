@@ -11,6 +11,8 @@ const ThermalCoreScene = dynamic(
   },
 );
 
+import { WebGLContextManager } from "@/components/webgl-context-manager";
+
 export function ThermalCoreCanvas() {
   const prefersReducedMotion = useMediaQuery(REDUCED_MOTION);
 
@@ -34,6 +36,7 @@ export function ThermalCoreCanvas() {
           }}
           dpr={[1, 2]}
         >
+          <WebGLContextManager />
           <ThermalCoreScene />
         </Canvas>
       </CanvasErrorBoundary>
