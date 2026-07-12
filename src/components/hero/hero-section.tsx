@@ -22,7 +22,7 @@ export async function HeroSection() {
     >
       {/* Ambient glow + 3D LSM stack, behind everything */}
       <div className="hero-glow absolute inset-0" aria-hidden />
-      <div className="absolute inset-0 md:left-[34%]" aria-hidden>
+      <div className="absolute inset-0" aria-hidden>
         <GlassShardsCanvas />
       </div>
 

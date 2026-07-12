@@ -364,12 +364,19 @@ export default function GlassShardsScene() {
       pointer.x += (pointerTarget.x - pointer.x) * 0.04;
       pointer.y += (pointerTarget.y - pointer.y) * 0.04;
 
+      let xOffset = 0;
+      if (window.innerWidth >= 768) {
+        // Shift camera left so the 3D origin (x=0) appears on the right side of the screen
+        // Center of the right side is ~67%. Offset is 17% of width = approx 1.56 * aspect.
+        xOffset = -1.56 * camera.aspect;
+      }
+
       camera.position.set(
-        pointer.x * 1.1 * eased * parallaxGate,
+        pointer.x * 1.1 * eased * parallaxGate + xOffset,
         REST_Y - pointer.y * 0.7 * eased * parallaxGate,
         THREE.MathUtils.lerp(INTRO_Z, REST_Z, eased),
       );
-      camera.lookAt(0, 0, 0);
+      camera.lookAt(xOffset, 0, 0);
       shardGroup.rotation.y = pointer.x * 0.05 * eased * parallaxGate;
 
       composer.render();
