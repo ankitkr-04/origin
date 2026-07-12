@@ -37,7 +37,7 @@ export function SiteNav() {
           aria-label="Ankit Kumar — home"
         >
           <BrandLogo />
-          <span className="type-frozen text-[13px] tracking-[0.16em] leading-none hidden sm:inline">
+          <span className="type-frozen text-[13px] tracking-[0.16em] leading-none hidden sm:inline translate-y-px">
             ANKIT KR
           </span>
         </Link>
