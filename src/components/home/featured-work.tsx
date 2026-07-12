@@ -2,7 +2,7 @@ import { FeaturedWorkList } from "@/components/home/featured-work-list";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import { ThermalButton } from "@/components/thermal/thermal-button";
-import { getProjects } from "@/db/queries";
+import { getProjects } from "@/db/projects";
 
 export async function FeaturedWork() {
   const flagshipProjects = (await getProjects()).filter(

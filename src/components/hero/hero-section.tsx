@@ -1,6 +1,7 @@
 import { HeroCanvas } from "@/components/hero/hero-canvas";
 import { ThermalButton } from "@/components/thermal/thermal-button";
-import { getAchievementStats, getEducation, getIdentity } from "@/db/queries";
+import { getIdentity } from "@/db/identity";
+import { getAchievementStats, getEducation } from "@/db/profile";
 
 const LSM_LEVELS = [
   { id: "L0", label: "memtable — active writes", temp: "hot" },

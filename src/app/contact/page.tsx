@@ -5,12 +5,12 @@ import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 import { ThermalButton } from "@/components/thermal/thermal-button";
-import { getIdentity, getSocialLinks } from "@/db/queries";
+import { getIdentity, getSocialLinks } from "@/db/identity";
 
 export async function generateMetadata(): Promise<Metadata> {
   const identity = await getIdentity();
   return {
-    title: `Contact — ${identity.name}`,
+    title: "Contact",
     description: `Backend and systems engineering roles from May 2026 — ${identity.location}, working with anyone, anywhere.`,
   };
 }

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getProjects } from "@/db/queries";
+import { getProjects } from "@/db/projects";
 import { siteConfig } from "@/lib/site-config";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

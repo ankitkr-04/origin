@@ -29,7 +29,7 @@ const archivo = Archivo({
   style: ["normal", "italic"],
 });
 
-import { getIdentity, getSocialLinks } from "@/db/queries";
+import { getIdentity, getSocialLinks } from "@/db/identity";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [identity, socialLinks] = await Promise.all([
@@ -47,12 +47,18 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL(siteConfig.url),
-    title: `${identity.name} — ${identity.headline}`,
+    title: {
+      default: `${identity.name} — ${identity.headline}`,
+      template: `%s — ${identity.name}`,
+    },
     description: identity.positioning,
     keywords: siteConfig.keywords as unknown as string[],
     authors: [{ name: identity.name, url: identity.githubUrl }],
     openGraph: {
-      title: `${identity.name} — ${identity.headline}`,
+      title: {
+        default: `${identity.name} — ${identity.headline}`,
+        template: `%s — ${identity.name}`,
+      },
       description: identity.positioning,
       type: "website",
     },

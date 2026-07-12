@@ -3,17 +3,12 @@ import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
-import {
-  getCertifications,
-  getEducation,
-  getExperiences,
-  getIdentity,
-} from "@/db/queries";
+import { getIdentity } from "@/db/identity";
+import { getCertifications, getEducation, getExperiences } from "@/db/profile";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const identity = await getIdentity();
+export function generateMetadata(): Metadata {
   return {
-    title: `About — ${identity.name}`,
+    title: "About",
     description: `Final-year CS student building storage engines, servers, and high-concurrency backends.`,
   };
 }

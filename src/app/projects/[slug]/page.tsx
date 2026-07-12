@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { ProjectDetail } from "@/components/projects/project-detail";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
-import { getIdentity, getProject, getProjects } from "@/db/queries";
+import { getIdentity } from "@/db/identity";
+import { getProject, getProjects } from "@/db/projects";
 
 export async function generateStaticParams() {
   const projects = await getProjects();
@@ -17,13 +18,10 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const [project, identity] = await Promise.all([
-    getProject(slug),
-    getIdentity(),
-  ]);
+  const project = await getProject(slug);
   if (!project) return {};
   return {
-    title: `${project.name} — ${identity.name}`,
+    title: project.name,
     description: project.tagline,
   };
 }
