@@ -3,13 +3,6 @@ import { ThermalButton } from "@/components/thermal/thermal-button";
 import { getIdentity } from "@/db/identity";
 import { getAchievementStats, getEducation } from "@/db/profile";
 
-const LSM_LEVELS = [
-  { id: "L0", label: "memtable — active writes", temp: "hot" },
-  { id: "L1", label: "flush to disk", temp: "warm" },
-  { id: "L2", label: "background compaction", temp: "warm" },
-  { id: "L3", label: "cold storage", temp: "cold" },
-] as const;
-
 export async function HeroSection() {
   const identity = await getIdentity();
   const achievementStats = await getAchievementStats();
@@ -90,67 +83,59 @@ export async function HeroSection() {
           className="hero-ignite warm-card relative self-center md:justify-self-end"
           style={{ animationDelay: "0.95s" }}
         >
-          <div className="relative overflow-hidden rounded-4xl border border-line/70 bg-abyss/65 p-5 shadow-[0_28px_120px_-42px_rgba(0,0,0,0.9)] backdrop-blur-md md:w-92 md:p-6">
+          <div className="relative overflow-hidden rounded-4xl border border-line/70 bg-abyss/65 p-5 shadow-[0_28px_120px_-42px_rgba(0,0,0,0.9)] backdrop-blur-xl md:w-96 md:p-6">
             <div
               className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,107,61,0.12),transparent_40%)]"
               aria-hidden
             />
 
-            <div className="relative flex items-center justify-between gap-4">
-              <p className="font-mono text-[11px] tracking-[0.3em] text-faint uppercase">
-                Compaction
-              </p>
-              <p className="font-mono text-xs tracking-[0.22em] text-ice uppercase">
-                θ / live
+            <div className="relative flex items-center justify-between gap-4 border-b border-line/60 pb-5">
+              <div className="flex items-center gap-3">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-flame opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-flame"></span>
+                </span>
+                <p className="font-mono text-[11px] tracking-[0.3em] text-polar uppercase">
+                  Sys.Status
+                </p>
+              </div>
+              <p className="font-mono text-[10px] tracking-[0.22em] text-ice uppercase">
+                Active
               </p>
             </div>
 
-            <ol className="thermal-rail mt-6 flex list-none flex-col gap-4">
-              {LSM_LEVELS.map((level) => (
-                <li
-                  key={level.id}
-                  className="relative flex items-baseline gap-3"
-                >
-                  <span
-                    className={`thermal-node ${
-                      level.temp === "hot"
-                        ? "thermal-node-hot"
-                        : level.temp === "cold"
-                          ? "thermal-node-cold"
-                          : ""
-                    }`}
-                    style={
-                      level.temp === "warm"
-                        ? { background: "var(--color-plasma)" }
-                        : undefined
-                    }
-                  />
-                  <span className="font-mono text-[11px] tracking-[0.16em] text-polar uppercase">
-                    {level.id}
-                  </span>
-                  <span
-                    className="mb-1 flex-1 border-b border-dotted border-line/70"
-                    aria-hidden
-                  />
-                  <span className="text-xs text-faint">{level.label}</span>
-                </li>
-              ))}
-            </ol>
+            <div className="relative mt-5 flex items-center justify-between gap-4 rounded-xl border border-line/40 bg-abyss/40 px-4 py-2.5">
+              <span className="font-mono text-[10px] tracking-[0.2em] text-mist uppercase">
+                Core Threads
+              </span>
+              <span className="font-mono text-xs text-polar">16 / 16</span>
+            </div>
 
-            <dl className="relative mt-6 grid grid-cols-2 gap-3 border-t border-line/60 pt-5">
+            <div className="relative mt-3 flex items-center justify-between gap-4 rounded-xl border border-line/40 bg-abyss/40 px-4 py-2.5">
+              <span className="font-mono text-[10px] tracking-[0.2em] text-mist uppercase">
+                Memory Cache
+              </span>
+              <span className="font-mono text-xs text-flame">WARM</span>
+            </div>
+
+            <dl className="relative mt-5 grid grid-cols-2 gap-3">
               {achievementStats.map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-2xl border border-line/70 bg-floe/50 px-4 py-3"
+                  className="bento-card-charge group relative overflow-hidden rounded-2xl border border-line/70 bg-floe/40 px-4 py-3 transition-colors hover:bg-floe/60"
                 >
-                  <dd className="font-display text-xl text-flame">
+                  <div
+                    className="bento-bg-charge absolute inset-0 opacity-0 transition-opacity"
+                    aria-hidden
+                  />
+                  <dd className="bento-val-charge font-display text-xl text-polar transition-colors">
                     {item.value}
                   </dd>
-                  <dt className="mt-1 font-mono text-[10px] tracking-[0.18em] text-mist uppercase">
+                  <dt className="bento-label-charge mt-1 font-mono text-[10px] tracking-[0.18em] text-mist uppercase transition-colors">
                     {item.label}
                   </dt>
                   {item.detail ? (
-                    <p className="mt-0.5 text-[11px] leading-snug text-faint">
+                    <p className="mt-1 text-[10px] leading-relaxed text-faint">
                       {item.detail}
                     </p>
                   ) : null}

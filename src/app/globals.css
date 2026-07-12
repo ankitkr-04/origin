@@ -816,3 +816,48 @@ body {
     background: rgba(16, 26, 44, 0.5);
   }
 }
+
+/* Bento delayed ignite effect */
+@keyframes bento-charge-val {
+  0% { color: var(--color-polar); text-shadow: 0 0 0px rgba(125, 211, 252, 0); }
+  25% { color: var(--color-ice); text-shadow: 0 0 8px rgba(125, 211, 252, 0.4); }
+  60% { color: var(--color-plasma); text-shadow: 0 0 12px rgba(192, 132, 252, 0.5); }
+  100% { color: var(--color-ember); text-shadow: 0 0 16px rgba(255, 107, 61, 0.6); }
+}
+
+@keyframes bento-charge-label {
+  0% { color: var(--color-mist); }
+  25% { color: var(--color-ice); }
+  60% { color: var(--color-plasma); }
+  100% { color: var(--color-ember); }
+}
+
+@keyframes bento-charge-bg {
+  0% { opacity: 0; }
+  25% { opacity: 1; background: radial-gradient(circle at top right, rgba(125, 211, 252, 0.12), transparent 60%); }
+  60% { opacity: 1; background: radial-gradient(circle at top right, rgba(192, 132, 252, 0.15), transparent 60%); }
+  100% { opacity: 1; background: radial-gradient(circle at top right, rgba(255, 107, 61, 0.18), transparent 60%); }
+}
+
+@keyframes bento-charge-border {
+  0% { border-color: var(--color-line); box-shadow: inset 0 0 0px rgba(125, 211, 252, 0); }
+  25% { border-color: color-mix(in srgb, var(--color-ice) 50%, transparent); box-shadow: inset 0 0 0px rgba(125, 211, 252, 0); }
+  60% { border-color: color-mix(in srgb, var(--color-plasma) 60%, transparent); box-shadow: inset 0 0 8px rgba(192, 132, 252, 0.15); }
+  100% { border-color: color-mix(in srgb, var(--color-ember) 60%, transparent); box-shadow: inset 0 0 16px rgba(255, 107, 61, 0.25); }
+}
+
+.bento-card-charge:hover {
+  animation: bento-charge-border 2.2s forwards ease-in-out;
+}
+
+.bento-card-charge:hover .bento-bg-charge {
+  animation: bento-charge-bg 2.2s forwards ease-in-out;
+}
+
+.bento-card-charge:hover .bento-val-charge {
+  animation: bento-charge-val 2.2s forwards ease-in-out;
+}
+
+.bento-card-charge:hover .bento-label-charge {
+  animation: bento-charge-label 2.2s forwards ease-in-out;
+}
