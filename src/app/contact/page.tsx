@@ -1,6 +1,6 @@
 // src/app/contact/page.tsx
 import type { Metadata } from "next";
-import { BeaconCanvas } from "@/components/contact/beacon-canvas";
+import { ThermalCoreCanvas } from "@/components/contact/thermal-core-canvas";
 import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
@@ -20,7 +20,7 @@ export default function ContactPage() {
       <main className="relative flex min-h-svh flex-col overflow-hidden pt-14">
         <div className="hero-glow absolute inset-0" aria-hidden />
         <div className="absolute inset-0 md:left-2/5" aria-hidden>
-          <BeaconCanvas />
+          <ThermalCoreCanvas />
         </div>
         {/* Same device-adaptive fade as the hero — vertical on mobile
             (content stacks over the full-bleed scene), horizontal on
@@ -88,7 +88,7 @@ export default function ContactPage() {
           aria-hidden
         >
           <span className="font-mono text-[10px] tracking-[0.28em] text-ice/70 uppercase">
-            θ / beacon
+            θ / thermal core
           </span>
           <span className="font-mono text-[10px] tracking-[0.2em] text-faint uppercase">
             ice ⇄ ember
