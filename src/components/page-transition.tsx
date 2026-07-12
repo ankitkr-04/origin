@@ -5,11 +5,12 @@ import { useEffect, useRef, useState, ViewTransition } from "react";
 
 /**
  * Cross-fades page content on <Link transitionTypes={["nav"]}> navigations.
- * Triggers a horizontal glowing sweep line (the ember sweep) on page changes.
+ * Triggers a top-to-bottom reveal curtain on page changes.
  */
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [sweep, setSweep] = useState(false);
+  const [transitionKey, setTransitionKey] = useState(pathname);
   const prevPathnameRef = useRef(pathname);
 
   useEffect(() => {
@@ -21,9 +22,10 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
     }
 
     setSweep(true);
+    setTransitionKey(pathname);
     const timer = setTimeout(() => {
       setSweep(false);
-    }, 1050); // matches the total transition animation duration (400ms exit + 650ms enter)
+    }, 1200); // matches the slowed transition duration (1.2s)
     return () => clearTimeout(timer);
   }, [pathname]);
 
@@ -33,11 +35,14 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
       exit={{ nav: "page-exit", default: "none" }}
       default="none"
     >
-      <div className="relative min-h-svh">
-        <div
-          className={`sweep-line ${sweep ? "sweep-go" : ""}`}
-          aria-hidden="true"
-        />
+      <div className="relative min-h-svh overflow-hidden">
+        {sweep && (
+          <div
+            key={`curtain-${transitionKey}`}
+            className="reveal-curtain sweep-go"
+            aria-hidden="true"
+          />
+        )}
         {children}
       </div>
     </ViewTransition>
