@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BrandLogo } from "@/components/brand-logo";
-import { identity } from "@/lib/profile";
 
 const navLinks = [
   { label: "Projects", href: "/projects" },
@@ -12,7 +11,7 @@ const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-export function SiteNav() {
+export function SiteNav({ githubUrl }: { githubUrl: string }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -60,7 +59,7 @@ export function SiteNav() {
 
         <div className="flex items-center gap-3">
           <a
-            href={identity.githubUrl}
+            href={githubUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full border border-line px-4 py-1.5 font-mono text-xs tracking-wider text-polar transition-colors hover:border-ember hover:text-ember"

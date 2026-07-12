@@ -43,8 +43,48 @@ async function main() {
     .insert(schema.certifications)
     .values(seed.certifications.map((title, i) => ({ title, sortOrder: i })));
 
+  await db.delete(schema.identity);
+  await db.insert(schema.identity).values({
+    name: seed.identity.name,
+    headline: seed.identity.headline,
+    headlineParts: seed.identity.headlineParts,
+    positioning: seed.identity.positioning,
+    location: seed.identity.location,
+    email: seed.identity.email,
+    githubUrl: seed.identity.githubUrl,
+    aboutNarrative: seed.identity.aboutNarrative,
+  });
+
+  await db.delete(schema.socialLinks);
+  await db.insert(schema.socialLinks).values(
+    seed.socialLinks.map((link, i) => ({
+      label: link.label,
+      href: link.href,
+      sortOrder: i,
+    })),
+  );
+
+  await db.delete(schema.achievementStats);
+  await db.insert(schema.achievementStats).values(
+    seed.achievementStats.map((stat, i) => ({
+      value: stat.value,
+      label: stat.label,
+      detail: stat.detail,
+      sortOrder: i,
+    })),
+  );
+
+  await db.delete(schema.educations);
+  await db.insert(schema.educations).values({
+    degree: seed.education.degree,
+    institution: seed.education.institution,
+    period: seed.education.period,
+    cgpa: seed.education.cgpa,
+    sortOrder: 0,
+  });
+
   console.log(
-    `Seeded ${seed.projects.length} projects, ${seed.achievements.length} achievements, ${seed.experiences.length} experiences, ${seed.certifications.length} certifications.`,
+    `Seeded ${seed.projects.length} projects, ${seed.achievements.length} achievements, ${seed.experiences.length} experiences, ${seed.certifications.length} certifications, identity, ${seed.socialLinks.length} social links, ${seed.achievementStats.length} achievement stats, and education.`,
   );
 }
 

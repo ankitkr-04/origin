@@ -29,23 +29,37 @@ const archivo = Archivo({
   style: ["normal", "italic"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: siteConfig.title,
-  description: siteConfig.description,
-  keywords: siteConfig.keywords as unknown as string[],
-  authors: [{ name: siteConfig.name, url: siteConfig.github }],
-  openGraph: {
-    title: siteConfig.title,
-    description:
-      "Storage engines, Redis-compatible servers, and high-concurrency backends.",
-    type: "website",
-  },
-  twitter: {
-    card: "summary",
-    creator: siteConfig.twitter,
-  },
-};
+import { getIdentity, getSocialLinks } from "@/db/queries";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const identity = await getIdentity();
+  const socialLinks = await getSocialLinks();
+
+  const twitterLink =
+    socialLinks.find(
+      (l) =>
+        l.label.toLowerCase().includes("twitter") ||
+        l.label.toLowerCase().includes("x"),
+    )?.href || "";
+  const twitterHandle = twitterLink.split("/").pop() || "";
+
+  return {
+    metadataBase: new URL(siteConfig.url),
+    title: `${identity.name} — ${identity.headline}`,
+    description: identity.positioning,
+    keywords: siteConfig.keywords as unknown as string[],
+    authors: [{ name: identity.name, url: identity.githubUrl }],
+    openGraph: {
+      title: `${identity.name} — ${identity.headline}`,
+      description: identity.positioning,
+      type: "website",
+    },
+    twitter: {
+      card: "summary",
+      creator: twitterHandle ? `@${twitterHandle}` : undefined,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#04070d",

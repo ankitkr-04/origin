@@ -86,3 +86,60 @@ export type ProjectRow = typeof projects.$inferSelect;
 export type AchievementRow = typeof achievements.$inferSelect;
 export type ExperienceRow = typeof experiences.$inferSelect;
 export type CertificationRow = typeof certifications.$inferSelect;
+
+export const identity = pgTable("identity", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: text("name").notNull(),
+  headline: text("headline").notNull(),
+  headlineParts: text("headline_parts").array().notNull(),
+  positioning: text("positioning").notNull(),
+  location: text("location").notNull(),
+  email: text("email").notNull(),
+  githubUrl: text("github_url").notNull(),
+  aboutNarrative: text("about_narrative").array().notNull(),
+  createdAt: createdAt(),
+  updatedAt: updatedAt(),
+});
+
+export const socialLinks = pgTable("social_links", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  label: text("label").notNull(),
+  href: text("href").notNull(),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: createdAt(),
+  updatedAt: updatedAt(),
+});
+
+export const educations = pgTable("educations", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  degree: text("degree").notNull(),
+  institution: text("institution").notNull(),
+  period: text("period").notNull(),
+  cgpa: text("cgpa").notNull(),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: createdAt(),
+  updatedAt: updatedAt(),
+});
+
+export const achievementStats = pgTable("achievement_stats", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  value: text("value").notNull(),
+  label: text("label").notNull(),
+  detail: text("detail"),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: createdAt(),
+  updatedAt: updatedAt(),
+});
+
+export type IdentityRow = typeof identity.$inferSelect;
+export type SocialLinkRow = typeof socialLinks.$inferSelect;
+export type EducationRow = typeof educations.$inferSelect;
+export type AchievementStatRow = typeof achievementStats.$inferSelect;

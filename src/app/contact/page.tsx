@@ -5,26 +5,28 @@ import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 import { ThermalButton } from "@/components/thermal/thermal-button";
-import { identity, socialLinks } from "@/lib/profile";
+import { getIdentity, getSocialLinks } from "@/db/queries";
 
-export const metadata: Metadata = {
-  title: "Contact — Ankit Kumar",
-  description:
-    "Backend and systems engineering roles from May 2026 — Bhopal, India, working with anyone, anywhere.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const identity = await getIdentity();
+  return {
+    title: `Contact — ${identity.name}`,
+    description: `Backend and systems engineering roles from May 2026 — ${identity.location}, working with anyone, anywhere.`,
+  };
+}
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const identity = await getIdentity();
+  const socialLinks = await getSocialLinks();
+
   return (
     <>
-      <SiteNav />
+      <SiteNav githubUrl={identity.githubUrl} />
       <main className="relative flex min-h-svh flex-col overflow-hidden pt-14">
         <div className="hero-glow absolute inset-0" aria-hidden />
         <div className="absolute inset-0 md:left-2/5" aria-hidden>
           <ThermalCoreCanvas />
         </div>
-        {/* Same device-adaptive fade as the hero — vertical on mobile
-            (content stacks over the full-bleed scene), horizontal on
-            desktop (scene sits right, text reads over solid ground left) */}
         <div
           className="absolute inset-0 bg-linear-to-b from-void via-void/58 to-void/30 md:hidden"
           aria-hidden

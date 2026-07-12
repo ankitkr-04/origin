@@ -12,7 +12,6 @@ const getEnv = (): Env => {
 
   const databaseUrl = process.env.DATABASE_URL;
   if (isServer && !databaseUrl) {
-    // Only throw in server environments to prevent client-side build crashes
     throw new Error(
       "Missing required server environment variable: DATABASE_URL",
     );

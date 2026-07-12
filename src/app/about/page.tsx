@@ -3,24 +3,32 @@ import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
-import { getCertifications, getExperiences } from "@/db/queries";
-import { aboutNarrative, education, identity } from "@/lib/profile";
+import {
+  getCertifications,
+  getEducation,
+  getExperiences,
+  getIdentity,
+} from "@/db/queries";
 
-export const metadata: Metadata = {
-  title: "About — Ankit Kumar",
-  description:
-    "Final-year CS student building storage engines, servers, and high-concurrency backends.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const identity = await getIdentity();
+  return {
+    title: `About — ${identity.name}`,
+    description: `Final-year CS student building storage engines, servers, and high-concurrency backends.`,
+  };
+}
 
 export default async function AboutPage() {
-  const [experiences, certifications] = await Promise.all([
+  const [experiences, certifications, identity, education] = await Promise.all([
     getExperiences(),
     getCertifications(),
+    getIdentity(),
+    getEducation(),
   ]);
 
   return (
     <>
-      <SiteNav />
+      <SiteNav githubUrl={identity.githubUrl} />
       <main className="pt-14">
         <section className="relative py-16 md:py-24 overflow-hidden">
           {/* Background CPU Instruction Pipeline & Register mapping schematic */}
@@ -185,7 +193,7 @@ export default async function AboutPage() {
             <div className="grid gap-10 md:grid-cols-[1.4fr_1fr]">
               <Reveal>
                 <div className="space-y-5">
-                  {aboutNarrative.map((paragraph) => (
+                  {identity.aboutNarrative.map((paragraph) => (
                     <p
                       key={paragraph}
                       className="text-lg leading-relaxed text-mist"

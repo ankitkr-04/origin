@@ -4,11 +4,14 @@ import { ContactCta } from "@/components/home/contact-cta";
 import { FeaturedWork } from "@/components/home/featured-work";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
+import { getIdentity } from "@/db/queries";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const identity = await getIdentity();
+
   return (
     <>
-      <SiteNav />
+      <SiteNav githubUrl={identity.githubUrl} />
       <main>
         <HeroSection />
         <FeaturedWork />

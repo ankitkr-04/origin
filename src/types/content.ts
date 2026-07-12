@@ -46,3 +46,21 @@ export interface SocialLink {
   label: string;
   href: string;
 }
+
+export interface Identity {
+  name: string;
+  headline: string;
+  headlineParts: string[];
+  positioning: string;
+  location: string;
+  email: string;
+  githubUrl: string;
+  aboutNarrative: string[];
+}
+
+export interface Education {
+  degree: string;
+  institution: string;
+  period: string;
+  cgpa: string;
+}

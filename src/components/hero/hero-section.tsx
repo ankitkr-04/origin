@@ -1,7 +1,6 @@
-// src/components/hero/hero-section.tsx
 import { HeroCanvas } from "@/components/hero/hero-canvas";
 import { ThermalButton } from "@/components/thermal/thermal-button";
-import { achievementStats, identity } from "@/lib/profile";
+import { getAchievementStats, getEducation, getIdentity } from "@/db/queries";
 
 const LSM_LEVELS = [
   { id: "L0", label: "memtable — active writes", temp: "hot" },
@@ -10,7 +9,11 @@ const LSM_LEVELS = [
   { id: "L3", label: "cold storage", temp: "cold" },
 ] as const;
 
-export function HeroSection() {
+export async function HeroSection() {
+  const identity = await getIdentity();
+  const achievementStats = await getAchievementStats();
+  const education = await getEducation();
+
   return (
     <section
       id="top"
@@ -50,7 +53,7 @@ export function HeroSection() {
             <span className="text-flame">001 / ORIGIN</span>
             <span className="text-faint">·</span>
             <span className="text-mist normal-case tracking-normal">
-              {identity.location} · {identity.education}
+              {identity.location} · {education.degree}
             </span>
           </p>
 
@@ -87,7 +90,7 @@ export function HeroSection() {
           className="hero-ignite warm-card relative self-center md:justify-self-end"
           style={{ animationDelay: "0.95s" }}
         >
-          <div className="relative overflow-hidden rounded-4xl border border-line/70 bg-abyss/65 p-5 shadow-[0_28px_120px_-42px_rgba(0,0,0,0.9)] backdrop-blur-md md:w-[23rem] md:p-6">
+          <div className="relative overflow-hidden rounded-4xl border border-line/70 bg-abyss/65 p-5 shadow-[0_28px_120px_-42px_rgba(0,0,0,0.9)] backdrop-blur-md md:w-92 md:p-6">
             <div
               className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,107,61,0.12),transparent_40%)]"
               aria-hidden

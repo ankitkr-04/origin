@@ -4,18 +4,21 @@ import { ProjectList } from "@/components/projects/project-list";
 import { ProjectListSkeleton } from "@/components/projects/project-list-skeleton";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
-import { getProjects } from "@/db/queries";
+import { getIdentity, getProjects } from "@/db/queries";
 
-export const metadata: Metadata = {
-  title: "Projects — Ankit Kumar",
-  description:
-    "Storage engines, servers, and systems: StrataDB, Axiom, TicketLedger, and the rest of the shelf.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const identity = await getIdentity();
+  return {
+    title: `Projects — ${identity.name}`,
+    description: "Storage engines, servers, and systems: StrataDB, Axiom, TicketLedger, and the rest of the shelf.",
+  };
+}
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const identity = await getIdentity();
   return (
     <>
-      <SiteNav />
+      <SiteNav githubUrl={identity.githubUrl} />
       <Suspense fallback={<ProjectListSkeleton />}>
         <ProjectsListContainer />
       </Suspense>

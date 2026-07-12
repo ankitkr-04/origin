@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ProjectDetail } from "@/components/projects/project-detail";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
-import { getProject, getProjects } from "@/db/queries";
+import { getProject, getProjects, getIdentity } from "@/db/queries";
 
 export async function generateStaticParams() {
   const projects = await getProjects();
@@ -19,8 +19,10 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = await getProject(slug);
   if (!project) return {};
+  
+  const identity = await getIdentity();
   return {
-    title: `${project.name} — Ankit Kumar`,
+    title: `${project.name} — ${identity.name}`,
     description: project.tagline,
   };
 }
@@ -33,10 +35,12 @@ export default async function ProjectPage({
   const { slug } = await params;
   const project = await getProject(slug);
   if (!project) notFound();
+  
+  const identity = await getIdentity();
 
   return (
     <>
-      <SiteNav />
+      <SiteNav githubUrl={identity.githubUrl} />
       <main className="pt-14">
         <div className="mx-auto max-w-3xl px-5 py-16 md:px-8 md:py-24">
           <Link
