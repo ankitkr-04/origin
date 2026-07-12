@@ -81,7 +81,11 @@ export async function HeroSection() {
             <ThermalButton variant="ignite" href="#work">
               View the work
             </ThermalButton>
-            <ThermalButton variant="frost" href={identity.githubUrl}>
+            <ThermalButton
+              variant="frost"
+              href={identity.githubUrl}
+              aria-label="GitHub profile (opens in a new tab)"
+            >
               github/ankitkr-04 ↗
             </ThermalButton>
           </div>

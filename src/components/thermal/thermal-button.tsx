@@ -8,6 +8,7 @@ type ThermalButtonProps = {
   children: React.ReactNode;
   className?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  "aria-label"?: string;
 };
 
 /** Living flame, embedded in every ignite button — flickers on hover. */
@@ -79,6 +80,7 @@ export function ThermalButton({
   children,
   className,
   onClick,
+  "aria-label": ariaLabel,
 }: ThermalButtonProps) {
   const ignite = variant === "ignite";
   const cls = [ignite ? "ignite-btn" : "frost-btn", className]
@@ -88,6 +90,7 @@ export function ThermalButton({
     className: cls,
     "data-warm": ignite ? "" : undefined,
     "data-cast": ignite ? "fire" : "ice",
+    "aria-label": ariaLabel,
   };
   const body = (
     <>

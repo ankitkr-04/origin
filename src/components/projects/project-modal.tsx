@@ -70,7 +70,7 @@ export function ProjectModal({
           type="button"
           onClick={handleClose}
           aria-label="Close project"
-          className="absolute top-4 right-4 z-10 flex size-9 items-center justify-center rounded-full border border-line bg-abyss/80 backdrop-blur-sm font-mono text-sm text-mist transition-colors hover:border-ember hover:text-ember"
+          className="absolute top-4 right-4 z-10 flex size-11 items-center justify-center rounded-full border border-line bg-abyss/80 backdrop-blur-sm font-mono text-sm text-mist transition-colors hover:border-ember hover:text-ember"
         >
           ✕
         </button>

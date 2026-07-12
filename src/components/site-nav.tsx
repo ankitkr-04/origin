@@ -62,6 +62,7 @@ export function SiteNav({ githubUrl }: { githubUrl: string }) {
             href={githubUrl}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="GitHub profile (opens in a new tab)"
             className="rounded-full border border-line px-4 py-1.5 font-mono text-xs tracking-wider text-polar transition-colors hover:border-ember hover:text-ember"
           >
             GitHub ↗
@@ -72,7 +73,7 @@ export function SiteNav({ githubUrl }: { githubUrl: string }) {
             aria-controls="mobile-menu"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             onClick={() => setMenuOpen((open) => !open)}
-            className="flex size-9 flex-col items-center justify-center gap-1.5 rounded-full border border-line md:hidden"
+            className="flex size-11 flex-col items-center justify-center gap-1.5 rounded-full border border-line md:hidden"
           >
             <span
               className={`h-px w-4 bg-polar transition-transform ${menuOpen ? "translate-y-[3.5px] rotate-45" : ""}`}
