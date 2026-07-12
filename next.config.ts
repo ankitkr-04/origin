@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   cacheComponents: true, // required for 'use cache' in src/db/queries.ts
   experimental: {
+    viewTransition: true,
     webVitalsAttribution: ["CLS", "FCP", "FID", "LCP", "TTFB"],
   },
 };

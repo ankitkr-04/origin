@@ -72,6 +72,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable}`}
+      data-scroll-behavior="smooth"
     >
       <body className="bg-void text-polar antialiased">
         {/* usePathname (for the nav flash) is request data under

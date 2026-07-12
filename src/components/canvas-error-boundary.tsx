@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface Props {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ interface State {
   hasError: boolean;
 }
 
-export class CanvasErrorBoundary extends React.Component<Props, State> {
+class CanvasErrorBoundaryClass extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
@@ -29,7 +29,40 @@ export class CanvasErrorBoundary extends React.Component<Props, State> {
     if (this.state.hasError) {
       return this.props.fallback || null;
     }
-
     return this.props.children;
   }
+}
+
+export function CanvasErrorBoundary(props: Props) {
+  const [contextLost, setContextLost] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleContextLost = (e: Event) => {
+      e.preventDefault();
+      console.warn("WebGL context lost! Hiding canvas to prevent white flash.");
+      setContextLost(true);
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      // Catch webglcontextlost in the capture phase since it doesn't bubble
+      container.addEventListener("webglcontextlost", handleContextLost, true);
+      return () => {
+        container.removeEventListener("webglcontextlost", handleContextLost, true);
+      };
+    }
+  }, []);
+
+  if (contextLost) {
+    return <>{props.fallback || null}</>;
+  }
+
+  return (
+    <div ref={containerRef} className="h-full w-full">
+      <CanvasErrorBoundaryClass fallback={props.fallback}>
+        {props.children}
+      </CanvasErrorBoundaryClass>
+    </div>
+  );
 }
