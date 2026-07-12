@@ -1,10 +1,17 @@
 "use client";
-import { Environment, Float, Icosahedron, Sphere } from "@react-three/drei";
+import {
+  Environment,
+  Float,
+  Icosahedron,
+  PerspectiveCamera,
+  Sphere,
+  View,
+} from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import type * as THREE from "three";
 
-export default function ThermalCoreScene() {
+function ThermalCoreSceneContent() {
   const coreRef = useRef<THREE.Mesh>(null);
   const ringRef = useRef<THREE.Group>(null);
 
@@ -45,6 +52,7 @@ export default function ThermalCoreScene() {
 
   return (
     <>
+      <PerspectiveCamera makeDefault position={[0, 0, 7]} fov={45} />
       <ambientLight intensity={0.2} />
 
       {/* Directional lights to simulate thermal lighting (ice on left, ember on right) */}
@@ -99,5 +107,13 @@ export default function ThermalCoreScene() {
       {/* Environment map for premium reflections */}
       <Environment preset="city" />
     </>
+  );
+}
+
+export default function ThermalCoreScene() {
+  return (
+    <View className="h-full w-full pointer-events-none">
+      <ThermalCoreSceneContent />
+    </View>
   );
 }

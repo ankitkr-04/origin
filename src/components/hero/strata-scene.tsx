@@ -1,7 +1,7 @@
 // src/components/hero/strata-scene.tsx
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
@@ -240,36 +240,23 @@ function SeamCurrent({
 
 export interface StrataSceneProps {
   animate: boolean;
-  maxDpr: number;
   lowDetail: boolean;
 }
 
-import { WebGLContextManager } from "@/components/webgl-context-manager";
+import { PerspectiveCamera, View } from "@react-three/drei";
 
 export default function StrataScene({
-  animate,
-  maxDpr,
-  lowDetail,
+  animate = true,
+  lowDetail = false,
 }: StrataSceneProps) {
   return (
-    <Canvas
-      camera={{ position: [0, 0.25, 6.4], fov: 32 }}
-      dpr={[1, maxDpr]}
-      frameloop={animate ? "always" : "demand"}
-      gl={{
-        antialias: false,
-        alpha: true,
-        powerPreference: "high-performance",
-      }}
-      className="pointer-events-none"
-      aria-hidden
-    >
-      <WebGLContextManager />
+    <View className="absolute inset-0 h-full w-full pointer-events-none">
+      <PerspectiveCamera makeDefault position={[0, 0.25, 6.4]} fov={32} />
       <ambientLight intensity={0.45} />
       <pointLight position={[4.5, 5, 5.5]} intensity={30} color="#ffb454" />
       <pointLight position={[-4, -2, 4]} intensity={18} color="#7dd3fc" />
       <pointLight position={[0, 3, 2]} intensity={10} color="#c084fc" />
       <SeamRibbon animate={animate} lowDetail={lowDetail} />
-    </Canvas>
+    </View>
   );
 }

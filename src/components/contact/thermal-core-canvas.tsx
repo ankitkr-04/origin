@@ -1,8 +1,6 @@
 "use client";
-import { Canvas } from "@react-three/fiber";
 import dynamic from "next/dynamic";
 import { REDUCED_MOTION, useMediaQuery } from "@/hooks/use-media-query";
-import { CanvasErrorBoundary } from "@/components/canvas-error-boundary";
 
 const ThermalCoreScene = dynamic(
   () => import("@/components/contact/thermal-core-scene"),
@@ -10,8 +8,6 @@ const ThermalCoreScene = dynamic(
     ssr: false,
   },
 );
-
-import { WebGLContextManager } from "@/components/webgl-context-manager";
 
 export function ThermalCoreCanvas() {
   const prefersReducedMotion = useMediaQuery(REDUCED_MOTION);
@@ -26,20 +22,7 @@ export function ThermalCoreCanvas() {
 
   return (
     <div className="absolute inset-0 z-0 pointer-events-none opacity-80 md:opacity-100 mix-blend-screen">
-      <CanvasErrorBoundary>
-        <Canvas
-          camera={{ position: [0, 0, 7], fov: 45 }}
-          gl={{
-            antialias: false,
-            alpha: true,
-            powerPreference: "high-performance",
-          }}
-          dpr={[1, 2]}
-        >
-          <WebGLContextManager />
-          <ThermalCoreScene />
-        </Canvas>
-      </CanvasErrorBoundary>
+      <ThermalCoreScene />
     </div>
   );
 }

@@ -10,7 +10,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const identity = await getIdentity();
   return {
     title: `Projects — ${identity.name}`,
-    description: "Storage engines, servers, and systems: StrataDB, Axiom, TicketLedger, and the rest of the shelf.",
+    description:
+      "Storage engines, servers, and systems: StrataDB, Axiom, TicketLedger, and the rest of the shelf.",
   };
 }
 

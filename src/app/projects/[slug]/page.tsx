@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ProjectDetail } from "@/components/projects/project-detail";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
-import { getProject, getProjects, getIdentity } from "@/db/queries";
+import { getIdentity, getProject, getProjects } from "@/db/queries";
 
 export async function generateStaticParams() {
   const projects = await getProjects();
@@ -19,7 +19,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = await getProject(slug);
   if (!project) return {};
-  
+
   const identity = await getIdentity();
   return {
     title: `${project.name} — ${identity.name}`,
@@ -35,7 +35,7 @@ export default async function ProjectPage({
   const { slug } = await params;
   const project = await getProject(slug);
   if (!project) notFound();
-  
+
   const identity = await getIdentity();
 
   return (

@@ -65,6 +65,8 @@ export const viewport: Viewport = {
   themeColor: "#04070d",
 };
 
+import { GlobalCanvas } from "@/components/global-canvas";
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -82,6 +84,7 @@ export default function RootLayout({
         </Suspense>
         <HeatLens />
         <ThermalInteractions />
+        <GlobalCanvas />
         <Suspense fallback={children}>
           <PageTransition>{children}</PageTransition>
         </Suspense>
