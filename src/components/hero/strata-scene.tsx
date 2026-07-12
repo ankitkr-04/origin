@@ -258,7 +258,6 @@ export default function StrataScene({
         antialias: false,
         alpha: true,
         powerPreference: "high-performance",
-        preserveDrawingBuffer: true,
       }}
       className="pointer-events-none"
       aria-hidden

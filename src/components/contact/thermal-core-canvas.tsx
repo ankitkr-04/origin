@@ -31,7 +31,6 @@ export function ThermalCoreCanvas() {
             antialias: false,
             alpha: true,
             powerPreference: "high-performance",
-            preserveDrawingBuffer: true,
           }}
           dpr={[1, 2]}
         >
