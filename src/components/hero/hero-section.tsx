@@ -1,4 +1,4 @@
-import { HeroCanvas } from "@/components/hero/hero-canvas";
+import { GlassShardsCanvas } from "@/components/hero/glass-shards-canvas";
 import { ThermalButton } from "@/components/thermal/thermal-button";
 import { getIdentity } from "@/db/identity";
 import { getAchievementStats, getEducation } from "@/db/profile";
@@ -23,13 +23,8 @@ export async function HeroSection() {
       {/* Ambient glow + 3D LSM stack, behind everything */}
       <div className="hero-glow absolute inset-0" aria-hidden />
       <div className="absolute inset-0 md:left-[34%]" aria-hidden>
-        <HeroCanvas />
+        <GlassShardsCanvas />
       </div>
-      {/* Fade the scene under the text on small screens for legibility */}
-      <div
-        className="absolute inset-0 bg-linear-to-r from-void via-void/72 to-transparent md:via-void/26"
-        aria-hidden
-      />
 
       <div className="relative z-10 mx-auto grid w-full max-w-6xl flex-1 items-end gap-10 px-5 pt-24 pb-12 md:grid-cols-[1.1fr_minmax(0,0.9fr)] md:px-8 md:pb-16">
         <div className="flex flex-col justify-center">

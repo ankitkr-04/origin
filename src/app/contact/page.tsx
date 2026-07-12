@@ -1,6 +1,6 @@
 // src/app/contact/page.tsx
 import type { Metadata } from "next";
-import { ThermalCoreCanvas } from "@/components/contact/thermal-core-canvas";
+import { HeroCanvas } from "@/components/hero/hero-canvas";
 import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
@@ -27,7 +27,7 @@ export default async function ContactPage() {
       <main className="relative flex min-h-svh flex-col overflow-hidden pt-14">
         <div className="hero-glow absolute inset-0" aria-hidden />
         <div className="absolute inset-0 md:left-2/5" aria-hidden>
-          <ThermalCoreCanvas />
+          <HeroCanvas />
         </div>
         <div
           className="absolute inset-0 bg-linear-to-b from-void via-void/58 to-void/30 md:hidden"
