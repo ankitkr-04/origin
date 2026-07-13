@@ -1,3 +1,4 @@
+import { HexagonIcon } from "@/components/icons";
 import { ThermalButton } from "@/components/thermal/thermal-button";
 import { getIdentity } from "@/db/identity";
 import { getSystemMetrics } from "@/db/metrics";
@@ -23,20 +24,7 @@ export async function HeroSection() {
             className="hero-ignite flex items-center gap-2.5 font-mono text-xs tracking-[0.24em] uppercase"
             style={{ animationDelay: "0.2s" }}
           >
-            <svg
-              width="11"
-              height="11"
-              viewBox="0 0 16 16"
-              fill="none"
-              aria-hidden="true"
-              className="text-ice/70"
-            >
-              <path
-                d="M8 1.2 14 4.6v6.8L8 14.8 2 11.4V4.6L8 1.2Z"
-                stroke="currentColor"
-                strokeWidth="1"
-              />
-            </svg>
+            <HexagonIcon className="text-ice/70" />
             <span className="text-flame">001 / ORIGIN</span>
             <span className="text-faint">·</span>
             <span className="text-mist normal-case tracking-normal">

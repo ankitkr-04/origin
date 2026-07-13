@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 interface RevealProps {
   children: React.ReactNode;
@@ -16,23 +17,16 @@ interface RevealProps {
 export function Reveal({ children, className, delay = 0 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          node.dataset.reveal = "visible";
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
+  useIntersectionObserver(
+    ref,
+    (entry, observer) => {
+      if (entry.isIntersecting && ref.current) {
+        ref.current.dataset.reveal = "visible";
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
+  );
 
   return (
     <div
