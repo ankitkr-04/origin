@@ -14,7 +14,7 @@ export default function ErrorPage({
       <p className="font-mono text-xs tracking-[0.25em] text-flame uppercase">
         ERROR · <em className="not-italic text-[#ff5f8f]">THERMAL RUNAWAY</em>
       </p>
-      <h1 className="font-display font-light text-7xl md:text-8xl lg:text-9xl tracking-[0.12em] leading-none my-6 bg-linear-to-b from-[#ffd9c2] to-ember bg-clip-text text-transparent select-none">
+      <h1 className="font-display font-light text-7xl md:text-8xl lg:text-9xl tracking-[0.12em] leading-none my-6 bg-linear-to-b from-flame to-ember bg-clip-text text-transparent select-none">
         500
       </h1>
       <p className="font-mono text-[11.5px] md:text-xs leading-[1.9] text-faint tracking-wider mb-8 uppercase max-w-lg">
