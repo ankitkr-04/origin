@@ -1,4 +1,4 @@
-import { ThermalButton } from "@/components/thermal/thermal-button";
+import { Button } from "@/components/ui/button";
 import type { Project } from "@/types/content";
 
 /**
@@ -61,13 +61,13 @@ export function ProjectDetail({ project }: { project: Project }) {
       </ul>
 
       <div className="mt-10 flex flex-wrap gap-4">
-        <ThermalButton variant="ignite" href={project.repoUrl}>
+        <Button variant="ignite" href={project.repoUrl}>
           Read the source ↗
-        </ThermalButton>
+        </Button>
         {project.demoUrl ? (
-          <ThermalButton variant="frost" href={project.demoUrl}>
+          <Button variant="frost" href={project.demoUrl}>
             Live demo ↗
-          </ThermalButton>
+          </Button>
         ) : null}
       </div>
     </article>

@@ -72,9 +72,9 @@ function CrystalGlyph() {
  * cold). Renders a <Link> for internal routes (with the typed "nav"
  * transition), an <a> for hash anchors and external URLs, or a <button>.
  * The bloom and spell-press are wired via data attributes and handled by
- * <ThermalInteractions/> — this stays a Server Component.
+ * <Interactions/> — this stays a Server Component.
  */
-export function ThermalButton({
+export function Button({
   variant = "ignite",
   href,
   children,

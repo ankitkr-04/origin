@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteNav } from "@/components/layout/site-nav";
 import { ProjectList } from "@/components/projects/project-list";
 import { ProjectListSkeleton } from "@/components/projects/project-list-skeleton";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteNav } from "@/components/site-nav";
 import { getIdentity } from "@/db/identity";
 import { getProjects } from "@/db/projects";
 import type { Project } from "@/types/content";

@@ -1,6 +1,6 @@
 "use client";
 
-import { ThermalButton } from "@/components/thermal/thermal-button";
+import { Button } from "@/components/ui/button";
 
 export default function ErrorPage({
   error,
@@ -28,9 +28,9 @@ export default function ErrorPage({
           </>
         ) : null}
       </p>
-      <ThermalButton variant="ignite" onClick={reset}>
+      <Button variant="ignite" onClick={reset}>
         Cool down & retry
-      </ThermalButton>
+      </Button>
     </main>
   );
 }

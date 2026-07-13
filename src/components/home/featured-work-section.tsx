@@ -1,10 +1,10 @@
 import { FeaturedWorkList } from "@/components/home/featured-work-list";
-import { Reveal } from "@/components/reveal";
-import { SectionHeading } from "@/components/section-heading";
-import { ThermalButton } from "@/components/thermal/thermal-button";
+import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/ui/reveal";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { getProjects } from "@/db/projects";
 
-export async function FeaturedWork() {
+export async function FeaturedWorkSection() {
   const flagshipProjects = (await getProjects()).filter(
     (project) => project.tier === "flagship",
   );
@@ -161,9 +161,9 @@ export async function FeaturedWork() {
         <FeaturedWorkList flagshipProjects={flagshipProjects} />
 
         <Reveal className="mt-14">
-          <ThermalButton variant="frost" href="/projects">
+          <Button variant="frost" href="/projects">
             All projects — including the early ones →
-          </ThermalButton>
+          </Button>
         </Reveal>
       </div>
     </section>

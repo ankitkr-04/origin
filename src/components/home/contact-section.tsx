@@ -1,7 +1,7 @@
-import { Reveal } from "@/components/reveal";
-import { ThermalButton } from "@/components/thermal/thermal-button";
+import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/ui/reveal";
 
-export function ContactCta() {
+export function ContactSection() {
   return (
     <section className="py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-5 text-center md:px-8">
@@ -18,9 +18,9 @@ export function ContactCta() {
         </Reveal>
         <Reveal delay={200}>
           <div className="mt-10 flex justify-center">
-            <ThermalButton variant="ignite" href="/contact">
+            <Button variant="ignite" href="/contact">
               Get in touch →
-            </ThermalButton>
+            </Button>
           </div>
         </Reveal>
       </div>

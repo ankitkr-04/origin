@@ -2,11 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { Archivo, Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
-import { PageTransition } from "@/components/page-transition";
-import { Grain } from "@/components/thermal/grain";
-import { HeatLens } from "@/components/thermal/heat-lens";
-import { ReaderBar } from "@/components/thermal/reader-bar";
-import { ThermalInteractions } from "@/components/thermal/thermal-interactions";
+import { Grain } from "@/components/layout/grain";
+import { HeatLens } from "@/components/layout/heat-lens";
+import { Interactions } from "@/components/layout/interactions";
+import { PageTransition } from "@/components/layout/page-transition";
+import { ReaderBar } from "@/components/layout/reader-bar";
 import { siteConfig } from "@/lib/site-config";
 
 const geistSans = Geist({
@@ -73,8 +73,8 @@ export const viewport: Viewport = {
   themeColor: "#04070d",
 };
 
-import { GlobalCanvas } from "@/components/global-canvas";
-import { GlassShardsCanvas } from "@/components/hero/glass-shards-canvas";
+import { GlobalCanvas } from "@/components/layout/global-canvas";
+import { GlassShardsCanvas } from "@/components/scenes/glass-shards-canvas";
 
 export default function RootLayout({
   children,
@@ -92,7 +92,7 @@ export default function RootLayout({
           <ReaderBar />
         </Suspense>
         <HeatLens />
-        <ThermalInteractions />
+        <Interactions />
         <GlobalCanvas />
         <Suspense fallback={null}>
           <GlassShardsCanvas />

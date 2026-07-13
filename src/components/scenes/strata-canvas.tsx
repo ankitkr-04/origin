@@ -2,7 +2,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import type { StrataSceneProps } from "@/components/hero/strata-scene";
+import type { StrataSceneProps } from "@/components/scenes/strata-scene";
 import {
   REDUCED_MOTION,
   SMALL_SCREEN,
@@ -10,11 +10,11 @@ import {
 } from "@/hooks/use-media-query";
 
 const StrataScene = dynamic<StrataSceneProps>(
-  () => import("@/components/hero/strata-scene"),
+  () => import("@/components/scenes/strata-scene"),
   { ssr: false },
 );
 
-export function HeroCanvas() {
+export function StrataCanvas() {
   const reducedMotion = useMediaQuery(REDUCED_MOTION);
   const smallScreen = useMediaQuery(SMALL_SCREEN);
 

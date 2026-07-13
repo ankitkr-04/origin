@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Reveal } from "@/components/reveal";
+import { Reveal } from "@/components/ui/reveal";
 import type { Project } from "@/types/content";
 
 type ProjectCaseProps = {

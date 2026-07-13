@@ -1,5 +1,5 @@
-import { Reveal } from "@/components/reveal";
-import { SectionHeading } from "@/components/section-heading";
+import { Reveal } from "@/components/ui/reveal";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { getAchievements } from "@/db/profile";
 
 export async function AchievementsSection() {

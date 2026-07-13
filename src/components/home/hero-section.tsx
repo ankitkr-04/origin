@@ -1,5 +1,5 @@
 import { HexagonIcon } from "@/components/icons";
-import { ThermalButton } from "@/components/thermal/thermal-button";
+import { Button } from "@/components/ui/button";
 import { getIdentity } from "@/db/identity";
 import { getSystemMetrics } from "@/db/metrics";
 import { getAchievementStats, getEducation } from "@/db/profile";
@@ -52,16 +52,16 @@ export async function HeroSection() {
             className="hero-ignite mt-10 flex flex-wrap items-center gap-4"
             style={{ animationDelay: "0.75s" }}
           >
-            <ThermalButton variant="ignite" href="#work">
+            <Button variant="ignite" href="#work">
               View the work
-            </ThermalButton>
-            <ThermalButton
+            </Button>
+            <Button
               variant="frost"
               href={identity.githubUrl}
               aria-label="GitHub profile (opens in a new tab)"
             >
               github/ankitkr-04 ↗
-            </ThermalButton>
+            </Button>
           </div>
         </div>
 

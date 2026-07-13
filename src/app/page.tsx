@@ -1,9 +1,9 @@
-import { HeroSection } from "@/components/hero/hero-section";
 import { AchievementsSection } from "@/components/home/achievements-section";
-import { ContactCta } from "@/components/home/contact-cta";
-import { FeaturedWork } from "@/components/home/featured-work";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteNav } from "@/components/site-nav";
+import { ContactSection } from "@/components/home/contact-section";
+import { FeaturedWorkSection } from "@/components/home/featured-work-section";
+import { HeroSection } from "@/components/home/hero-section";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteNav } from "@/components/layout/site-nav";
 import { getIdentity } from "@/db/identity";
 
 export default async function HomePage() {
@@ -14,9 +14,9 @@ export default async function HomePage() {
       <SiteNav githubUrl={identity.githubUrl} />
       <main>
         <HeroSection />
-        <FeaturedWork />
+        <FeaturedWorkSection />
         <AchievementsSection />
-        <ContactCta />
+        <ContactSection />
       </main>
       <SiteFooter />
     </>

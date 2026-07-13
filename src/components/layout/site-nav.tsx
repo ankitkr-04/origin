@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { BrandLogo } from "@/components/brand-logo";
 import {
   ChevronIcon,
   DownloadIcon,
   GithubIcon,
   ListIcon,
 } from "@/components/icons";
+import { BrandLogo } from "@/components/ui/brand-logo";
 
 const navLinks = [
   { label: "Projects", href: "/projects" },

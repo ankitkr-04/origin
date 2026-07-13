@@ -5,8 +5,8 @@ import { ProjectCard } from "@/components/projects/project-card";
 import { ProjectCase } from "@/components/projects/project-case";
 import { ProjectDetail } from "@/components/projects/project-detail";
 import { ProjectModal } from "@/components/projects/project-modal";
-import { Reveal } from "@/components/reveal";
-import { SectionHeading } from "@/components/section-heading";
+import { Reveal } from "@/components/ui/reveal";
+import { SectionHeading } from "@/components/ui/section-heading";
 import type { Project } from "@/types/content";
 
 export function ProjectList({ projects }: { projects: Project[] }) {

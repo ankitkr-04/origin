@@ -1,10 +1,10 @@
 // src/app/contact/page.tsx
 import type { Metadata } from "next";
-import { HeroCanvas } from "@/components/hero/hero-canvas";
-import { Reveal } from "@/components/reveal";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteNav } from "@/components/site-nav";
-import { ThermalButton } from "@/components/thermal/thermal-button";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteNav } from "@/components/layout/site-nav";
+import { StrataCanvas } from "@/components/scenes/strata-canvas";
+import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/ui/reveal";
 import { getIdentity, getSocialLinks } from "@/db/identity";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -27,7 +27,7 @@ export default async function ContactPage() {
       <main className="relative flex min-h-svh flex-col overflow-hidden pt-14">
         <div className="hero-glow absolute inset-0" aria-hidden />
         <div className="absolute inset-0 md:left-2/5" aria-hidden>
-          <HeroCanvas />
+          <StrataCanvas />
         </div>
         <div
           className="absolute inset-0 bg-linear-to-b from-void via-void/58 to-void/30 md:hidden"
@@ -59,9 +59,9 @@ export default async function ContactPage() {
           </Reveal>
           <Reveal delay={300}>
             <div className="mt-10 flex flex-col items-start gap-7">
-              <ThermalButton variant="ignite" href={`mailto:${identity.email}`}>
+              <Button variant="ignite" href={`mailto:${identity.email}`}>
                 {identity.email}
-              </ThermalButton>
+              </Button>
               <div className="font-mono text-xs leading-6 text-faint">
                 <p>$ open connection --to ankit</p>
                 <p>

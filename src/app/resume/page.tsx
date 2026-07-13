@@ -1,9 +1,9 @@
 import { Suspense } from "react";
-import { Reveal } from "@/components/reveal";
-import { SectionHeading } from "@/components/section-heading";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteNav } from "@/components/site-nav";
-import { ThermalButton } from "@/components/thermal/thermal-button";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteNav } from "@/components/layout/site-nav";
+import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/ui/reveal";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { getIdentity } from "@/db/identity";
 import { getResumes } from "@/db/resume";
 import { ResumeNotifier } from "./resume-notifier";
@@ -92,9 +92,9 @@ export default async function ResumePage() {
                     </Reveal>
                     <Reveal delay={idx * 50 + 50}>
                       <div className="flex sm:justify-end items-start pt-4 sm:pt-0 border-t border-line/50 sm:border-0">
-                        <ThermalButton variant="frost" href={resume.fileUrl}>
+                        <Button variant="frost" href={resume.fileUrl}>
                           Download PDF
-                        </ThermalButton>
+                        </Button>
                       </div>
                     </Reveal>
                   </div>

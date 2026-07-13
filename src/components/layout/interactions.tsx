@@ -17,7 +17,7 @@ const ICE_SPARKS = ["#7dd3fc", "#5eead4", "#eaf3ff", "#c084fc"];
  *
  * Everything is skipped under reduced motion.
  */
-export function ThermalInteractions() {
+export function Interactions() {
   const reducedMotion = useMediaQuery(REDUCED_MOTION);
 
   useEffect(() => {

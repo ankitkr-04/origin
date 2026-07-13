@@ -1,4 +1,4 @@
-import { Reveal } from "@/components/reveal";
+import { Reveal } from "@/components/ui/reveal";
 
 interface SectionHeadingProps {
   /** Numbered doc-style index, e.g. "001" — mirrors the architecture-doc convention. */

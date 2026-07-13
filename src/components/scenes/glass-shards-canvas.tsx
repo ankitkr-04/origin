@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 
 const GlassShardsScene = dynamic(
-  () => import("@/components/hero/glass-shards-scene"),
+  () => import("@/components/scenes/glass-shards-scene"),
   { ssr: false },
 );
 

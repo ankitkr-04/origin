@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { ThermalButton } from "@/components/thermal/thermal-button";
+import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   const pathname = usePathname();
@@ -19,9 +19,9 @@ export default function NotFound() {
         <br />
         object not found in any tier
       </p>
-      <ThermalButton variant="frost" href="/">
+      <Button variant="frost" href="/">
         Return to the hot path
-      </ThermalButton>
+      </Button>
     </main>
   );
 }
