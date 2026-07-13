@@ -3,6 +3,7 @@
 export const CACHE_TAGS = {
   projects: "projects",
   profile: "profile",
+  resume: "resume",
 } as const;
 
 export type CacheTag = (typeof CACHE_TAGS)[keyof typeof CACHE_TAGS];

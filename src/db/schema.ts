@@ -1,9 +1,12 @@
+import { sql } from "drizzle-orm";
 import {
+  boolean,
   index,
   integer,
   pgTable,
   text,
   timestamp,
+  uniqueIndex,
   varchar,
 } from "drizzle-orm/pg-core";
 import type { ProjectStatus, ProjectTier } from "@/types/content";
@@ -143,3 +146,26 @@ export type IdentityRow = typeof identity.$inferSelect;
 export type SocialLinkRow = typeof socialLinks.$inferSelect;
 export type EducationRow = typeof educations.$inferSelect;
 export type AchievementStatRow = typeof achievementStats.$inferSelect;
+
+export const resumes = pgTable(
+  "resumes",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    label: text("label").notNull(),
+    fileUrl: text("file_url").notNull(),
+    focusAreas: text("focus_areas").array().notNull(),
+    isPublic: boolean("is_public").notNull().default(true),
+    isCurrent: boolean("is_current").notNull().default(false),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    uniqueIndex("resumes_one_current_idx")
+      .on(t.isCurrent)
+      .where(sql`${t.isCurrent} = true`),
+  ],
+);
+
+export type ResumeRow = typeof resumes.$inferSelect;
