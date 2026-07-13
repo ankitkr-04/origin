@@ -450,7 +450,7 @@ body {
 }
 
 .matrix-card:hover {
-  transition-duration: 0.18s;
+  transition-duration: 0.6s;
   transform: translateY(-3px);
   border-color: color-mix(in srgb, var(--color-ember) 36%, transparent);
   box-shadow: 0 22px 60px -24px rgba(255, 107, 61, 0.25);
@@ -458,7 +458,7 @@ body {
 
 .matrix-card:hover::before {
   opacity: 1;
-  animation: matrix-bloom 1.2s cubic-bezier(0.22, 0.9, 0.32, 1) forwards;
+  animation: matrix-bloom 3.5s ease forwards;
 }
 
 @property --bloom-color {
@@ -471,7 +471,7 @@ body {
   0% {
     --bloom-color: rgba(125, 211, 252, 0.15); /* Ice */
   }
-  40% {
+  35% {
     --bloom-color: rgba(192, 132, 252, 0.15); /* Plasma */
   }
   100% {
