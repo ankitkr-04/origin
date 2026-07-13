@@ -11,8 +11,11 @@ export function FeaturedResume({
       className="relative overflow-hidden rounded-2xl border border-ember/20 bg-abyss/80 p-8 md:p-12 shadow-[0_0_40px_rgba(255,100,50,0.1)] warm-card group mb-20"
       data-warm
     >
-      <div className="absolute top-0 right-0 p-6 opacity-40 group-hover:opacity-100 transition-opacity duration-700">
-        <span className="thermal-node thermal-node-hot" aria-hidden />
+      <div className="absolute top-6 right-6 flex h-6 w-6 items-center justify-center opacity-40 transition-opacity duration-700 group-hover:opacity-100">
+        <span
+          className="thermal-node-hot block h-3.5 w-3.5 rounded-full"
+          aria-hidden
+        />
       </div>
 
       <div className="relative z-10 grid gap-8 md:grid-cols-[1fr_auto] items-end">
