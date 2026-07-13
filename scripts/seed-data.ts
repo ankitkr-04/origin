@@ -321,3 +321,76 @@ export const education = {
   period: "Aug 2023 — May 2026",
   cgpa: "8.41 / 10",
 };
+
+export const resumes = [
+  {
+    label: "Version 1 — Distributed Systems",
+    fileUrl: "/resume/ankit-resume-2025-11-distributed-systems.pdf",
+    focusAreas: ["Distributed Systems", "Performance Optimization"],
+    isCurrent: false,
+    updatedAt: new Date("2025-11-15T00:00:00Z"),
+  },
+  {
+    label: "Version 2 — Backend Engineering",
+    fileUrl: "/resume/ankit-resume-2025-12-backend.pdf",
+    focusAreas: ["General Backend", "Spring Boot"],
+    isCurrent: false,
+    updatedAt: new Date("2025-12-15T00:00:00Z"),
+  },
+  {
+    label: "Version 3 — Backend Engineering",
+    fileUrl: "/resume/ankit-resume-2026-01-backend.pdf",
+    focusAreas: ["General Backend"],
+    isCurrent: false,
+    updatedAt: new Date("2026-01-15T00:00:00Z"),
+  },
+  {
+    label: "Version 4 — Web Engineering",
+    fileUrl: "/resume/ankit-resume-2026-02-web-engineering.pdf",
+    focusAreas: ["Web Engineering", "WebSockets"],
+    isCurrent: false,
+    updatedAt: new Date("2026-02-15T00:00:00Z"),
+  },
+  {
+    label: "Version 5 — Backend Engineering",
+    fileUrl: "/resume/ankit-resume-2026-03-backend.pdf",
+    focusAreas: ["General Backend", "Spring Boot"],
+    isCurrent: false,
+    updatedAt: new Date("2026-03-15T00:00:00Z"),
+  },
+  {
+    label: "Version 6 — Systems Engineering",
+    fileUrl: "/resume/ankit-resume-2026-04-systems.pdf",
+    focusAreas: ["Concurrency", "Real-Time Infrastructure"],
+    isCurrent: false,
+    updatedAt: new Date("2026-04-10T00:00:00Z"),
+  },
+  {
+    label: "Version 7 — Systems Engineering (Qualcomm)",
+    fileUrl: "/resume/ankit-resume-2026-04-qualcomm.pdf",
+    focusAreas: ["Systems Engineering", "Qualcomm"],
+    isCurrent: false,
+    updatedAt: new Date("2026-04-12T00:00:00Z"),
+  },
+  {
+    label: "Version 8 — Full-Stack AI (Cognizant)",
+    fileUrl: "/resume/ankit-resume-2026-04-cognizant-ai.pdf",
+    focusAreas: ["Full-Stack AI", "RAG Pipelines"],
+    isCurrent: false,
+    updatedAt: new Date("2026-04-15T00:00:00Z"),
+  },
+  {
+    label: "Version 9 — Backend Architecture (Infosys)",
+    fileUrl: "/resume/ankit-resume-2026-04-infosys.pdf",
+    focusAreas: ["Backend Architecture", "Low-Level Infrastructure"],
+    isCurrent: false,
+    updatedAt: new Date("2026-04-20T00:00:00Z"),
+  },
+  {
+    label: "Version 10 — C++ Systems",
+    fileUrl: "/resume/ankit-resume-2026-05-cpp.pdf",
+    focusAreas: ["C++ Systems", "Memory Allocators", "Linux"],
+    isCurrent: true,
+    updatedAt: new Date("2026-05-15T00:00:00Z"),
+  },
+];

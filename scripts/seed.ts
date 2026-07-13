@@ -83,8 +83,19 @@ async function main() {
     sortOrder: 0,
   });
 
+  await db.delete(schema.resumes);
+  await db.insert(schema.resumes).values(
+    seed.resumes.map((resume) => ({
+      label: resume.label,
+      fileUrl: resume.fileUrl,
+      focusAreas: resume.focusAreas,
+      isCurrent: resume.isCurrent,
+      updatedAt: resume.updatedAt,
+    })),
+  );
+
   console.log(
-    `Seeded ${seed.projects.length} projects, ${seed.achievements.length} achievements, ${seed.experiences.length} experiences, ${seed.certifications.length} certifications, identity, ${seed.socialLinks.length} social links, ${seed.achievementStats.length} achievement stats, and education.`,
+    `Seeded ${seed.projects.length} projects, ${seed.achievements.length} achievements, ${seed.experiences.length} experiences, ${seed.certifications.length} certifications, identity, ${seed.socialLinks.length} social links, ${seed.achievementStats.length} achievement stats, education, and ${seed.resumes.length} resumes.`,
   );
 }
 
