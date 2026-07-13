@@ -62,6 +62,7 @@ const focusTrap = (e: ReactKeyboardEvent) => {
 
 export function TerminalPalette() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
@@ -71,19 +72,34 @@ export function TerminalPalette() {
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const isOpenRef = useRef(isOpen);
+  const isClosingRef = useRef(isClosing);
 
   const router = useRouter();
   const pathname = usePathname();
+
+  const closeTerminal = () => {
+    if (isClosingRef.current || !isOpenRef.current) return;
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+    }, 240);
+  };
 
   // Keep ref in sync for event listeners without rebinding
   useEffect(() => {
     isOpenRef.current = isOpen;
   }, [isOpen]);
 
-  // Close on route change
+  useEffect(() => {
+    isClosingRef.current = isClosing;
+  }, [isClosing]);
+
+  // Close on route change (instant, no animation needed)
   // biome-ignore lint/correctness/useExhaustiveDependencies: we explicitly want to run this when pathname changes
   useEffect(() => {
     setIsOpen(false);
+    setIsClosing(false);
   }, [pathname]);
 
   // Global Keyboard Shortcut (Cmd+K)
@@ -91,15 +107,17 @@ export function TerminalPalette() {
     const handleKeyDown = (e: globalThis.KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault(); // Prevents Chrome/Edge address bar focus
-        setIsOpen((prev) => {
-          if (!prev) setIsBooting(true);
-          return !prev;
-        });
+        if (isOpenRef.current) {
+          closeTerminal();
+        } else {
+          setIsOpen(true);
+          setIsBooting(true);
+        }
       }
 
       // Escape to close
       if (e.key === "Escape" && isOpenRef.current) {
-        setIsOpen(false);
+        closeTerminal();
       }
     };
 
@@ -109,7 +127,7 @@ export function TerminalPalette() {
 
   // Auto-focus and lock scroll
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && !isClosing) {
       document.documentElement.style.overflow = "hidden";
       if (isBooting) {
         const timer = setTimeout(() => {
@@ -120,10 +138,10 @@ export function TerminalPalette() {
       } else {
         inputRef.current?.focus();
       }
-    } else {
+    } else if (!isOpen) {
       document.documentElement.style.overflow = "";
     }
-  }, [isOpen, isBooting]);
+  }, [isOpen, isBooting, isClosing]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: run when history or boot state changes
   useEffect(() => {
@@ -161,10 +179,12 @@ export function TerminalPalette() {
       if (["about", "resume", "projects", "contact"].includes(target)) {
         addEntry(`Navigating to /${target}...`);
         router.push(`/${target}`);
+        closeTerminal();
         return;
       } else if (target === "home" || target === "/") {
         addEntry(`Navigating to /...`);
         router.push(`/`);
+        closeTerminal();
         return;
       }
       addEntry(`bash: go: unknown route '${target}'`, true);
@@ -238,6 +258,7 @@ export function TerminalPalette() {
           },
         ]);
         router.push("/contact");
+        closeTerminal();
       }, 800);
       return;
     }
@@ -311,7 +332,10 @@ export function TerminalPalette() {
     <>
       <button
         type="button"
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          setIsOpen(true);
+          setIsBooting(true);
+        }}
         className="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-line bg-abyss/80 text-mist shadow-lg backdrop-blur transition-all hover:scale-105 hover:border-ice/40 hover:text-polar focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember group"
         aria-label="Open Terminal Palette"
         style={{ bottom: "max(1.5rem, env(safe-area-inset-bottom))" }}
@@ -329,15 +353,15 @@ export function TerminalPalette() {
         // biome-ignore lint/a11y/useKeyWithClickEvents: backdrop click
         // biome-ignore lint/a11y/noStaticElementInteractions: backdrop click
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-void/40 backdrop-blur-md"
-          onClick={() => setIsOpen(false)}
+          className={`fixed inset-0 z-50 flex items-center justify-center bg-void/40 backdrop-blur-md modal-backdrop ${isClosing ? "modal-closing" : ""}`}
+          onClick={closeTerminal}
         >
           {/* biome-ignore lint/a11y/noStaticElementInteractions: dialog container */}
           {/* biome-ignore lint/a11y/useKeyWithClickEvents: dialog container */}
           <div
             role="dialog"
             aria-modal="true"
-            className="w-full max-w-2xl overflow-hidden rounded-xl border border-line/70 bg-abyss/90 shadow-2xl matrix-card"
+            className="w-full max-w-2xl overflow-hidden rounded-xl border border-line/70 bg-abyss/90 shadow-2xl matrix-card modal-panel"
             style={{ height: "min(600px, 90dvh)" }}
             onClick={(e) => e.stopPropagation()}
             onKeyDown={focusTrap}
