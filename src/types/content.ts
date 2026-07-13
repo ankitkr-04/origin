@@ -64,3 +64,8 @@ export interface Education {
   period: string;
   cgpa: string;
 }
+
+export interface SystemMetrics {
+  githubCommits: number;
+  dsaSolved: number;
+}

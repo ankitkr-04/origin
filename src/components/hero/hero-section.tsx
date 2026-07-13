@@ -1,11 +1,13 @@
 import { ThermalButton } from "@/components/thermal/thermal-button";
 import { getIdentity } from "@/db/identity";
+import { getSystemMetrics } from "@/db/metrics";
 import { getAchievementStats, getEducation } from "@/db/profile";
 
 export async function HeroSection() {
   const identity = await getIdentity();
   const achievementStats = await getAchievementStats();
   const education = await getEducation();
+  const systemMetrics = await getSystemMetrics();
 
   return (
     <section
@@ -102,16 +104,20 @@ export async function HeroSection() {
 
             <div className="relative mt-5 flex items-center justify-between gap-4 rounded-xl border border-line/40 bg-abyss/40 px-4 py-2.5">
               <span className="font-mono text-[10px] tracking-[0.2em] text-mist uppercase">
-                Core Threads
+                Github Commits (2026)
               </span>
-              <span className="font-mono text-xs text-polar">16 / 16</span>
+              <span className="font-mono text-xs text-polar">
+                {systemMetrics.githubCommits}
+              </span>
             </div>
 
             <div className="relative mt-3 flex items-center justify-between gap-4 rounded-xl border border-line/40 bg-abyss/40 px-4 py-2.5">
               <span className="font-mono text-[10px] tracking-[0.2em] text-mist uppercase">
-                Memory Cache
+                DSA Problems Solved
               </span>
-              <span className="font-mono text-xs text-flame">WARM</span>
+              <span className="font-mono text-xs text-flame">
+                {systemMetrics.dsaSolved}
+              </span>
             </div>
 
             <dl className="relative mt-5 grid grid-cols-2 gap-3">
