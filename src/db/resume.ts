@@ -21,7 +21,7 @@ export async function getCurrentResume() {
     .select()
     .from(resumes)
     .where(eq(resumes.isPublic, true))
-    .orderBy(desc(resumes.createdAt))
+    .orderBy(desc(resumes.updatedAt))
     .limit(1);
 
   return latestPublic || null;
@@ -36,5 +36,5 @@ export async function getResumes() {
     .select()
     .from(resumes)
     .where(eq(resumes.isPublic, true))
-    .orderBy(desc(resumes.createdAt));
+    .orderBy(desc(resumes.updatedAt));
 }
