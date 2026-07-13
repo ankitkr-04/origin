@@ -2,7 +2,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { REDUCED_MOTION, useMediaQuery } from "@/hooks/use-media-query";
+import { usePathname } from "next/navigation";
 
 const GlassShardsScene = dynamic(
   () => import("@/components/hero/glass-shards-scene"),
@@ -10,11 +10,18 @@ const GlassShardsScene = dynamic(
 );
 
 export function GlassShardsCanvas() {
-  const _reducedMotion = useMediaQuery(REDUCED_MOTION);
+  const pathname = usePathname();
+  const isVisible = pathname === "/";
 
-  // If we really want to render nothing or a fallback when reduced motion is on,
-  // we could do it here. But the scene already handles it gracefully (stops spinning).
-  // I will just render the scene.
-
-  return <GlassShardsScene />;
+  return (
+    <div
+      className="fixed inset-0 h-screen w-screen pointer-events-none z-0 transition-opacity duration-[1400ms] ease-out"
+      style={{
+        visibility: isVisible ? "visible" : "hidden",
+        opacity: isVisible ? 1 : 0,
+      }}
+    >
+      <GlassShardsScene isVisible={isVisible} />
+    </div>
+  );
 }

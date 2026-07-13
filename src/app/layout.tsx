@@ -74,6 +74,7 @@ export const viewport: Viewport = {
 };
 
 import { GlobalCanvas } from "@/components/global-canvas";
+import { GlassShardsCanvas } from "@/components/hero/glass-shards-canvas";
 
 export default function RootLayout({
   children,
@@ -93,6 +94,9 @@ export default function RootLayout({
         <HeatLens />
         <ThermalInteractions />
         <GlobalCanvas />
+        <Suspense fallback={null}>
+          <GlassShardsCanvas />
+        </Suspense>
         <Suspense fallback={children}>
           <PageTransition>{children}</PageTransition>
         </Suspense>

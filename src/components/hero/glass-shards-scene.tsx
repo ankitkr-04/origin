@@ -10,10 +10,49 @@ import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 import { REDUCED_MOTION, useMediaQuery } from "@/hooks/use-media-query";
 
-export default function GlassShardsScene() {
+export default function GlassShardsScene({
+  isVisible = true,
+}: {
+  isVisible?: boolean;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useMediaQuery(REDUCED_MOTION);
+
+  const isVisibleRef = useRef(isVisible);
+  const isPausedRef = useRef(false);
+  const lastTimeRef = useRef(performance.now());
+  const lastVisibleTimeRef = useRef(performance.now());
+  const animateRef = useRef<((time: number) => void) | null>(null);
+  const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    isVisibleRef.current = isVisible;
+    if (isVisible) {
+      if (pauseTimeoutRef.current) {
+        clearTimeout(pauseTimeoutRef.current);
+        pauseTimeoutRef.current = null;
+      }
+      if (isPausedRef.current && animateRef.current) {
+        isPausedRef.current = false;
+        lastTimeRef.current = performance.now();
+        lastVisibleTimeRef.current = performance.now();
+        requestAnimationFrame(animateRef.current);
+      }
+    } else {
+      if (!pauseTimeoutRef.current) {
+        pauseTimeoutRef.current = setTimeout(() => {
+          isPausedRef.current = true;
+          pauseTimeoutRef.current = null;
+        }, 1400);
+      }
+    }
+    return () => {
+      if (pauseTimeoutRef.current) {
+        clearTimeout(pauseTimeoutRef.current);
+      }
+    };
+  }, [isVisible]);
 
   useEffect(() => {
     if (!canvasRef.current || !containerRef.current) return;
@@ -332,8 +371,6 @@ export default function GlassShardsScene() {
     });
     resizeObserver.observe(container);
 
-    // Instead of deprecated THREE.Clock, use performance.now()
-    let lastTime = performance.now();
     const INTRO_DURATION = reduceMotion ? 0.001 : 2.4;
     let animationFrameId: number;
 
@@ -341,13 +378,17 @@ export default function GlassShardsScene() {
     let revealed = false;
 
     function animate(time: number) {
+      if (!isVisibleRef.current && isPausedRef.current) {
+        return;
+      }
       animationFrameId = requestAnimationFrame(animate);
 
-      const delta = (time - lastTime) / 1000;
-      lastTime = time;
+      const delta = (time - lastTimeRef.current) / 1000;
+      lastTimeRef.current = time;
 
       const dt = Math.min(delta, 0.05);
       const elapsed = time / 1000;
+      const introElapsed = (time - lastVisibleTimeRef.current) / 1000;
 
       updateSpawner(dt);
       updatePackets(dt);
@@ -357,7 +398,7 @@ export default function GlassShardsScene() {
       core.scale.setScalar(corePulse);
       coreLight.intensity = 9 + Math.sin(elapsed * 1.6) * 1.6;
 
-      const introT = THREE.MathUtils.clamp(elapsed / INTRO_DURATION, 0, 1);
+      const introT = THREE.MathUtils.clamp(introElapsed / INTRO_DURATION, 0, 1);
       const eased = 1 - (1 - introT) ** 3;
       const parallaxGate = reduceMotion ? 0 : 1;
 
@@ -386,12 +427,43 @@ export default function GlassShardsScene() {
         canvasRef.current.style.opacity = "1";
       }
     }
-    animationFrameId = requestAnimationFrame(animate);
+
+    animateRef.current = animate;
+
+    if (isVisibleRef.current) {
+      isPausedRef.current = false;
+      lastTimeRef.current = performance.now();
+      lastVisibleTimeRef.current = performance.now();
+      animationFrameId = requestAnimationFrame(animate);
+    } else {
+      isPausedRef.current = true;
+    }
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       resizeObserver.disconnect();
       window.removeEventListener("pointermove", onPointerMove);
+
+      // Traverse and dispose meshes
+      scene.traverse((object) => {
+        if (object instanceof THREE.Mesh) {
+          if (object.geometry) object.geometry.dispose();
+          if (object.material) {
+            if (Array.isArray(object.material)) {
+              for (const m of object.material) m.dispose();
+            } else {
+              object.material.dispose();
+            }
+          }
+        }
+      });
+
+      // Explicitly dispose shared/remaining objects
+      for (const mat of glassMaterials) {
+        mat.dispose();
+      }
+      packetGeometry.dispose();
+
       renderer.dispose();
       pmremGenerator.dispose();
       scene.clear();
