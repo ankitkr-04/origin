@@ -75,6 +75,7 @@ export const viewport: Viewport = {
 
 import { GlobalCanvas } from "@/components/layout/global-canvas";
 import { GlassShardsCanvas } from "@/components/scenes/glass-shards-canvas";
+import { TerminalPalette } from "@/components/ui/terminal-palette";
 
 export default function RootLayout({
   children,
@@ -96,6 +97,9 @@ export default function RootLayout({
         <GlobalCanvas />
         <Suspense fallback={null}>
           <GlassShardsCanvas />
+        </Suspense>
+        <Suspense fallback={null}>
+          <TerminalPalette />
         </Suspense>
         <Suspense fallback={children}>
           <PageTransition>{children}</PageTransition>
