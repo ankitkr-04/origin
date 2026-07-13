@@ -123,7 +123,7 @@ export function TerminalPalette() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [closeTerminal]);
 
   // Auto-focus and lock scroll
   useEffect(() => {

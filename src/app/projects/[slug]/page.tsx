@@ -51,7 +51,7 @@ export default async function ProjectPage({
             ← All projects
           </Link>
           <div className="mt-8">
-            <ProjectDetail project={project} />
+            <ProjectDetail project={project} isModal={false} />
           </div>
         </div>
       </main>

@@ -1,3 +1,4 @@
+import { WalVisualizer } from "@/components/projects/wal-visualizer";
 import { Button } from "@/components/ui/button";
 import type { Project } from "@/types/content";
 
@@ -5,7 +6,13 @@ import type { Project } from "@/types/content";
  * Full project write-up, shared by the intercepted modal and the standalone
  * /projects/[slug] page.
  */
-export function ProjectDetail({ project }: { project: Project }) {
+export function ProjectDetail({
+  project,
+  isModal = true,
+}: {
+  project: Project;
+  isModal?: boolean;
+}) {
   return (
     <article>
       <div className="flex flex-wrap items-center gap-3">
@@ -25,6 +32,12 @@ export function ProjectDetail({ project }: { project: Project }) {
       <p className="mt-5 text-lg text-balance text-polar/90 md:text-xl">
         {project.tagline}
       </p>
+
+      {project.slug === "stratadb" && !isModal && (
+        <div className="mt-10 mb-14">
+          <WalVisualizer />
+        </div>
+      )}
 
       <div className="mt-6 flex flex-wrap gap-2">
         {project.metrics.map((metric) => (
