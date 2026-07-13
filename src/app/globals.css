@@ -425,6 +425,60 @@ body {
   transition-duration: 0.18s;
 }
 
+/* Matrix card — Ice to Plasma to Fire on hover */
+.matrix-card {
+  position: relative;
+  transition:
+    transform 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.matrix-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    300px circle at var(--mx, 50%) var(--my, 50%),
+    var(--bloom-color, rgba(125, 211, 252, 0)),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.matrix-card:hover {
+  transition-duration: 0.18s;
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--color-ember) 36%, transparent);
+  box-shadow: 0 22px 60px -24px rgba(255, 107, 61, 0.25);
+}
+
+.matrix-card:hover::before {
+  opacity: 1;
+  animation: matrix-bloom 1.2s cubic-bezier(0.22, 0.9, 0.32, 1) forwards;
+}
+
+@property --bloom-color {
+  syntax: "<color>";
+  initial-value: rgba(125, 211, 252, 0);
+  inherits: true;
+}
+
+@keyframes matrix-bloom {
+  0% {
+    --bloom-color: rgba(125, 211, 252, 0.15); /* Ice */
+  }
+  40% {
+    --bloom-color: rgba(192, 132, 252, 0.15); /* Plasma */
+  }
+  100% {
+    --bloom-color: rgba(255, 107, 61, 0.12); /* Ember/Fire */
+  }
+}
+
 /* Heat row — an ember strip slides in on the row you're on */
 .heat-row {
   position: relative;

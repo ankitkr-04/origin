@@ -15,18 +15,9 @@ export function SkillsMatrix({ skills }: { skills: SkillRow[] }) {
       {categories.map((category, i) => (
         <Reveal key={category} delay={i * 75}>
           <div
-            className="relative h-full overflow-hidden rounded-xl border border-line/50 bg-abyss/80 p-6 md:p-8 group transition-all duration-500 hover:border-plasma/30 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_rgba(192,132,252,0.15)]"
+            className="matrix-card relative h-full overflow-hidden rounded-xl border border-line/50 bg-abyss/80 p-6 md:p-8 group"
             data-warm
           >
-            {/* Plasma/Ice mouse bloom tracker powered by interactions.tsx */}
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), rgba(192, 132, 252, 0.12), rgba(125, 211, 252, 0.05) 40%, transparent 70%)",
-              }}
-            />
-
             <div className="relative z-10">
               <h3 className="mb-6 type-frozen text-mist group-hover:text-polar transition-colors duration-500">
                 {category}
