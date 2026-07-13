@@ -3,8 +3,14 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteNav } from "@/components/layout/site-nav";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { SkillsMatrix } from "@/components/ui/skills-matrix";
 import { getIdentity } from "@/db/identity";
-import { getCertifications, getEducation, getExperiences } from "@/db/profile";
+import {
+  getCertifications,
+  getEducation,
+  getExperiences,
+  getSkills,
+} from "@/db/profile";
 
 export function generateMetadata(): Metadata {
   return {
@@ -14,12 +20,14 @@ export function generateMetadata(): Metadata {
 }
 
 export default async function AboutPage() {
-  const [experiences, certifications, identity, education] = await Promise.all([
-    getExperiences(),
-    getCertifications(),
-    getIdentity(),
-    getEducation(),
-  ]);
+  const [experiences, certifications, identity, education, skills] =
+    await Promise.all([
+      getExperiences(),
+      getCertifications(),
+      getIdentity(),
+      getEducation(),
+      getSkills(),
+    ]);
 
   return (
     <>
@@ -334,6 +342,18 @@ export default async function AboutPage() {
                 </div>
               </Reveal>
             </div>
+          </div>
+        </section>
+
+        <section className="border-t border-line/60 bg-abyss/40 py-16 md:py-24">
+          <div className="mx-auto max-w-6xl px-5 md:px-8">
+            <SectionHeading
+              index="004"
+              label="Capabilities"
+              title="Skills Matrix"
+              readout="θ FUNCTIONAL CLUSTERS"
+            />
+            <SkillsMatrix skills={skills} />
           </div>
         </section>
       </main>

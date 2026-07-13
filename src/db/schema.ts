@@ -85,10 +85,22 @@ export const certifications = pgTable("certifications", {
   updatedAt: updatedAt(),
 });
 
+export const skills = pgTable("skills", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  category: text("category").notNull(),
+  name: text("name").notNull(),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: createdAt(),
+  updatedAt: updatedAt(),
+});
+
 export type ProjectRow = typeof projects.$inferSelect;
 export type AchievementRow = typeof achievements.$inferSelect;
 export type ExperienceRow = typeof experiences.$inferSelect;
 export type CertificationRow = typeof certifications.$inferSelect;
+export type SkillRow = typeof skills.$inferSelect;
 
 export const identity = pgTable("identity", {
   id: text("id")

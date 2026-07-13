@@ -94,8 +94,17 @@ async function main() {
     })),
   );
 
+  await db.delete(schema.skills);
+  await db.insert(schema.skills).values(
+    seed.skills.map((skill, i) => ({
+      category: skill.category,
+      name: skill.name,
+      sortOrder: i,
+    })),
+  );
+
   console.log(
-    `Seeded ${seed.projects.length} projects, ${seed.achievements.length} achievements, ${seed.experiences.length} experiences, ${seed.certifications.length} certifications, identity, ${seed.socialLinks.length} social links, ${seed.achievementStats.length} achievement stats, education, and ${seed.resumes.length} resumes.`,
+    `Seeded ${seed.projects.length} projects, ${seed.achievements.length} achievements, ${seed.experiences.length} experiences, ${seed.certifications.length} certifications, identity, ${seed.socialLinks.length} social links, ${seed.achievementStats.length} achievement stats, education, ${seed.resumes.length} resumes, and ${seed.skills.length} skills.`,
   );
 }
 

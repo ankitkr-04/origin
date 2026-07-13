@@ -394,3 +394,33 @@ export const resumes = [
     updatedAt: new Date("2026-05-15T00:00:00Z"),
   },
 ];
+
+export const skills = [
+  { category: "Systems & Languages", name: "C++ (11/14/17)" },
+  { category: "Systems & Languages", name: "Rust" },
+  { category: "Systems & Languages", name: "Go" },
+  { category: "Systems & Languages", name: "Java / Spring Boot" },
+  { category: "Systems & Languages", name: "TypeScript / Node.js" },
+  { category: "Systems & Languages", name: "Python" },
+
+  { category: "Storage & Databases", name: "PostgreSQL" },
+  { category: "Storage & Databases", name: "Redis" },
+  { category: "Storage & Databases", name: "MongoDB" },
+  { category: "Storage & Databases", name: "Kafka" },
+  { category: "Storage & Databases", name: "RabbitMQ" },
+  { category: "Storage & Databases", name: "LevelDB / RocksDB" },
+
+  { category: "Web & Frontend", name: "React" },
+  { category: "Web & Frontend", name: "Next.js" },
+  { category: "Web & Frontend", name: "WebSockets" },
+  { category: "Web & Frontend", name: "GraphQL" },
+  { category: "Web & Frontend", name: "Tailwind CSS" },
+  { category: "Web & Frontend", name: "Framer Motion" },
+
+  { category: "Infra & Tooling", name: "Linux" },
+  { category: "Infra & Tooling", name: "Docker" },
+  { category: "Infra & Tooling", name: "AWS (S3, EC2, RDS)" },
+  { category: "Infra & Tooling", name: "CI/CD (GitHub Actions)" },
+  { category: "Infra & Tooling", name: "Nginx" },
+  { category: "Infra & Tooling", name: "Git" },
+];

@@ -89,3 +89,11 @@ export async function getAchievementStats(): Promise<
     detail: row.detail ?? undefined,
   }));
 }
+
+export async function getSkills() {
+  "use cache";
+  cacheTag(CACHE_TAGS.profile);
+  cacheLife(CONTENT_CACHE_LIFE);
+  const { skills } = await import("@/db/schema");
+  return db.select().from(skills).orderBy(asc(skills.sortOrder));
+}
