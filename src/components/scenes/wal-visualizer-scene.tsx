@@ -71,6 +71,14 @@ function RingBuffer({
   // Flush animation state
   const flushTimer = useRef(0);
   const isFlushing = useRef(false);
+  const timeouts = useRef<Set<ReturnType<typeof setTimeout>>>(new Set());
+
+  useEffect(() => {
+    return () => {
+      timeouts.current.forEach(clearTimeout);
+      timeouts.current.clear();
+    };
+  }, []);
 
   // Pre-calculate slot positions
   const slotPositions = useMemo(() => {
@@ -139,7 +147,8 @@ function RingBuffer({
         slotsRef.current[targetIdx].targetColor.copy(COLORS.WRITING);
 
         // After brief write, become SEALED
-        setTimeout(() => {
+        const t = setTimeout(() => {
+          timeouts.current.delete(t);
           if (slotsRef.current[targetIdx].state === "WRITING") {
             slotsRef.current[targetIdx].state = "SEALED";
             slotsRef.current[targetIdx].targetColor.copy(COLORS.SEALED);
@@ -157,6 +166,7 @@ function RingBuffer({
             }
           }
         }, 300);
+        timeouts.current.add(t);
       } else {
         // Move packet along curve
         if (packetMeshRef.current && packetLightRef.current) {
