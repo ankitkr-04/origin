@@ -34,11 +34,11 @@ export function GithubHeatmap({ stats }: { stats: GithubStats }) {
 
   // Determine intensity color based on count (GitHub style)
   const getIntensityClass = (count: number) => {
-    if (count === 0) return "bg-abyss/80 border-line/20";
-    if (count <= 2) return "bg-flame/30 border-flame/40";
-    if (count <= 5) return "bg-flame/50 border-flame/60";
-    if (count <= 10) return "bg-flame/70 border-flame/80";
-    return "bg-flame border-flame";
+    if (count === 0) return "bg-polar/10 border-polar/20"; // Ice (base state)
+    if (count <= 2) return "bg-flame/30 border-flame/40"; // Spark
+    if (count <= 5) return "bg-flame/60 border-flame/70"; // Fire
+    if (count <= 10) return "bg-flame/90 border-flame"; // Plasma
+    return "bg-flame border-flame shadow-[0_0_10px_rgba(255,107,0,0.6)]"; // Burst
   };
 
   return (

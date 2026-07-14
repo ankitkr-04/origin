@@ -105,20 +105,14 @@ export async function HeroSection() {
               </span>
             </a>
 
-            <a
-              href={`https://leetcode.com/u/${identity.leetcodeHandle}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-warm
-              className="relative mt-3 flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-line/40 bg-abyss/40 px-4 py-2.5 transition-colors hover:border-line/70 hover:bg-abyss/60"
-            >
+            <div className="relative mt-3 flex items-center justify-between gap-4 rounded-xl border border-line/40 bg-abyss/40 px-4 py-2.5 transition-colors">
               <span className="font-mono text-[10px] tracking-[0.2em] text-mist uppercase transition-colors">
                 DSA Problems Solved
               </span>
               <span className="font-mono text-xs text-flame transition-colors">
                 {systemMetrics.dsaSolved}
               </span>
-            </a>
+            </div>
 
             <dl className="relative mt-5 grid grid-cols-2 gap-3">
               {achievementStats.map((item) => (
