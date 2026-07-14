@@ -6,6 +6,7 @@ interface Env {
   REVALIDATE_SECRET?: string;
   NEXT_PUBLIC_SITE_URL: string;
   GITHUB_PERSONAL_ACCESS_TOKEN?: string;
+  ENABLE_WEB_VITALS_ATTRIBUTION: boolean;
 }
 
 const getEnv = (): Env => {
@@ -25,6 +26,7 @@ const getEnv = (): Env => {
     NEXT_PUBLIC_SITE_URL:
       process.env.NEXT_PUBLIC_SITE_URL || "https://ankitkr.dev",
     GITHUB_PERSONAL_ACCESS_TOKEN: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
+    ENABLE_WEB_VITALS_ATTRIBUTION: process.env.ENABLE_WEB_VITALS_ATTRIBUTION === "true",
   };
 };
 

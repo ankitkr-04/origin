@@ -8,6 +8,7 @@ import { Interactions } from "@/components/layout/interactions";
 import { PageTransition } from "@/components/layout/page-transition";
 import { ReaderBar } from "@/components/layout/reader-bar";
 import { siteConfig } from "@/lib/site-config";
+import { env } from "@/lib/env";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = Geist({
@@ -77,6 +78,7 @@ export const viewport: Viewport = {
 import { GlobalCanvas } from "@/components/layout/global-canvas";
 import { GlassShardsCanvas } from "@/components/scenes/glass-shards-canvas";
 import { TerminalPalette } from "@/components/ui/terminal-palette";
+import { WebVitalsReporter } from "@/components/web-vitals";
 
 export default function RootLayout({
   children,
@@ -108,6 +110,7 @@ export default function RootLayout({
         </Suspense>
         <Grain />
         <SpeedInsights/>
+        {env.ENABLE_WEB_VITALS_ATTRIBUTION ? <WebVitalsReporter /> : null}
       </body>
     </html>
   );
