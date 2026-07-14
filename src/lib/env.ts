@@ -5,6 +5,7 @@ interface Env {
   GEMINI_API_KEY?: string;
   REVALIDATE_SECRET?: string;
   NEXT_PUBLIC_SITE_URL: string;
+  GITHUB_PERSONAL_ACCESS_TOKEN? : string;
 }
 
 const getEnv = (): Env => {
@@ -19,10 +20,11 @@ const getEnv = (): Env => {
 
   return {
     DATABASE_URL: databaseUrl || "",
-    GEMINI_API_KEY: process.env.GEMINI_API_KEY,
+    GEMINI_API_KEY: process.env.GEMINI_API_KEY, 
     REVALIDATE_SECRET: process.env.REVALIDATE_SECRET,
     NEXT_PUBLIC_SITE_URL:
       process.env.NEXT_PUBLIC_SITE_URL || "https://ankitkr.dev",
+    GITHUB_PERSONAL_ACCESS_TOKEN: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
   };
 };
 
