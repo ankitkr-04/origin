@@ -263,7 +263,7 @@ function RingBuffer({
 
       {/* Slots */}
       {slotPositions.map((pos, i) => (
-        <group key={i} position={pos}>
+        <group key={`slot-${pos.x}-${pos.y}-${pos.z}`} position={pos}>
           {/* Connecting line to center */}
           <Line
             points={[

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { CodingStats } from "@/components/about/coding-stats";
+import { GithubHeatmap } from "@/components/about/github-heatmap";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteNav } from "@/components/layout/site-nav";
 import { Reveal } from "@/components/ui/reveal";
@@ -11,6 +13,8 @@ import {
   getExperiences,
   getSkills,
 } from "@/db/profile";
+import { getGithubStats } from "@/lib/api/github";
+import { getSystemMetrics } from "@/lib/metrics";
 
 export function generateMetadata(): Metadata {
   return {
@@ -20,14 +24,23 @@ export function generateMetadata(): Metadata {
 }
 
 export default async function AboutPage() {
-  const [experiences, certifications, identity, education, skills] =
+  const [experiences, certifications, identity, education, skills, metrics] =
     await Promise.all([
       getExperiences(),
       getCertifications(),
       getIdentity(),
       getEducation(),
       getSkills(),
+      getSystemMetrics(),
     ]);
+
+  // Fetch github stats separately to get full heatmap data. It handles its own fallback gracefully.
+  let githubStats = null;
+  try {
+    githubStats = await getGithubStats(identity.githubHandle);
+  } catch (e) {
+    console.error("Failed to load github stats for heatmap", e);
+  }
 
   return (
     <>
@@ -231,6 +244,16 @@ export default async function AboutPage() {
                 </dl>
               </Reveal>
             </div>
+
+            <Reveal delay={200}>
+              <CodingStats metrics={metrics} identity={identity} />
+            </Reveal>
+
+            {githubStats && (
+              <Reveal delay={250}>
+                <GithubHeatmap stats={githubStats} />
+              </Reveal>
+            )}
           </div>
         </section>
 

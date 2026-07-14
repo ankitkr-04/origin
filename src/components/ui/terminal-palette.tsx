@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import {
   type KeyboardEvent as ReactKeyboardEvent,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -77,14 +78,14 @@ export function TerminalPalette() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const closeTerminal = () => {
+  const closeTerminal = useCallback(() => {
     if (isClosingRef.current || !isOpenRef.current) return;
     setIsClosing(true);
     setTimeout(() => {
       setIsOpen(false);
       setIsClosing(false);
     }, 240);
-  };
+  }, []);
 
   // Keep ref in sync for event listeners without rebinding
   useEffect(() => {
@@ -356,8 +357,6 @@ export function TerminalPalette() {
           className={`fixed inset-0 z-50 flex items-center justify-center bg-void/40 backdrop-blur-md modal-backdrop ${isClosing ? "modal-closing" : ""}`}
           onClick={closeTerminal}
         >
-          {/* biome-ignore lint/a11y/noStaticElementInteractions: dialog container */}
-          {/* biome-ignore lint/a11y/useKeyWithClickEvents: dialog container */}
           <div
             role="dialog"
             aria-modal="true"
