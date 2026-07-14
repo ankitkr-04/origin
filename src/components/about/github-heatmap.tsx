@@ -7,16 +7,30 @@ export function GithubHeatmap({ stats }: { stats: GithubStats }) {
   const tooltipRef = useRef<HTMLDivElement>(null);
   const tooltipContentRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
+  const isScrollingRef = useRef(false);
+  const scrollEndTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (scrollEndTimer.current) clearTimeout(scrollEndTimer.current);
     };
   }, []);
+
+  const handleScroll = () => {
+    isScrollingRef.current = true;
+    if (scrollEndTimer.current) clearTimeout(scrollEndTimer.current);
+    scrollEndTimer.current = setTimeout(() => {
+      isScrollingRef.current = false;
+    }, 100);
+  };
 
   const handleOver = (
     e: React.MouseEvent | React.TouchEvent | React.FocusEvent,
   ) => {
+    // Ignore synthetic hover events fired by hit-testing during scroll
+    if (isScrollingRef.current) return;
+
     const target = e.target as HTMLElement;
     const date = target.getAttribute("data-date");
     const count = target.getAttribute("data-count");
@@ -147,7 +161,10 @@ export function GithubHeatmap({ stats }: { stats: GithubStats }) {
       </div>
 
       {/* Desktop Heatmap View */}
-      <div className="hidden md:block w-full overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-line/50 scrollbar-track-transparent">
+      <div
+        className="hidden md:block w-full overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-line/50 scrollbar-track-transparent will-change-transform"
+        onScroll={handleScroll}
+      >
         {/* biome-ignore lint/a11y/noStaticElementInteractions: tooltip wrapper */}
         <div
           className="flex justify-between min-w-max gap-4 lg:gap-5"
