@@ -1,11 +1,18 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import type { GithubStats } from "@/lib/api/github";
 
 export function GithubHeatmap({ stats }: { stats: GithubStats }) {
   const tooltipRef = useRef<HTMLDivElement>(null);
   const tooltipContentRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
 
   const handleOver = (
     e: React.MouseEvent | React.TouchEvent | React.FocusEvent,
@@ -15,11 +22,31 @@ export function GithubHeatmap({ stats }: { stats: GithubStats }) {
     const count = target.getAttribute("data-count");
 
     if (date && count && tooltipRef.current && tooltipContentRef.current) {
-      const rect = target.getBoundingClientRect();
-      tooltipContentRef.current.textContent = `${count} contributions on ${date}`;
-      tooltipRef.current.style.top = `${rect.top - 10}px`;
-      tooltipRef.current.style.left = `${rect.left + rect.width / 2}px`;
-      tooltipRef.current.style.opacity = "1";
+      let x = 0;
+      let y = 0;
+
+      if ("clientX" in e) {
+        x = e.clientX;
+        y = e.clientY - 15;
+      } else if ("touches" in e && e.touches.length > 0) {
+        x = e.touches[0].clientX;
+        y = e.touches[0].clientY - 15;
+      } else {
+        const rect = target.getBoundingClientRect();
+        x = rect.left + rect.width / 2;
+        y = rect.top - 5;
+      }
+
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+
+      rafRef.current = requestAnimationFrame(() => {
+        if (tooltipContentRef.current && tooltipRef.current) {
+          tooltipContentRef.current.textContent = `${count} contributions on ${date}`;
+          // Use hardware-accelerated transform instead of top/left
+          tooltipRef.current.style.transform = `translate(calc(${x}px - 50%), calc(${y}px - 100%))`;
+          tooltipRef.current.style.opacity = "1";
+        }
+      });
     }
   };
 
@@ -28,12 +55,14 @@ export function GithubHeatmap({ stats }: { stats: GithubStats }) {
   ) => {
     const target = e.target as HTMLElement;
     if (target.hasAttribute("data-date") && tooltipRef.current) {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
       tooltipRef.current.style.opacity = "0";
     }
   };
 
   const clearTooltip = () => {
     if (tooltipRef.current) {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
       tooltipRef.current.style.opacity = "0";
     }
   };
@@ -174,7 +203,7 @@ export function GithubHeatmap({ stats }: { stats: GithubStats }) {
       {/* Mobile Summary View */}
       <div className="md:hidden grid grid-cols-2 gap-3">
         <div className="rounded-md border border-line/40 bg-abyss/40 p-4">
-          <p className="font-mono text-[10px] tracking-[0.1em] text-mist uppercase">
+          <p className="font-mono text-[10px] tracking-widest text-mist uppercase">
             Total (12mo)
           </p>
           <p className="mt-2 font-display text-2xl text-polar">
@@ -182,7 +211,7 @@ export function GithubHeatmap({ stats }: { stats: GithubStats }) {
           </p>
         </div>
         <div className="rounded-md border border-line/40 bg-abyss/40 p-4">
-          <p className="font-mono text-[10px] tracking-[0.1em] text-mist uppercase">
+          <p className="font-mono text-[10px] tracking-widest text-mist uppercase">
             Today
           </p>
           <p className="mt-2 font-display text-2xl text-flame">
@@ -190,7 +219,7 @@ export function GithubHeatmap({ stats }: { stats: GithubStats }) {
           </p>
         </div>
         <div className="col-span-2 rounded-md border border-line/40 bg-abyss/40 p-4">
-          <p className="font-mono text-[10px] tracking-[0.1em] text-mist uppercase">
+          <p className="font-mono text-[10px] tracking-widest text-mist uppercase">
             Max Commits (1 day)
           </p>
           <p className="mt-2 font-display text-2xl text-plasma">{maxCommits}</p>
