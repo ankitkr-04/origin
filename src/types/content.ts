@@ -71,4 +71,6 @@ export interface Education {
 export interface SystemMetrics {
   githubCommits: number;
   dsaSolved: number;
+  leetcodeSolved: number;
+  codeforcesSolved: number;
 }

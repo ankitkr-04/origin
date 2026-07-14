@@ -6,6 +6,8 @@ import { getLeetcodeStats } from "./api/leetcode";
 export interface SystemMetrics {
   githubCommits: number;
   dsaSolved: number;
+  leetcodeSolved: number;
+  codeforcesSolved: number;
 }
 
 export async function getSystemMetrics(): Promise<SystemMetrics> {
@@ -29,14 +31,19 @@ export async function getSystemMetrics(): Promise<SystemMetrics> {
   }
 
   let dsaSolved = 0;
+  let leetcodeSolved = 0;
+  let codeforcesSolved = 0;
+
   if (leetcodeResult.status === "fulfilled") {
-    dsaSolved += leetcodeResult.value.totalSolved;
+    leetcodeSolved = leetcodeResult.value.totalSolved;
+    dsaSolved += leetcodeSolved;
   } else {
     console.error("Failed to fetch LeetCode stats:", leetcodeResult.reason);
   }
 
   if (codeforcesResult.status === "fulfilled") {
-    dsaSolved += codeforcesResult.value.totalSolved;
+    codeforcesSolved = codeforcesResult.value.totalSolved;
+    dsaSolved += codeforcesSolved;
   } else {
     console.error("Failed to fetch Codeforces stats:", codeforcesResult.reason);
   }
@@ -44,5 +51,7 @@ export async function getSystemMetrics(): Promise<SystemMetrics> {
   return {
     githubCommits,
     dsaSolved,
+    leetcodeSolved,
+    codeforcesSolved,
   };
 }

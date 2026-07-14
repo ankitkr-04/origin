@@ -14,6 +14,7 @@ import {
   getSkills,
 } from "@/db/profile";
 import { getGithubStats } from "@/lib/api/github";
+import { getSystemMetrics } from "@/lib/metrics";
 
 export function generateMetadata(): Metadata {
   return {
@@ -23,13 +24,14 @@ export function generateMetadata(): Metadata {
 }
 
 export default async function AboutPage() {
-  const [experiences, certifications, identity, education, skills] =
+  const [experiences, certifications, identity, education, skills, metrics] =
     await Promise.all([
       getExperiences(),
       getCertifications(),
       getIdentity(),
       getEducation(),
       getSkills(),
+      getSystemMetrics(),
     ]);
 
   // Fetch github stats separately to get full heatmap data. It handles its own fallback gracefully.
@@ -240,7 +242,7 @@ export default async function AboutPage() {
                     <dd className="mt-1 text-flame">From May 2026</dd>
                   </div>
                 </dl>
-                <CodingStats identity={identity} />
+                <CodingStats identity={identity} metrics={metrics} />
               </Reveal>
             </div>
 
