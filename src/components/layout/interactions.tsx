@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { useKonamiCode } from "@/hooks/use-konami-code";
 import { REDUCED_MOTION, useMediaQuery } from "@/hooks/use-media-query";
 
 const FIRE_SPARKS = ["#ffb454", "#ff6b3d", "#ff5f8f", "#c084fc"];
@@ -99,70 +98,14 @@ export function Interactions() {
       }
     };
 
-    const onKonami = (e: Event) => {
-      const ce = e as CustomEvent<{ x: number; y: number }>;
-      const { x, y } = ce.detail;
-      const el = document.body;
-
-      const ring = document.createElement("span");
-      ring.className = `cast-ring cast-ring-konami`;
-      ring.style.left = `${x}px`;
-      ring.style.top = `${y}px`;
-      // massive burst
-      ring.style.background = "linear-gradient(45deg, #7dd3fc, #ff6b3d)";
-      el.appendChild(ring);
-      ring.animate(
-        [
-          { transform: "translate(-50%,-50%) scale(0.1)", opacity: 1 },
-          { transform: "translate(-50%,-50%) scale(10)", opacity: 0 },
-        ],
-        { duration: 1200, easing: "cubic-bezier(0.1, 0.8, 0.2, 1)" },
-      ).onfinish = () => ring.remove();
-
-      // Many sparks of both colors
-      const colors = [...ICE_SPARKS, ...FIRE_SPARKS];
-      for (let i = 0; i < 40; i++) {
-        const spark = document.createElement("span");
-        spark.className = `cast-spark cast-spark-crystal`;
-        spark.style.left = `${x}px`;
-        spark.style.top = `${y}px`;
-        const color = colors[i % colors.length];
-        spark.style.background = color;
-        spark.style.boxShadow = `0 0 12px ${color}`;
-        el.appendChild(spark);
-
-        const angle = Math.random() * Math.PI * 2;
-        const dist = 100 + Math.random() * 400;
-        const dx = Math.cos(angle) * dist;
-        const dy = Math.sin(angle) * dist;
-        spark.animate(
-          [
-            { transform: "translate(-50%,-50%) scale(1.5)", opacity: 1 },
-            {
-              transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0)`,
-              opacity: 0,
-            },
-          ],
-          {
-            duration: 800 + Math.random() * 600,
-            easing: "cubic-bezier(0.1, 0.8, 0.2, 1)",
-          },
-        ).onfinish = () => spark.remove();
-      }
-    };
-
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("pointerdown", onDown, { passive: true });
-    window.addEventListener("thermal-cast:konami", onKonami);
     return () => {
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerdown", onDown);
-      window.removeEventListener("thermal-cast:konami", onKonami);
       if (raf) cancelAnimationFrame(raf);
     };
   }, [reducedMotion]);
-
-  useKonamiCode();
 
   return null;
 }
