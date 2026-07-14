@@ -55,6 +55,9 @@ export interface Identity {
   location: string;
   email: string;
   githubUrl: string;
+  githubHandle: string;
+  leetcodeHandle: string;
+  codeforcesHandle: string;
   aboutNarrative: string[];
 }
 

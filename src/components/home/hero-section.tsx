@@ -1,8 +1,8 @@
 import { HexagonIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { getIdentity } from "@/db/identity";
-import { getSystemMetrics } from "@/db/metrics";
 import { getAchievementStats, getEducation } from "@/db/profile";
+import { getSystemMetrics } from "@/lib/metrics";
 
 export async function HeroSection() {
   const identity = await getIdentity();
@@ -90,23 +90,35 @@ export async function HeroSection() {
               </p>
             </div>
 
-            <div className="relative mt-5 flex items-center justify-between gap-4 rounded-xl border border-line/40 bg-abyss/40 px-4 py-2.5">
-              <span className="font-mono text-[10px] tracking-[0.2em] text-mist uppercase">
-                Github Commits (2026)
+            <a
+              href={identity.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-warm
+              className="relative mt-5 flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-line/40 bg-abyss/40 px-4 py-2.5 transition-colors hover:border-line/70 hover:bg-abyss/60"
+            >
+              <span className="font-mono text-[10px] tracking-[0.2em] text-mist uppercase transition-colors group-hover:text-polar">
+                Github Contributions (12mo)
               </span>
-              <span className="font-mono text-xs text-polar">
+              <span className="font-mono text-xs text-polar transition-colors">
                 {systemMetrics.githubCommits}
               </span>
-            </div>
+            </a>
 
-            <div className="relative mt-3 flex items-center justify-between gap-4 rounded-xl border border-line/40 bg-abyss/40 px-4 py-2.5">
-              <span className="font-mono text-[10px] tracking-[0.2em] text-mist uppercase">
+            <a
+              href={`https://leetcode.com/u/${identity.leetcodeHandle}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-warm
+              className="relative mt-3 flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-line/40 bg-abyss/40 px-4 py-2.5 transition-colors hover:border-line/70 hover:bg-abyss/60"
+            >
+              <span className="font-mono text-[10px] tracking-[0.2em] text-mist uppercase transition-colors">
                 DSA Problems Solved
               </span>
-              <span className="font-mono text-xs text-flame">
+              <span className="font-mono text-xs text-flame transition-colors">
                 {systemMetrics.dsaSolved}
               </span>
-            </div>
+            </a>
 
             <dl className="relative mt-5 grid grid-cols-2 gap-3">
               {achievementStats.map((item) => (

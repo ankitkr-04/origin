@@ -52,6 +52,9 @@ async function main() {
     location: seed.identity.location,
     email: seed.identity.email,
     githubUrl: seed.identity.githubUrl,
+    githubHandle: seed.identity.githubHandle,
+    leetcodeHandle: seed.identity.leetcodeHandle,
+    codeforcesHandle: seed.identity.codeforcesHandle,
     aboutNarrative: seed.identity.aboutNarrative,
   });
 

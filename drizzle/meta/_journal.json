@@ -29,6 +29,13 @@
       "when": 1783926683151,
       "tag": "0003_grey_marten_broadcloak",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1784003641315,
+      "tag": "0004_talented_iron_patriot",
+      "breakpoints": true
     }
   ]
 }

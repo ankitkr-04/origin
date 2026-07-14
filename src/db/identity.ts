@@ -19,6 +19,9 @@ export async function getIdentity(): Promise<
     location: row.location,
     email: row.email,
     githubUrl: row.githubUrl,
+    githubHandle: row.githubHandle,
+    leetcodeHandle: row.leetcodeHandle,
+    codeforcesHandle: row.codeforcesHandle,
     aboutNarrative: row.aboutNarrative,
   };
 }

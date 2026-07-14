@@ -279,6 +279,9 @@ export const identity = {
   education: "B.Tech CSE · LNCT Bhopal · Class of 2026",
   email: "ak0182274@gmail.com",
   githubUrl: "https://github.com/ankitkr-04",
+  githubHandle: "ankitkr-04",
+  leetcodeHandle: "ankitkr_04",
+  codeforcesHandle: "Ankit_Kr04",
   aboutNarrative: [
     "I'm a final-year computer science student who got curious about what actually happens under an API — and kept digging until I hit allocators. The projects that followed run the whole depth of the stack: a C++26 storage engine that starts at NUMA-aware memory management, a Redis-compatible server built on a single event loop, and a booking platform whose architecture was written as ten numbered documents before the first commit.",
     "The throughline is measured performance. Claims on this site come with the benchmark, the bound, or the sanitizer run that backs them — and where something is still in progress, it says so.",
