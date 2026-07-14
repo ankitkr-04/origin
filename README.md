@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Origin
 
-## Getting Started
+Origin is a portfolio and digital identity platform built to showcase a highly interactive, 3D-integrated web experience. It features a bespoke "Thermal" design system, seamless view transitions, and ambient React Three Fiber canvases.
 
-First, run the development server:
+## Tech stack
+
+- **Framework:** Next.js 16 (App Router) with React 19 and React Compiler
+- **Styling:** Tailwind CSS v4 and native View Transitions API
+- **3D & Canvas:** React Three Fiber (`@react-three/fiber`, `@react-three/drei`)
+- **Database:** Drizzle ORM and Neon Postgres
+- **Tooling:** Biome (linting/formatting), managed via pnpm
+
+## Quickstart
+
+To run the application locally, you need Node.js and pnpm installed.
+
+1. Install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Start the development server:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The application runs at [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+## Commands
 
-To learn more about Next.js, take a look at the following resources:
+Use these pnpm commands for development and production tasks:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Command | Action |
+|---|---|
+| `pnpm dev` | Start the development server |
+| `pnpm build` | Build the production application |
+| `pnpm start` | Serve the production application |
+| `pnpm lint` | Check code with Biome |
+| `pnpm format` | Format code with Biome |
+| `pnpm seed` | Seed the database |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Documentation
 
-## Deploy on Vercel
+Deep dives into specific features and architecture live in the `docs/` directory:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [The Thermal Theme System](docs/theme-system.md) — How the ice/fire design language, typography phases, and interaction primitives work.
