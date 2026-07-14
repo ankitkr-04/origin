@@ -7,6 +7,7 @@ import {
   certifications,
   educations,
   experiences,
+  skills,
 } from "@/db/schema";
 import { CACHE_TAGS, CONTENT_CACHE_LIFE } from "@/lib/cache-config";
 import type { Achievement, Experience } from "@/types/content";
@@ -94,6 +95,5 @@ export async function getSkills() {
   "use cache";
   cacheTag(CACHE_TAGS.profile);
   cacheLife(CONTENT_CACHE_LIFE);
-  const { skills } = await import("@/db/schema");
   return db.select().from(skills).orderBy(asc(skills.sortOrder));
 }

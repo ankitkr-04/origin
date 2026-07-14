@@ -1,9 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { ProjectCase } from "@/components/projects/project-case";
-import { ProjectDetail } from "@/components/projects/project-detail";
-import { ProjectModal } from "@/components/projects/project-modal";
+import { useProjectModal } from "@/hooks/use-project-modal";
 import type { Project } from "@/types/content";
 
 export function FeaturedWorkList({
@@ -11,7 +9,7 @@ export function FeaturedWorkList({
 }: {
   flagshipProjects: Project[];
 }) {
-  const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const { setActiveProject, modal } = useProjectModal();
 
   return (
     <>
@@ -26,12 +24,7 @@ export function FeaturedWorkList({
         ))}
       </div>
 
-      <ProjectModal
-        project={activeProject}
-        onClose={() => setActiveProject(null)}
-      >
-        {activeProject ? <ProjectDetail project={activeProject} /> : null}
-      </ProjectModal>
+      {modal}
     </>
   );
 }

@@ -24,7 +24,7 @@ export default function GlassShardsScene({
   const lastTimeRef = useRef(performance.now());
   const lastVisibleTimeRef = useRef(performance.now());
   const animateRef = useRef<((time: number) => void) | null>(null);
-  const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const pauseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     isVisibleRef.current = isVisible;

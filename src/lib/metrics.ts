@@ -1,6 +1,6 @@
 import { getIdentity } from "@/db/identity";
 import { getCodeforcesStats } from "./api/codeforces";
-import { getGithubStats } from "./api/github";
+import { getGithubStats, type GithubStats } from "./api/github";
 import { getLeetcodeStats } from "./api/leetcode";
 
 export interface SystemMetrics {
@@ -8,6 +8,7 @@ export interface SystemMetrics {
   dsaSolved: number;
   leetcodeSolved: number;
   codeforcesSolved: number;
+  githubData: GithubStats | null;
 }
 
 export async function getSystemMetrics(): Promise<SystemMetrics> {
@@ -24,8 +25,10 @@ export async function getSystemMetrics(): Promise<SystemMetrics> {
 
   // 3. Process results with fallbacks for failures
   let githubCommits = 0;
+  let githubData: GithubStats | null = null;
   if (githubResult.status === "fulfilled") {
     githubCommits = githubResult.value.totalCommitContributions;
+    githubData = githubResult.value;
   } else {
     console.error("Failed to fetch GitHub stats:", githubResult.reason);
   }
@@ -53,5 +56,6 @@ export async function getSystemMetrics(): Promise<SystemMetrics> {
     dsaSolved,
     leetcodeSolved,
     codeforcesSolved,
+    githubData,
   };
 }

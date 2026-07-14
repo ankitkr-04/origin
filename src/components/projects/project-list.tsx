@@ -1,16 +1,14 @@
 "use client";
 
-import { useState } from "react";
 import { ProjectCard } from "@/components/projects/project-card";
 import { ProjectCase } from "@/components/projects/project-case";
-import { ProjectDetail } from "@/components/projects/project-detail";
-import { ProjectModal } from "@/components/projects/project-modal";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { useProjectModal } from "@/hooks/use-project-modal";
 import type { Project } from "@/types/content";
 
 export function ProjectList({ projects }: { projects: Project[] }) {
-  const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const { setActiveProject, modal } = useProjectModal();
 
   const flagshipProjects = projects.filter((p) => p.tier === "flagship");
   const notableProjects = projects.filter((p) => p.tier === "notable");
@@ -75,12 +73,7 @@ export function ProjectList({ projects }: { projects: Project[] }) {
         </div>
       </section>
 
-      <ProjectModal
-        project={activeProject}
-        onClose={() => setActiveProject(null)}
-      >
-        {activeProject ? <ProjectDetail project={activeProject} /> : null}
-      </ProjectModal>
+      {modal}
     </main>
   );
 }

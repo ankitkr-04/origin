@@ -34,8 +34,6 @@ const HELP_OUTPUT = (
     <span>Search projects and skills</span>
     <span className="text-flame">go &lt;page&gt;</span>
     <span>Navigate (about, projects, contact)</span>
-    <span className="text-flame">theme &lt;ice|fire&gt;</span>
-    <span>Shift ambient site temperature</span>
     <span className="text-flame">status</span>
     <span>System telemetry</span>
     <span className="text-flame">clear</span>
@@ -217,8 +215,9 @@ export function TerminalPalette() {
         addEntry(""); // no hits
       } else {
         // Highlight terms
+        const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
         const lines = res.split("\n").map((line, i) => {
-          const regex = new RegExp(`(${term})`, "gi");
+          const regex = new RegExp(`(${escapedTerm})`, "gi");
           const chunks = line.split(regex);
           return (
             // biome-ignore lint/suspicious/noArrayIndexKey: static string highlight
@@ -264,26 +263,7 @@ export function TerminalPalette() {
       return;
     }
 
-    if (cmd === "theme ice") {
-      document.documentElement.classList.remove("theme-fire");
-      document.documentElement.classList.add("theme-ice");
-      addEntry("Ambient thermal state biased to ICE.");
-      return;
-    }
 
-    if (cmd === "theme fire") {
-      document.documentElement.classList.remove("theme-ice");
-      document.documentElement.classList.add("theme-fire");
-      addEntry("Ambient thermal state biased to FIRE.");
-      return;
-    }
-
-    if (cmd === "cast") {
-      addEntry("Casting shockwave...");
-      const ev = new CustomEvent("thermal-cast", { detail: "fire" });
-      document.dispatchEvent(ev);
-      return;
-    }
 
     if (base === "help") {
       addEntry(HELP_OUTPUT);

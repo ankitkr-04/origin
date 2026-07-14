@@ -13,7 +13,6 @@ import {
   getExperiences,
   getSkills,
 } from "@/db/profile";
-import { getGithubStats } from "@/lib/api/github";
 import { getSystemMetrics } from "@/lib/metrics";
 
 export function generateMetadata(): Metadata {
@@ -30,17 +29,11 @@ export default async function AboutPage() {
       getCertifications(),
       getIdentity(),
       getEducation(),
-      getSkills(),
-      getSystemMetrics(),
-    ]);
+    getSkills(),
+    getSystemMetrics(),
+  ]);
 
-  // Fetch github stats separately to get full heatmap data. It handles its own fallback gracefully.
-  let githubStats = null;
-  try {
-    githubStats = await getGithubStats(identity.githubHandle);
-  } catch (e) {
-    console.error("Failed to load github stats for heatmap", e);
-  }
+  const githubStats = metrics.githubData;
 
   return (
     <>

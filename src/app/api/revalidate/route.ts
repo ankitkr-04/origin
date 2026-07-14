@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import { revalidateTag } from "next/cache";
 import { CACHE_TAGS, type CacheTag } from "@/lib/cache-config";
 
@@ -10,7 +11,19 @@ const validTags = new Set<string>(Object.values(CACHE_TAGS));
  */
 export async function POST(request: Request) {
   const secret = process.env.REVALIDATE_SECRET;
-  if (!secret || request.headers.get("x-revalidate-secret") !== secret) {
+  const provided = request.headers.get("x-revalidate-secret");
+
+  if (!secret || !provided) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const secretBuffer = Buffer.from(secret);
+  const providedBuffer = Buffer.from(provided);
+
+  if (
+    secretBuffer.length !== providedBuffer.length ||
+    !crypto.timingSafeEqual(secretBuffer, providedBuffer)
+  ) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
 

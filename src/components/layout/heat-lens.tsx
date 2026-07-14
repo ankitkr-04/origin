@@ -37,8 +37,19 @@ export function HeatLens() {
     };
 
     const tick = () => {
-      x += (targetX - x) * 0.11;
-      y += (targetY - y) * 0.11;
+      const dx = targetX - x;
+      const dy = targetY - y;
+
+      if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) {
+        x = targetX;
+        y = targetY;
+        place();
+        raf = 0;
+        return;
+      }
+
+      x += dx * 0.11;
+      y += dy * 0.11;
       place();
       raf = requestAnimationFrame(tick);
     };
@@ -52,13 +63,16 @@ export function HeatLens() {
         y = targetY;
         lens.classList.add("heat-lens-on");
       }
+      if (!raf) {
+        raf = requestAnimationFrame(tick);
+      }
     };
 
     window.addEventListener("pointermove", onMove, { passive: true });
-    raf = requestAnimationFrame(tick);
+    // Don't start ticking until pointer moves
     return () => {
       window.removeEventListener("pointermove", onMove);
-      cancelAnimationFrame(raf);
+      if (raf) cancelAnimationFrame(raf);
     };
   }, [active]);
 

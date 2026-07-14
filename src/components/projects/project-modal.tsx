@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CloseIcon } from "@/components/icons";
 import { useEscapeKey } from "@/hooks/use-escape-key";
 import { useScrollLock } from "@/hooks/use-scroll-lock";
@@ -37,6 +37,37 @@ export function ProjectModal({
   useScrollLock(!!project);
   useEscapeKey(handleClose, !!project);
 
+  // Focus trap
+  useEffect(() => {
+    if (project && !closing && panelRef.current) {
+      panelRef.current.focus();
+    }
+  }, [project, closing]);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Tab") {
+      const focusableElements = panelRef.current?.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusableElements || focusableElements.length === 0) return;
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          lastElement.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          firstElement.focus();
+          e.preventDefault();
+        }
+      }
+    }
+  };
+
   if (!project && !closing) return null;
 
   return (
@@ -55,6 +86,7 @@ export function ProjectModal({
         role="dialog"
         aria-modal="true"
         tabIndex={-1}
+        onKeyDown={handleKeyDown}
         className="modal-panel relative flex flex-col w-full max-w-3xl max-h-[80vh] md:max-h-[85vh] rounded-xl border border-line bg-abyss outline-none"
       >
         <button
