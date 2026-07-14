@@ -53,7 +53,9 @@ export async function getLeetcodeStats(handle: string): Promise<LeetcodeStats> {
 
   // acSubmissionNum is an array: [{difficulty: "All", count: X}, {difficulty: "Easy", count: Y}, ...]
   const acStats = data.data.matchedUser.submitStats.acSubmissionNum;
-  const allDiff = acStats.find((s: { difficulty: string; count: number }) => s.difficulty === "All");
+  const allDiff = acStats.find(
+    (s: { difficulty: string; count: number }) => s.difficulty === "All",
+  );
 
   return {
     totalSolved: allDiff ? allDiff.count : 0,
