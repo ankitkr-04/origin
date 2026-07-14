@@ -1,31 +1,42 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef } from "react";
 import type { GithubStats } from "@/lib/api/github";
 
 export function GithubHeatmap({ stats }: { stats: GithubStats }) {
-  const [activeTooltip, setActiveTooltip] = useState<{
-    date: string;
-    count: number;
-    x: number;
-    y: number;
-  } | null>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const tooltipContentRef = useRef<HTMLDivElement>(null);
 
-  const handleInteraction = (
-    e: React.MouseEvent | React.TouchEvent,
-    date: string,
-    count: number,
+  const handleOver = (
+    e: React.MouseEvent | React.TouchEvent | React.FocusEvent,
   ) => {
-    const rect = (e.target as HTMLElement).getBoundingClientRect();
-    setActiveTooltip({
-      date,
-      count,
-      x: rect.left + rect.width / 2,
-      y: rect.top - 10,
-    });
+    const target = e.target as HTMLElement;
+    const date = target.getAttribute("data-date");
+    const count = target.getAttribute("data-count");
+
+    if (date && count && tooltipRef.current && tooltipContentRef.current) {
+      const rect = target.getBoundingClientRect();
+      tooltipContentRef.current.textContent = `${count} contributions on ${date}`;
+      tooltipRef.current.style.top = `${rect.top - 10}px`;
+      tooltipRef.current.style.left = `${rect.left + rect.width / 2}px`;
+      tooltipRef.current.style.opacity = "1";
+    }
   };
 
-  const clearTooltip = () => setActiveTooltip(null);
+  const handleOut = (
+    e: React.MouseEvent | React.TouchEvent | React.FocusEvent,
+  ) => {
+    const target = e.target as HTMLElement;
+    if (target.hasAttribute("data-date") && tooltipRef.current) {
+      tooltipRef.current.style.opacity = "0";
+    }
+  };
+
+  const clearTooltip = () => {
+    if (tooltipRef.current) {
+      tooltipRef.current.style.opacity = "0";
+    }
+  };
 
   const getIntensityClass = (count: number) => {
     if (count === 0) return "bg-white/5 border-line/20"; // Base
@@ -111,6 +122,12 @@ export function GithubHeatmap({ stats }: { stats: GithubStats }) {
         {/* biome-ignore lint/a11y/noStaticElementInteractions: tooltip wrapper */}
         <div
           className="flex justify-between min-w-max gap-4 lg:gap-5"
+          onMouseOver={handleOver}
+          onMouseOut={handleOut}
+          onFocus={handleOver}
+          onBlur={handleOut}
+          onTouchStart={handleOver}
+          onTouchEnd={handleOut}
           onMouseLeave={clearTooltip}
         >
           {months.map((month) => (
@@ -137,17 +154,11 @@ export function GithubHeatmap({ stats }: { stats: GithubStats }) {
                         <button
                           type="button"
                           key={day.date}
+                          data-date={day.date}
+                          data-count={day.count}
                           className={`h-3 w-3 rounded-[3px] border transition-colors duration-300 hover:border-polar cursor-pointer ${getIntensityClass(
                             day.count,
                           )}`}
-                          onMouseEnter={(e) =>
-                            handleInteraction(e, day.date, day.count)
-                          }
-                          onTouchStart={(e) =>
-                            handleInteraction(e, day.date, day.count)
-                          }
-                          onMouseLeave={clearTooltip}
-                          onTouchEnd={clearTooltip}
                           aria-label={`${day.count} contributions on ${day.date}`}
                         />
                       );
@@ -186,14 +197,14 @@ export function GithubHeatmap({ stats }: { stats: GithubStats }) {
         </div>
       </div>
 
-      {activeTooltip && (
-        <div
-          className="fixed z-50 -translate-x-1/2 -translate-y-full rounded border border-line/70 bg-abyss/95 px-2 py-1 font-mono text-[10px] text-polar shadow-lg backdrop-blur-sm pointer-events-none"
-          style={{ top: activeTooltip.y, left: activeTooltip.x }}
-        >
-          {activeTooltip.count} contributions on {activeTooltip.date}
-        </div>
-      )}
+      {/* Tooltip rendered outside normal flow, controlled via refs to avoid re-renders */}
+      <div
+        ref={tooltipRef}
+        className="fixed z-50 -translate-x-1/2 -translate-y-full rounded border border-line/70 bg-abyss/95 px-2 py-1 font-mono text-[10px] text-polar shadow-lg backdrop-blur-sm pointer-events-none opacity-0 transition-opacity duration-150"
+        style={{ top: 0, left: 0 }}
+      >
+        <span ref={tooltipContentRef} />
+      </div>
     </div>
   );
 }
