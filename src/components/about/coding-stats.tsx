@@ -15,11 +15,11 @@ export function CodingStats({
         target="_blank"
         rel="noopener noreferrer"
         data-warm
-        className="group relative flex cursor-pointer items-center justify-between gap-4 rounded border border-line/40 bg-abyss/40 px-4 py-3 transition-colors hover:border-line/70 hover:bg-abyss/60"
+        className="group relative flex cursor-pointer items-center justify-between gap-4 rounded border border-line/40 bg-abyss/40 px-4 py-3 transition-colors hover:border-flame/50 hover:bg-flame/5"
       >
         <div className="flex items-center gap-3">
           <LeetCodeIcon className="w-5 h-5 text-mist transition-colors group-hover:text-flame" />
-          <span className="font-mono text-[11px] tracking-widest text-mist transition-colors group-hover:text-polar">
+          <span className="font-mono text-[11px] tracking-widest text-mist transition-colors group-hover:text-flame">
             LeetCode
           </span>
         </div>
@@ -36,17 +36,17 @@ export function CodingStats({
         target="_blank"
         rel="noopener noreferrer"
         data-warm
-        className="group relative flex cursor-pointer items-center justify-between gap-4 rounded border border-line/40 bg-abyss/40 px-4 py-3 transition-colors hover:border-line/70 hover:bg-abyss/60"
+        className="group relative flex cursor-pointer items-center justify-between gap-4 rounded border border-line/40 bg-abyss/40 px-4 py-3 transition-colors hover:border-ice/50 hover:bg-ice/5"
       >
         <div className="flex items-center gap-3">
-          <CodeforcesIcon className="w-5 h-5 text-mist transition-colors group-hover:text-polar" />
-          <span className="font-mono text-[11px] tracking-widest text-mist transition-colors group-hover:text-polar">
+          <CodeforcesIcon className="w-5 h-5 text-mist transition-colors group-hover:text-ice" />
+          <span className="font-mono text-[11px] tracking-widest text-mist transition-colors group-hover:text-ice">
             Codeforces
           </span>
         </div>
         <div className="flex items-center gap-2">
           <span className="font-mono text-[10px] text-faint">Solved:</span>
-          <span className="font-mono text-sm text-polar">
+          <span className="font-mono text-sm text-ice">
             {metrics.codeforcesSolved}
           </span>
         </div>
