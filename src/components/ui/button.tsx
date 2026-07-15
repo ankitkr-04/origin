@@ -1,125 +1,138 @@
 import Link from "next/link";
+import { FlameIcon, CrystalIcon } from "@/components/icons";
+import { cn } from "@/lib/utils";
 
-type Variant = "ignite" | "frost";
+type Variant = "ignite" | "frost" | "stats-ignite" | "stats-frost" | "custom";
 
-type ThermalButtonProps = {
+type BaseProps = {
   variant?: Variant;
   href?: string;
-  children: React.ReactNode;
+  icon?: React.ReactNode;
+  text?: React.ReactNode;
   className?: string;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  "aria-label"?: string;
+  children?: React.ReactNode;
 };
 
-/** Living flame, embedded in every ignite button — flickers on hover. */
-function FlameGlyph() {
-  return (
-    <svg
-      className="btn-glyph"
-      width="14"
-      height="14"
-      viewBox="0 0 16 16"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M8 1.5c1.9 2.6 4 4.3 4 7.1a4 4 0 0 1-8 0c0-1.2.5-2.3 1.2-3.3.3.9 1 1.5 1.6 1.7C6.3 5 6.9 3.2 8 1.5Z"
-        fill="url(#flame-fill)"
-      />
-      <path
-        d="M8 8.4c.9.9 1.6 1.6 1.6 2.6a1.6 1.6 0 0 1-3.2 0c0-1 .7-1.7 1.6-2.6Z"
-        fill="#ffd9a1"
-      />
-      <defs>
-        <linearGradient id="flame-fill" x1="8" y1="1.5" x2="8" y2="12.6">
-          <stop stopColor="#ffb454" />
-          <stop offset="1" stopColor="#ff6b3d" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
-
-/** Faceted ice shard, embedded in every frost button — tilts on hover. */
-function CrystalGlyph() {
-  return (
-    <svg
-      className="btn-glyph"
-      width="13"
-      height="13"
-      viewBox="0 0 16 16"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M8 1.2 12.8 6 8 14.8 3.2 6 8 1.2Z"
-        stroke="#7dd3fc"
-        strokeWidth="1.1"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M3.2 6h9.6M8 1.2 6.3 6 8 14.8M8 1.2 9.7 6 8 14.8"
-        stroke="#7dd3fc"
-        strokeWidth="0.6"
-        strokeOpacity="0.55"
-      />
-    </svg>
-  );
-}
+export type ButtonProps = BaseProps &
+  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof BaseProps> &
+  Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof BaseProps>;
 
 /**
  * The site's button. Ignite = primary (fire); frost = secondary (quiet
- * cold). Renders a <Link> for internal routes (with the typed "nav"
- * transition), an <a> for hash anchors and external URLs, or a <button>.
- * The bloom and spell-press are wired via data attributes and handled by
- * <Interactions/> — this stays a Server Component.
+ * cold); stats-* = specialized stats card variants; custom = apply your own classes but get the thermal effect routing.
+ * Renders a <Link> for internal routes, an <a> for external URLs, or a <button>.
  */
 export function Button({
   variant = "ignite",
   href,
+  icon,
+  text,
   children,
   className,
-  onClick,
-  "aria-label": ariaLabel,
-}: ThermalButtonProps) {
-  const ignite = variant === "ignite";
-  const cls = [ignite ? "ignite-btn" : "frost-btn", className]
-    .filter(Boolean)
-    .join(" ");
+  ...props
+}: ButtonProps) {
+  const isIgnite = variant === "ignite";
+  const isFrost = variant === "frost";
+  const isStatsIgnite = variant === "stats-ignite";
+  const isStatsFrost = variant === "stats-frost";
+
+  const isStats = isStatsIgnite || isStatsFrost;
+  const isAnyIgnite = isIgnite || isStatsIgnite;
+  const isAnyFrost = isFrost || isStatsFrost;
+
+  // Default glyphs for standard variants if no icon provided
+  let defaultIcon = icon;
+  if (!icon && !isStats && variant !== "custom") {
+    if (isIgnite) defaultIcon = <FlameIcon />;
+    if (isFrost) defaultIcon = <CrystalIcon />;
+  }
+
+  const cls = cn(
+    isIgnite && "ignite-btn",
+    isFrost && "frost-btn",
+    isStatsIgnite &&
+      "group relative flex cursor-pointer items-center justify-between gap-4 rounded border border-line/40 bg-abyss/40 px-4 py-3 transition-colors hover:border-flame/50 hover:bg-flame/5",
+    isStatsFrost &&
+      "group relative flex cursor-pointer items-center justify-between gap-4 rounded border border-line/40 bg-abyss/40 px-4 py-3 transition-colors hover:border-ice/50 hover:bg-ice/5",
+    className,
+  );
+
+  // Allow overriding thermal attributes via props, fallback to variant defaults
+  const dataWarm =
+    "data-warm" in props
+      ? props["data-warm"]
+      : isAnyIgnite || variant === "custom"
+        ? ""
+        : undefined;
+  const dataCast =
+    "data-cast" in props
+      ? props["data-cast"]
+      : isAnyIgnite
+        ? "fire"
+        : isAnyFrost
+          ? "ice"
+          : undefined;
+
   const thermalProps = {
     className: cls,
-    "data-warm": ignite ? "" : undefined,
-    "data-cast": ignite ? "fire" : "ice",
-    "aria-label": ariaLabel,
+    "data-warm": dataWarm,
+    "data-cast": dataCast,
+    ...props,
   };
+
   const body = (
     <>
-      {ignite ? <FlameGlyph /> : <CrystalGlyph />}
-      <span>{children}</span>
+      {isStats ? (
+        <>
+          <div className="flex items-center gap-3">
+            {defaultIcon}
+            {text ? (
+              <span
+                className={cn(
+                  "font-mono text-[11px] tracking-widest text-mist transition-colors",
+                  isStatsIgnite && "group-hover:text-flame",
+                  isStatsFrost && "group-hover:text-ice",
+                )}
+              >
+                {text}
+              </span>
+            ) : null}
+          </div>
+          <div className="flex items-center gap-2">{children}</div>
+        </>
+      ) : (
+        <>
+          {defaultIcon}
+          {text ? <span>{text}</span> : null}
+          {children}
+        </>
+      )}
     </>
   );
 
   if (href?.startsWith("/")) {
     return (
-      <Link href={href} transitionTypes={["nav"]} {...thermalProps}>
+      <Link href={href} transitionTypes={["nav"]} {...(thermalProps as any)}>
         {body}
       </Link>
     );
   }
+
   if (href) {
     const external = href.startsWith("http");
     return (
       <a
         href={href}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-        {...thermalProps}
+        {...(thermalProps as any)}
       >
         {body}
       </a>
     );
   }
+
   return (
-    <button type="button" onClick={onClick} {...thermalProps}>
+    <button type={(props as any).type || "button"} {...(thermalProps as any)}>
       {body}
     </button>
   );

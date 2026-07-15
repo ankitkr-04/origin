@@ -1,11 +1,11 @@
-'use client'
+"use client";
 
-import { useReportWebVitals } from 'next/web-vitals'
+import { useReportWebVitals } from "next/web-vitals";
 
 export function WebVitalsReporter() {
   useReportWebVitals((metric) => {
-    console.log('[Web Vitals]', metric)
-  })
-  
-  return null
+    console.log("[Web Vitals]", metric);
+  });
+
+  return null;
 }

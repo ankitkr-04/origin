@@ -11,6 +11,8 @@ import {
 } from "@/db/schema";
 import { CACHE_TAGS, CONTENT_CACHE_LIFE } from "@/lib/cache-config";
 import type { Achievement, Experience } from "@/types/content";
+import { getIdentity } from "@/db/identity";
+import { getCodeforcesUserInfo } from "@/lib/api/codeforces";
 
 export async function getAchievements(): Promise<Achievement[]> {
   "use cache";
@@ -20,11 +22,29 @@ export async function getAchievements(): Promise<Achievement[]> {
     .select()
     .from(achievements)
     .orderBy(asc(achievements.sortOrder));
-  return rows.map((row) => ({
+  const results = rows.map((row) => ({
     value: row.value,
     context: row.context,
     note: row.note,
   }));
+
+  const cfIndex = results.findIndex((a) =>
+    a.context.toLowerCase().includes("codeforces"),
+  );
+  if (cfIndex !== -1) {
+    try {
+      const identity = await getIdentity();
+      const cfInfo = await getCodeforcesUserInfo(identity.codeforcesHandle);
+      if (cfInfo.rating > 0) {
+        const rank = cfInfo.rank.charAt(0).toUpperCase() + cfInfo.rank.slice(1);
+        results[cfIndex].value = `${rank} · ${cfInfo.rating}`;
+      }
+    } catch (e) {
+      // Fallback to database value
+    }
+  }
+
+  return results;
 }
 
 export async function getExperiences(): Promise<Experience[]> {
@@ -84,11 +104,30 @@ export async function getAchievementStats(): Promise<
     .select()
     .from(achievementStats)
     .orderBy(asc(achievementStats.sortOrder));
-  return rows.map((row) => ({
+  const results = rows.map((row) => ({
     value: row.value,
     label: row.label,
     detail: row.detail ?? undefined,
   }));
+
+  const cfIndex = results.findIndex((s) =>
+    s.label.toLowerCase().includes("codeforces"),
+  );
+  if (cfIndex !== -1) {
+    try {
+      const identity = await getIdentity();
+      const cfInfo = await getCodeforcesUserInfo(identity.codeforcesHandle);
+      if (cfInfo.rating > 0) {
+        const rank = cfInfo.rank.charAt(0).toUpperCase() + cfInfo.rank.slice(1);
+        results[cfIndex].label = `Codeforces ${rank}`;
+        results[cfIndex].value = cfInfo.rating.toString();
+      }
+    } catch (e) {
+      // Fallback to database value
+    }
+  }
+
+  return results;
 }
 
 export async function getSkills() {

@@ -47,7 +47,7 @@ export function ProjectModal({
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Tab") {
       const focusableElements = panelRef.current?.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
       );
       if (!focusableElements || focusableElements.length === 0) return;
 

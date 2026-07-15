@@ -4,6 +4,11 @@ import { getIdentity } from "@/db/identity";
 import { getAchievementStats, getEducation } from "@/db/profile";
 import { getSystemMetrics } from "@/lib/metrics";
 
+const HERO_CONFIG = {
+  sectionLabel: "001 / ORIGIN",
+  primaryAction: "View the work",
+};
+
 export async function HeroSection() {
   const identity = await getIdentity();
   const achievementStats = await getAchievementStats();
@@ -25,7 +30,7 @@ export async function HeroSection() {
             style={{ animationDelay: "0.2s" }}
           >
             <HexagonIcon className="text-ice/70" />
-            <span className="text-flame">001 / ORIGIN</span>
+            <span className="text-flame">{HERO_CONFIG.sectionLabel}</span>
             <span className="text-faint">·</span>
             <span className="text-mist normal-case tracking-normal">
               {identity.location} · {education.degree}
@@ -53,14 +58,14 @@ export async function HeroSection() {
             style={{ animationDelay: "0.75s" }}
           >
             <Button variant="ignite" href="#work">
-              View the work
+              {HERO_CONFIG.primaryAction}
             </Button>
             <Button
               variant="frost"
               href={identity.githubUrl}
               aria-label="GitHub profile (opens in a new tab)"
             >
-              github/ankitkr-04 ↗
+              github/{identity.githubHandle} ↗
             </Button>
           </div>
         </div>

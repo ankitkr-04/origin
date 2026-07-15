@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CodingStats } from "@/components/about/coding-stats";
+import { CpuSchematic } from "@/components/about/cpu-schematic";
 import { GithubHeatmap } from "@/components/about/github-heatmap";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteNav } from "@/components/layout/site-nav";
@@ -22,6 +23,12 @@ export function generateMetadata(): Metadata {
   };
 }
 
+const ABOUT_CONFIG = {
+  focusAreas: "Backend, Distributed system, and Concurrency",
+  availability: "From June 2026",
+  experienceTitle: "Backend & systems engineering",
+};
+
 export default async function AboutPage() {
   const [experiences, certifications, identity, education, skills, metrics] =
     await Promise.all([
@@ -29,9 +36,9 @@ export default async function AboutPage() {
       getCertifications(),
       getIdentity(),
       getEducation(),
-    getSkills(),
-    getSystemMetrics(),
-  ]);
+      getSkills(),
+      getSystemMetrics(),
+    ]);
 
   const githubStats = metrics.githubData;
 
@@ -40,162 +47,7 @@ export default async function AboutPage() {
       <SiteNav githubUrl={identity.githubUrl} />
       <main className="pt-14">
         <section className="relative py-16 md:py-24 overflow-hidden">
-          {/* Background CPU Instruction Pipeline & Register mapping schematic */}
-          <div
-            className="absolute -right-24 top-12 -z-10 w-96 h-96 opacity-10 pointer-events-none hidden lg:block select-none"
-            aria-hidden
-          >
-            <svg
-              viewBox="0 0 200 200"
-              fill="none"
-              className="w-full h-full text-ice/40"
-              stroke="currentColor"
-            >
-              <title>CPU Registry Map Schematic</title>
-              <rect
-                x="10"
-                y="10"
-                width="45"
-                height="15"
-                rx="1.5"
-                strokeWidth="1"
-              />
-              <text
-                x="15"
-                y="20"
-                fontSize="5"
-                fontFamily="monospace"
-                fill="currentColor"
-              >
-                RAX: 0x00FF8C
-              </text>
-
-              <rect
-                x="10"
-                y="30"
-                width="45"
-                height="15"
-                rx="1.5"
-                strokeWidth="1"
-              />
-              <text
-                x="15"
-                y="40"
-                fontSize="5"
-                fontFamily="monospace"
-                fill="currentColor"
-              >
-                RBX: 0x1A2F69
-              </text>
-
-              <rect
-                x="10"
-                y="50"
-                width="45"
-                height="15"
-                rx="1.5"
-                strokeWidth="1"
-              />
-              <text
-                x="15"
-                y="60"
-                fontSize="5"
-                fontFamily="monospace"
-                fill="currentColor"
-              >
-                RSP: 0x7FFF00
-              </text>
-
-              <path
-                d="M55 17 H100 V95 H130"
-                strokeWidth="1"
-                strokeDasharray="2,2"
-              />
-              <path d="M55 37 H85 V125 H130" strokeWidth="1" />
-              <path d="M55 57 H70 V155 H130" strokeWidth="1" />
-
-              <text
-                x="135"
-                y="85"
-                fontSize="5"
-                fontFamily="monospace"
-                fill="currentColor"
-              >
-                TLB / PAGE TRANSLATION
-              </text>
-              <rect
-                x="130"
-                y="90"
-                width="60"
-                height="20"
-                rx="1.5"
-                strokeWidth="1"
-              />
-              <text
-                x="135"
-                y="102"
-                fontSize="4.5"
-                fontFamily="monospace"
-                fill="currentColor"
-              >
-                VPN 0x0A → PPN 0x82
-              </text>
-
-              <rect
-                x="130"
-                y="120"
-                width="60"
-                height="20"
-                rx="1.5"
-                strokeWidth="1"
-              />
-              <text
-                x="135"
-                y="132"
-                fontSize="4.5"
-                fontFamily="monospace"
-                fill="currentColor"
-              >
-                VPN 0x0B → PPN 0x14
-              </text>
-
-              <rect
-                x="130"
-                y="150"
-                width="60"
-                height="20"
-                rx="1.5"
-                strokeWidth="1"
-              />
-              <text
-                x="135"
-                y="162"
-                fontSize="4.5"
-                fontFamily="monospace"
-                fill="currentColor"
-              >
-                VPN 0x0C → PPN 0xEE
-              </text>
-
-              <circle
-                cx="32"
-                cy="120"
-                r="15"
-                strokeWidth="1"
-                strokeDasharray="3,1"
-              />
-              <text
-                x="32"
-                y="122"
-                fontSize="4.5"
-                fontFamily="monospace"
-                textAnchor="middle"
-                fill="currentColor"
-              >
-                NUMA CORE
-              </text>
-            </svg>
-          </div>
+          <CpuSchematic />
 
           <div className="mx-auto max-w-6xl px-5 md:px-8">
             <SectionHeading index="001" label="About" title={identity.name} />
@@ -225,14 +77,16 @@ export default async function AboutPage() {
                       Focus
                     </dt>
                     <dd className="mt-1 text-polar/90">
-                      Backend · Systems · Concurrency
+                      {ABOUT_CONFIG.focusAreas}
                     </dd>
                   </div>
                   <div>
                     <dt className="text-[11px] tracking-[0.2em] text-faint uppercase">
                       Available
                     </dt>
-                    <dd className="mt-1 text-flame">From May 2026</dd>
+                    <dd className="mt-1 text-flame">
+                      {ABOUT_CONFIG.availability}
+                    </dd>
                   </div>
                 </dl>
                 <CodingStats identity={identity} metrics={metrics} />
@@ -252,7 +106,7 @@ export default async function AboutPage() {
             <SectionHeading
               index="002"
               label="Experience"
-              title="Real-time infrastructure, in production"
+              title={ABOUT_CONFIG.experienceTitle}
               readout="θ RECENCY = WARMTH"
             />
             <div className="thermal-rail space-y-14">

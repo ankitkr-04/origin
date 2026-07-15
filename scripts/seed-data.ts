@@ -237,7 +237,7 @@ export const achievements = [
     note: "Top 0.003% in one of the world's largest coding competitions",
   },
   {
-    value: "Expert · 1655",
+    value: "Expert · 1663",
     context: "Codeforces competitive rating",
     note: "Externally verifiable, earned across rated contests",
   },
@@ -246,16 +246,15 @@ export const achievements = [
 export const experiences = [
   {
     company: "ControlShift Talent",
-    role: "Engineering Intern",
+    role: "Web Developer Intern",
     period: "Feb — May 2025",
     summary:
-      "Built the real-time backbone of a live AI interviewing platform — the infrastructure between a candidate on video and the AI on the other end.",
+      "Architected real-time infrastructure in production for a live AI interviewing platform.",
     highlights: [
-      "Architected WebRTC signaling and a WebSocket layer with heartbeat, room management, and reconnection for candidate–AI video sessions",
-      "Built a collaborative code editor over WebSocket, syncing client state live during interviews",
-      "Moved blocking email I/O to BullMQ + Redis job queues with retry and dead-letter handling",
-      "Chunked live interview recordings into an async cheat-detection AI pipeline",
-      "Shipped 30+ REST endpoints with input validation and centralized error handling, backed by 25+ unit tests on auth and booking paths",
+      "Architected real-time infrastructure for a live AI interviewer — WebRTC signaling server + WebSocket layer with heartbeat, room management, and reconnection for candidate–AI video sessions.",
+      "Built a collaborative code editor over WebSocket, syncing client state live during interviews.",
+      "Async job queues (BullMQ + Redis) for blocking email I/O, with retry and dead-letter handling.",
+      "30+ REST endpoints with input validation and centralized error handling; 25+ unit tests on auth/booking paths.",
     ],
   },
 ];
@@ -267,14 +266,14 @@ export const certifications = [
 
 export const identity = {
   name: "Ankit Kumar",
-  headline: "I build storage engines and the systems underneath them.",
+  headline: "I build scalable backend systems and the infrastructure that powers them.",
   headlineParts: [
     "I build ",
-    "storage engines",
-    " and the systems underneath them.",
+    "scalable backend systems",
+    " and the infrastructure that powers them.",
   ],
   positioning:
-    "Final-year CS student and Codeforces Expert focused on backend and systems engineering — high-throughput servers, storage internals, and infrastructure with measured performance.",
+    "Final-year CS student and Codeforces Expert focused on backend engineering—building high-throughput APIs, reliable systems, and real-time infrastructure.",
   location: "Bhopal, India",
   education: "B.Tech CSE · LNCT Bhopal · Class of 2026",
   email: "ak0182274@gmail.com",
@@ -283,9 +282,9 @@ export const identity = {
   leetcodeHandle: "ankitkr_04",
   codeforcesHandle: "Ankit_Kr04",
   aboutNarrative: [
-    "I'm a final-year computer science student who got curious about what actually happens under an API — and kept digging until I hit allocators. The projects that followed run the whole depth of the stack: a C++26 storage engine that starts at NUMA-aware memory management, a Redis-compatible server built on a single event loop, and a booking platform whose architecture was written as ten numbered documents before the first commit.",
-    "The throughline is measured performance. Claims on this site come with the benchmark, the bound, or the sanitizer run that backs them — and where something is still in progress, it says so.",
-    "Away from the terminal: competitive programming (Codeforces Expert) and chess.",
+    "I'm a final-year Computer Science student who started by building APIs and kept digging deeper to understand how systems work under the hood. This curiosity led me to explore the full depth of the stack—from building a storage engine with memory management in C++26, to writing a Redis-compatible server driven by a single event loop, and designing high-concurrency booking platforms.",
+    "My focus is on systems engineering and performance. I believe in measuring what matters, so I back my work with benchmarks and tests. I'm always learning, and if something is a work in progress, I'm upfront about it.",
+    "When I'm not at the terminal, you'll probably find me solving competitive programming challenges (Codeforces Expert) or playing chess.",
   ],
 };
 
@@ -302,7 +301,7 @@ export const achievementStats = [
     detail: "of 669,000+ participants",
   },
   {
-    value: "1655",
+    value: "1663",
     label: "Codeforces Expert",
     detail: "externally verifiable rating",
   },
@@ -399,31 +398,56 @@ export const resumes = [
 ];
 
 export const skills = [
-  { category: "Systems & Languages", name: "C++ (11/14/17)" },
-  { category: "Systems & Languages", name: "Rust" },
-  { category: "Systems & Languages", name: "Go" },
-  { category: "Systems & Languages", name: "Java / Spring Boot" },
-  { category: "Systems & Languages", name: "TypeScript / Node.js" },
-  { category: "Systems & Languages", name: "Python" },
+  { category: "Languages", name: "Java (Primary)" },
+  { category: "Languages", name: "C++ (C++26)" },
+  { category: "Languages", name: "Rust" },
+  { category: "Languages", name: "Python" },
+  { category: "Languages", name: "TypeScript / JavaScript" },
+  { category: "Languages", name: "SQL" },
 
-  { category: "Storage & Databases", name: "PostgreSQL" },
-  { category: "Storage & Databases", name: "Redis" },
-  { category: "Storage & Databases", name: "MongoDB" },
-  { category: "Storage & Databases", name: "Kafka" },
-  { category: "Storage & Databases", name: "RabbitMQ" },
-  { category: "Storage & Databases", name: "LevelDB / RocksDB" },
+  { category: "Backend & Frameworks", name: "Spring Boot" },
+  { category: "Backend & Frameworks", name: "FastAPI" },
+  { category: "Backend & Frameworks", name: "Axum" },
+  { category: "Backend & Frameworks", name: "Next.js" },
+  { category: "Backend & Frameworks", name: "REST APIs" },
+  { category: "Backend & Frameworks", name: "WebSockets" },
+  { category: "Backend & Frameworks", name: "WebRTC" },
 
-  { category: "Web & Frontend", name: "React" },
-  { category: "Web & Frontend", name: "Next.js" },
-  { category: "Web & Frontend", name: "WebSockets" },
-  { category: "Web & Frontend", name: "GraphQL" },
-  { category: "Web & Frontend", name: "Tailwind CSS" },
-  { category: "Web & Frontend", name: "Framer Motion" },
+  { category: "Databases & Caching", name: "PostgreSQL (HikariCP)" },
+  { category: "Databases & Caching", name: "Redis" },
+  { category: "Databases & Caching", name: "DragonflyDB" },
+  { category: "Databases & Caching", name: "ChromaDB (Vector DB)" },
 
-  { category: "Infra & Tooling", name: "Linux" },
-  { category: "Infra & Tooling", name: "Docker" },
-  { category: "Infra & Tooling", name: "AWS (S3, EC2, RDS)" },
-  { category: "Infra & Tooling", name: "CI/CD (GitHub Actions)" },
-  { category: "Infra & Tooling", name: "Nginx" },
-  { category: "Infra & Tooling", name: "Git" },
+  { category: "Systems & Concurrency", name: "Java NIO" },
+  { category: "Systems & Concurrency", name: "Virtual Threads (Java 21)" },
+  { category: "Systems & Concurrency", name: "Lock-free Data Structures" },
+  { category: "Systems & Concurrency", name: "Memory Allocators (Arena, TLAB)" },
+  { category: "Systems & Concurrency", name: "Epoch-based Reclamation" },
+  { category: "Systems & Concurrency", name: "MVCC" },
+  { category: "Systems & Concurrency", name: "Event-driven I/O" },
+
+  { category: "AI & LLMs", name: "LangChain" },
+  { category: "AI & LLMs", name: "RAG Pipelines" },
+  { category: "AI & LLMs", name: "Prompt Engineering" },
+  { category: "AI & LLMs", name: "Gemini" },
+  { category: "AI & LLMs", name: "Qwen3-4B" },
+  { category: "AI & LLMs", name: "Prompt Guardrails (Pydantic)" },
+
+  { category: "Infrastructure & Tools", name: "Linux" },
+  { category: "Infrastructure & Tools", name: "Docker" },
+  { category: "Infrastructure & Tools", name: "AWS (EC2, Lambda)" },
+  { category: "Infrastructure & Tools", name: "Oracle Cloud Infrastructure" },
+  { category: "Infrastructure & Tools", name: "Git" },
+  { category: "Infrastructure & Tools", name: "Prometheus" },
+  { category: "Infrastructure & Tools", name: "Grafana" },
+
+  { category: "C++/Systems Tooling", name: "CMake" },
+  { category: "C++/Systems Tooling", name: "GDB" },
+  { category: "C++/Systems Tooling", name: "perf" },
+  { category: "C++/Systems Tooling", name: "TSAN/ASAN/UBSAN" },
+  { category: "C++/Systems Tooling", name: "Valgrind" },
+  { category: "C++/Systems Tooling", name: "Google Benchmark" },
+
+  { category: "Message Queues / Async", name: "BullMQ" },
+  { category: "Message Queues / Async", name: "Redis Pub/Sub" },
 ];

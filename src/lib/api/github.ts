@@ -17,7 +17,47 @@ export interface GithubStats {
   weeks: Week[];
 }
 
+interface GithubGraphQLResponse {
+  data: {
+    user: {
+      contributionsCollection: {
+        totalCommitContributions: number;
+        contributionCalendar: {
+          totalContributions: number;
+          weeks: Week[];
+        };
+      };
+      repositories: {
+        totalCount: number;
+      };
+    };
+  };
+  errors?: unknown[];
+}
+
 const GITHUB_GRAPHQL_API = "https://api.github.com/graphql";
+
+const USER_CONTRIBUTIONS_QUERY = `
+  query($userName: String!) {
+    user(login: $userName) {
+      contributionsCollection {
+        totalCommitContributions
+        contributionCalendar {
+          totalContributions
+          weeks {
+            contributionDays {
+              contributionCount
+              date
+            }
+          }
+        }
+      }
+      repositories(privacy: PUBLIC) {
+        totalCount
+      }
+    }
+  }
+`;
 
 export async function getGithubStats(username: string): Promise<GithubStats> {
   "use cache";
@@ -29,28 +69,6 @@ export async function getGithubStats(username: string): Promise<GithubStats> {
     throw new Error("GITHUB_PERSONAL_ACCESS_TOKEN is not set");
   }
 
-  const query = `
-    query($userName: String!) {
-      user(login: $userName) {
-        contributionsCollection {
-          totalCommitContributions
-          contributionCalendar {
-            totalContributions
-            weeks {
-              contributionDays {
-                contributionCount
-                date
-              }
-            }
-          }
-        }
-        repositories(privacy: PUBLIC) {
-          totalCount
-        }
-      }
-    }
-  `;
-
   const response = await fetch(GITHUB_GRAPHQL_API, {
     method: "POST",
     headers: {
@@ -58,7 +76,7 @@ export async function getGithubStats(username: string): Promise<GithubStats> {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      query,
+      query: USER_CONTRIBUTIONS_QUERY,
       variables: { userName: username },
     }),
   });
@@ -67,12 +85,13 @@ export async function getGithubStats(username: string): Promise<GithubStats> {
     throw new Error(`GitHub API returned ${response.status}`);
   }
 
-  const data = await response.json();
+  const data: GithubGraphQLResponse = await response.json();
   if (data.errors) {
     throw new Error(`GitHub GraphQL error: ${JSON.stringify(data.errors)}`);
   }
 
-  const user = data.data.user;
+  const { user } = data.data;
+
   return {
     totalCommitContributions:
       user.contributionsCollection.totalCommitContributions,
