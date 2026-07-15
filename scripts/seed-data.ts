@@ -266,14 +266,14 @@ export const certifications = [
 
 export const identity = {
   name: "Ankit Kumar",
-  headline: "I build storage engines and the systems underneath them.",
+  headline: "I build scalable backend systems and the infrastructure that powers them.",
   headlineParts: [
     "I build ",
-    "storage engines",
-    " and the systems underneath them.",
+    "scalable backend systems",
+    " and the infrastructure that powers them.",
   ],
   positioning:
-    "Final-year CS student and Codeforces Expert focused on backend and systems engineering — high-throughput servers, storage internals, and infrastructure with measured performance.",
+    "Final-year CS student and Codeforces Expert focused on backend engineering—building high-throughput APIs, reliable systems, and real-time infrastructure.",
   location: "Bhopal, India",
   education: "B.Tech CSE · LNCT Bhopal · Class of 2026",
   email: "ak0182274@gmail.com",
@@ -301,7 +301,7 @@ export const achievementStats = [
     detail: "of 669,000+ participants",
   },
   {
-    value: "1655",
+    value: "1663",
     label: "Codeforces Expert",
     detail: "externally verifiable rating",
   },
