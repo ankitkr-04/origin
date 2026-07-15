@@ -9,3 +9,5 @@ export { InfoIcon } from "./info-icon";
 export * from "./leetcode-icon";
 export { ListIcon } from "./list-icon";
 export { MenuIcon } from "./menu-icon";
+export * from "./flame-icon";
+export * from "./crystal-icon";
