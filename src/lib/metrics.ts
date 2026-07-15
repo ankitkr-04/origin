@@ -30,7 +30,7 @@ export async function getSystemMetrics(): Promise<SystemMetrics> {
     githubCommits = githubResult.value.totalCommitContributions;
     githubData = githubResult.value;
   } else {
-    console.error("Failed to fetch GitHub stats:", githubResult.reason);
+    // Silently continue with fallbacks
   }
 
   let dsaSolved = 0;
@@ -41,14 +41,14 @@ export async function getSystemMetrics(): Promise<SystemMetrics> {
     leetcodeSolved = leetcodeResult.value.totalSolved;
     dsaSolved += leetcodeSolved;
   } else {
-    console.error("Failed to fetch LeetCode stats:", leetcodeResult.reason);
+    // Silently continue with fallbacks
   }
 
   if (codeforcesResult.status === "fulfilled") {
     codeforcesSolved = codeforcesResult.value.totalSolved;
     dsaSolved += codeforcesSolved;
   } else {
-    console.error("Failed to fetch Codeforces stats:", codeforcesResult.reason);
+    // Silently continue with fallbacks
   }
 
   return {
