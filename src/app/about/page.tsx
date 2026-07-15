@@ -26,7 +26,7 @@ export function generateMetadata(): Metadata {
 const ABOUT_CONFIG = {
   focusAreas: "Backend, Distributed system, and Concurrency",
   availability: "From June 2026",
-  experienceTitle: "Backend and systems engineering experience",
+  experienceTitle: "Backend & systems engineering",
 };
 
 export default async function AboutPage() {
