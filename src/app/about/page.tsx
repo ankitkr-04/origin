@@ -25,6 +25,7 @@ export function generateMetadata(): Metadata {
 const ABOUT_CONFIG = {
   focusAreas: "Backend, Distributed system, and Concurrency",
   availability: "From June 2026",
+  experienceTitle: "Backend and systems engineering experience",
 };
 
 export default async function AboutPage() {
@@ -259,7 +260,7 @@ export default async function AboutPage() {
             <SectionHeading
               index="002"
               label="Experience"
-              title="Real-time infrastructure, in production"
+              title={ABOUT_CONFIG.experienceTitle}
               readout="θ RECENCY = WARMTH"
             />
             <div className="thermal-rail space-y-14">

@@ -237,7 +237,7 @@ export const achievements = [
     note: "Top 0.003% in one of the world's largest coding competitions",
   },
   {
-    value: "Expert · 1655",
+    value: "Expert · 1663",
     context: "Codeforces competitive rating",
     note: "Externally verifiable, earned across rated contests",
   },
@@ -246,16 +246,15 @@ export const achievements = [
 export const experiences = [
   {
     company: "ControlShift Talent",
-    role: "Engineering Intern",
+    role: "Web Developer Intern",
     period: "Feb — May 2025",
     summary:
-      "Built the real-time backbone of a live AI interviewing platform — the infrastructure between a candidate on video and the AI on the other end.",
+      "Worked as a Web Developer Intern, where I helped build the real-time infrastructure for a live AI interviewing platform.",
     highlights: [
-      "Architected WebRTC signaling and a WebSocket layer with heartbeat, room management, and reconnection for candidate–AI video sessions",
-      "Built a collaborative code editor over WebSocket, syncing client state live during interviews",
-      "Moved blocking email I/O to BullMQ + Redis job queues with retry and dead-letter handling",
-      "Chunked live interview recordings into an async cheat-detection AI pipeline",
-      "Shipped 30+ REST endpoints with input validation and centralized error handling, backed by 25+ unit tests on auth and booking paths",
+      "Architected real-time infrastructure for a live AI interviewer — WebRTC signaling server + WebSocket layer with heartbeat, room management, and reconnection for candidate–AI video sessions.",
+      "Built a collaborative code editor over WebSocket, syncing client state live during interviews.",
+      "Async job queues (BullMQ + Redis) for blocking email I/O, with retry and dead-letter handling.",
+      "30+ REST endpoints with input validation and centralized error handling; 25+ unit tests on auth/booking paths.",
     ],
   },
 ];
@@ -283,9 +282,9 @@ export const identity = {
   leetcodeHandle: "ankitkr_04",
   codeforcesHandle: "Ankit_Kr04",
   aboutNarrative: [
-    "I'm a final-year computer science student who got curious about what actually happens under an API — and kept digging until I hit allocators. The projects that followed run the whole depth of the stack: a C++26 storage engine that starts at NUMA-aware memory management, a Redis-compatible server built on a single event loop, and a booking platform whose architecture was written as ten numbered documents before the first commit.",
-    "The throughline is measured performance. Claims on this site come with the benchmark, the bound, or the sanitizer run that backs them — and where something is still in progress, it says so.",
-    "Away from the terminal: competitive programming (Codeforces Expert) and chess.",
+    "I'm a final-year Computer Science student who started by building APIs and kept digging deeper to understand how systems work under the hood. This curiosity led me to explore the full depth of the stack—from building a storage engine with memory management in C++26, to writing a Redis-compatible server driven by a single event loop, and designing high-concurrency booking platforms.",
+    "My focus is on systems engineering and performance. I believe in measuring what matters, so I back my work with benchmarks and tests. I'm always learning, and if something is a work in progress, I'm upfront about it.",
+    "When I'm not at the terminal, you'll probably find me solving competitive programming challenges (Codeforces Expert) or playing chess.",
   ],
 };
 
