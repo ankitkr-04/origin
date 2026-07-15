@@ -5,6 +5,13 @@ export interface CodeforcesStats {
   totalSolved: number;
 }
 
+export interface CodeforcesUserInfo {
+  rating: number;
+  rank: string;
+  maxRating: number;
+  maxRank: string;
+}
+
 const CODEFORCES_REST_API = "https://codeforces.com/api";
 
 export async function getCodeforcesStats(
@@ -14,18 +21,22 @@ export async function getCodeforcesStats(
   cacheTag(CACHE_TAGS.coding);
   cacheLife(LIVE_STATS_CACHE_LIFE);
 
-  // Fetch up to 10000 submissions to cover the user's history and avoid undocumented pagination limits
-  const response = await fetch(
-    `${CODEFORCES_REST_API}/user.status?handle=${handle}&from=1&count=10000`,
-  );
+  let response : Response;
+  try {
+    response = await fetch(
+      `${CODEFORCES_REST_API}/user.status?handle=${handle}&from=1&count=10000`,
+    );
+  } catch (_) {
+    return { totalSolved: 0 };
+  }
 
   if (!response.ok) {
-    throw new Error(`Codeforces API returned ${response.status}`);
+    return { totalSolved: 0 };
   }
 
   const data = await response.json();
   if (data.status !== "OK") {
-    throw new Error(`Codeforces API error: ${data.comment || "Unknown error"}`);
+    return { totalSolved: 0 };
   }
 
   const submissions = data.result;
@@ -46,5 +57,40 @@ export async function getCodeforcesStats(
 
   return {
     totalSolved: solvedProblems.size,
+  };
+}
+
+export async function getCodeforcesUserInfo(
+  handle: string,
+): Promise<CodeforcesUserInfo> {
+  "use cache";
+  cacheTag(CACHE_TAGS.coding);
+  cacheLife(LIVE_STATS_CACHE_LIFE);
+
+  let response: Response;
+  try {
+    response = await fetch(
+      `${CODEFORCES_REST_API}/user.info?handles=${handle}`,
+    );
+  } catch (_: unknown) {
+    return { rating: 0, rank: "unrated", maxRating: 0, maxRank: "unrated" };
+  }
+
+  if (!response.ok) {
+    return { rating: 0, rank: "unrated", maxRating: 0, maxRank: "unrated" };
+  }
+
+  const data = await response.json();
+  if (data.status !== "OK") {
+    return { rating: 0, rank: "unrated", maxRating: 0, maxRank: "unrated" };
+  }
+
+  const user = data.result[0];
+
+  return {
+    rating: user.rating || 0,
+    rank: user.rank || "unrated",
+    maxRating: user.maxRating || 0,
+    maxRank: user.maxRank || "unrated",
   };
 }
