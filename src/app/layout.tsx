@@ -9,7 +9,7 @@ import { PageTransition } from "@/components/layout/page-transition";
 import { ReaderBar } from "@/components/layout/reader-bar";
 import { siteConfig } from "@/lib/site-config";
 import { env } from "@/lib/env";
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -89,7 +89,6 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable}`}
       data-scroll-behavior="smooth"
     >
-      
       <body className="bg-void text-polar antialiased">
         {/* usePathname (for the nav flash) is request data under
             cacheComponents — it must resolve inside a Suspense boundary */}
@@ -109,7 +108,7 @@ export default function RootLayout({
           <PageTransition>{children}</PageTransition>
         </Suspense>
         <Grain />
-        <SpeedInsights/>
+        <SpeedInsights />
         {env.ENABLE_WEB_VITALS_ATTRIBUTION ? <WebVitalsReporter /> : null}
       </body>
     </html>

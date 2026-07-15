@@ -29,7 +29,7 @@ export async function getAchievements(): Promise<Achievement[]> {
   }));
 
   const cfIndex = results.findIndex((a) =>
-    a.context.toLowerCase().includes("codeforces")
+    a.context.toLowerCase().includes("codeforces"),
   );
   if (cfIndex !== -1) {
     try {
@@ -111,7 +111,7 @@ export async function getAchievementStats(): Promise<
   }));
 
   const cfIndex = results.findIndex((s) =>
-    s.label.toLowerCase().includes("codeforces")
+    s.label.toLowerCase().includes("codeforces"),
   );
   if (cfIndex !== -1) {
     try {

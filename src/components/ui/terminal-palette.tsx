@@ -263,8 +263,6 @@ export function TerminalPalette() {
       return;
     }
 
-
-
     if (base === "help") {
       addEntry(HELP_OUTPUT);
       return;

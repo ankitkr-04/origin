@@ -8,7 +8,9 @@ export function GithubHeatmap({ stats }: { stats: GithubStats }) {
   const tooltipContentRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
   const isScrollingRef = useRef(false);
-  const scrollEndTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const scrollEndTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     return () => {

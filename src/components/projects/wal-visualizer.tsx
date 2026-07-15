@@ -5,9 +5,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { REDUCED_MOTION, useMediaQuery } from "@/hooks/use-media-query";
 
-const Scene = dynamic(() => import("@/components/scenes/wal-visualizer-scene"), {
-  ssr: false,
-});
+const Scene = dynamic(
+  () => import("@/components/scenes/wal-visualizer-scene"),
+  {
+    ssr: false,
+  },
+);
 
 export function WalVisualizer() {
   const reducedMotion = useMediaQuery(REDUCED_MOTION);

@@ -1,8 +1,6 @@
-
 import { cacheLife, cacheTag } from "next/cache";
 import { safeFetchJson } from "@/lib/api/fetch-utils";
 import { CACHE_TAGS, LIVE_STATS_CACHE_LIFE } from "@/lib/cache-config";
-
 
 export interface LeetcodeStats {
   totalSolved: number;
@@ -40,9 +38,7 @@ const USER_PROFILE_QUERY = `
   }
 `;
 
-export async function getLeetcodeStats(
-  handle: string,
-): Promise<LeetcodeStats> {
+export async function getLeetcodeStats(handle: string): Promise<LeetcodeStats> {
   "use cache";
   cacheTag(CACHE_TAGS.coding);
   cacheLife(LIVE_STATS_CACHE_LIFE);

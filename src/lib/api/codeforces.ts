@@ -2,7 +2,6 @@ import { cacheLife, cacheTag } from "next/cache";
 import { safeFetchJson } from "@/lib/api/fetch-utils";
 import { CACHE_TAGS, LIVE_STATS_CACHE_LIFE } from "@/lib/cache-config";
 
-
 export interface CodeforcesStats {
   totalSolved: number;
 }
