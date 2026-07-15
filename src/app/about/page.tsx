@@ -22,6 +22,11 @@ export function generateMetadata(): Metadata {
   };
 }
 
+const ABOUT_CONFIG = {
+  focusAreas: "Backend, Distributed system, and Concurrency",
+  availability: "From June 2026",
+};
+
 export default async function AboutPage() {
   const [experiences, certifications, identity, education, skills, metrics] =
     await Promise.all([
@@ -29,9 +34,9 @@ export default async function AboutPage() {
       getCertifications(),
       getIdentity(),
       getEducation(),
-    getSkills(),
-    getSystemMetrics(),
-  ]);
+      getSkills(),
+      getSystemMetrics(),
+    ]);
 
   const githubStats = metrics.githubData;
 
@@ -225,14 +230,16 @@ export default async function AboutPage() {
                       Focus
                     </dt>
                     <dd className="mt-1 text-polar/90">
-                      Backend · Systems · Concurrency
+                      {ABOUT_CONFIG.focusAreas}
                     </dd>
                   </div>
                   <div>
                     <dt className="text-[11px] tracking-[0.2em] text-faint uppercase">
                       Available
                     </dt>
-                    <dd className="mt-1 text-flame">From May 2026</dd>
+                    <dd className="mt-1 text-flame">
+                      {ABOUT_CONFIG.availability}
+                    </dd>
                   </div>
                 </dl>
                 <CodingStats identity={identity} metrics={metrics} />
