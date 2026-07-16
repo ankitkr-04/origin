@@ -10,7 +10,7 @@ export async function SiteFooter() {
   const socialLinks = await getSocialLinks();
 
   return (
-    <footer className="border-t border-line/60">
+    <footer className="relative z-10 border-t border-line/60">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-8 md:flex-row md:items-center md:justify-between md:px-8">
         <p className="font-mono text-xs text-faint">
           © <CurrentYear fallback={2026} /> {identity.name} ·{" "}
