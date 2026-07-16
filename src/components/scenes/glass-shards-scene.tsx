@@ -27,6 +27,20 @@ export default function GlassShardsScene({
   const pauseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        isPausedRef.current = true;
+      } else if (isVisibleRef.current) {
+        isPausedRef.current = false;
+        lastTimeRef.current = performance.now();
+        lastVisibleTimeRef.current = performance.now();
+        if (animateRef.current && !pauseTimeoutRef.current) {
+          requestAnimationFrame(animateRef.current);
+        }
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     isVisibleRef.current = isVisible;
     if (isVisible) {
       if (pauseTimeoutRef.current) {
@@ -48,6 +62,7 @@ export default function GlassShardsScene({
       }
     }
     return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       if (pauseTimeoutRef.current) {
         clearTimeout(pauseTimeoutRef.current);
       }
@@ -62,9 +77,15 @@ export default function GlassShardsScene({
     const width = container.clientWidth;
     const height = container.clientHeight;
 
+    const isBudget =
+      typeof window !== "undefined" &&
+      window.matchMedia("(pointer:coarse)").matches &&
+      (navigator.hardwareConcurrency <= 4 ||
+        (navigator as any).deviceMemory <= 4);
+
     // Config - Fire and Ice Theme
     const CONFIG = {
-      shardCount: 20,
+      shardCount: isBudget ? 8 : 20,
       innerRadius: 3.2,
       outerRadius: 8,
       coreRadius: 0.22,
@@ -79,11 +100,11 @@ export default function GlassShardsScene({
 
     const renderer = new THREE.WebGLRenderer({
       canvas,
-      antialias: true,
+      antialias: false,
       powerPreference: "high-performance",
       alpha: true,
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(isBudget ? 1 : Math.min(window.devicePixelRatio, 2));
     renderer.setSize(width, height);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
@@ -351,13 +372,15 @@ export default function GlassShardsScene({
 
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
-    const bloomPass = new UnrealBloomPass(
-      new THREE.Vector2(width, height),
-      CONFIG.bloom.strength,
-      CONFIG.bloom.radius,
-      CONFIG.bloom.threshold,
-    );
-    composer.addPass(bloomPass);
+    if (!isBudget) {
+      const bloomPass = new UnrealBloomPass(
+        new THREE.Vector2(width, height),
+        CONFIG.bloom.strength,
+        CONFIG.bloom.radius,
+        CONFIG.bloom.threshold,
+      );
+      composer.addPass(bloomPass);
+    }
     composer.addPass(new OutputPass());
 
     const resizeObserver = new ResizeObserver(() => {

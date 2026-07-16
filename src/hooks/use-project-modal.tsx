@@ -1,7 +1,7 @@
-import { useState, useCallback } from "react";
-import type { Project } from "@/types/content";
-import { ProjectModal } from "@/components/projects/project-modal";
+import { useCallback, useState } from "react";
 import { ProjectDetail } from "@/components/projects/project-detail";
+import { ProjectModal } from "@/components/projects/project-modal";
+import type { Project } from "@/types/content";
 
 export function useProjectModal() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);

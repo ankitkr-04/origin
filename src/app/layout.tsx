@@ -2,14 +2,14 @@ import type { Metadata, Viewport } from "next";
 import { Archivo, Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Grain } from "@/components/layout/grain";
 import { HeatLens } from "@/components/layout/heat-lens";
 import { Interactions } from "@/components/layout/interactions";
 import { PageTransition } from "@/components/layout/page-transition";
 import { ReaderBar } from "@/components/layout/reader-bar";
-import { siteConfig } from "@/lib/site-config";
 import { env } from "@/lib/env";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { siteConfig } from "@/lib/site-config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

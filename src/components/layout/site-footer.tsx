@@ -1,6 +1,5 @@
-import { getIdentity, getSocialLinks } from "@/db/identity";
-
 import { CurrentYear } from "@/components/ui/current-year";
+import { getIdentity, getSocialLinks } from "@/db/identity";
 
 export async function SiteFooter() {
   // Cache component: lets the © year render at build/revalidate time,

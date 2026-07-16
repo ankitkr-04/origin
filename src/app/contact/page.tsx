@@ -24,9 +24,9 @@ export default async function ContactPage() {
   return (
     <>
       <SiteNav githubUrl={identity.githubUrl} />
-      <main className="relative flex min-h-svh flex-col overflow-hidden pt-14">
+      <main className="relative flex min-h-svh flex-col pt-14">
         <div className="hero-glow absolute inset-0" aria-hidden />
-        <div className="absolute inset-0 md:left-2/5" aria-hidden>
+        <div className="fixed inset-0 md:left-2/5" aria-hidden>
           <StrataCanvas />
         </div>
         <div
