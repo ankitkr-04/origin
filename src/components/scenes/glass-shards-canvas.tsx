@@ -6,7 +6,10 @@ import { usePathname } from "next/navigation";
 
 const GlassShardsScene = dynamic(
   () => import("@/components/scenes/glass-shards-scene"),
-  { ssr: false },
+  {
+    ssr: false,
+    loading: () => <div className="absolute inset-0 hero-glow" aria-hidden />,
+  },
 );
 
 export function GlassShardsCanvas() {

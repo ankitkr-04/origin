@@ -1,6 +1,7 @@
 import { asc } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 import { db } from "@/db";
+import { getIdentity } from "@/db/identity";
 import {
   achievementStats,
   achievements,
@@ -9,10 +10,9 @@ import {
   experiences,
   skills,
 } from "@/db/schema";
+import { getCodeforcesUserInfo } from "@/lib/api/codeforces";
 import { CACHE_TAGS, CONTENT_CACHE_LIFE } from "@/lib/cache-config";
 import type { Achievement, Experience } from "@/types/content";
-import { getIdentity } from "@/db/identity";
-import { getCodeforcesUserInfo } from "@/lib/api/codeforces";
 
 export async function getAchievements(): Promise<Achievement[]> {
   "use cache";

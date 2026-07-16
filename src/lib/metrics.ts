@@ -1,6 +1,6 @@
 import { getIdentity } from "@/db/identity";
 import { getCodeforcesStats } from "./api/codeforces";
-import { getGithubStats, type GithubStats } from "./api/github";
+import { type GithubStats, getGithubStats } from "./api/github";
 import { getLeetcodeStats } from "./api/leetcode";
 
 export interface SystemMetrics {

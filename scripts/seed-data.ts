@@ -266,7 +266,8 @@ export const certifications = [
 
 export const identity = {
   name: "Ankit Kumar",
-  headline: "I build scalable backend systems and the infrastructure that powers them.",
+  headline:
+    "I build scalable backend systems and the infrastructure that powers them.",
   headlineParts: [
     "I build ",
     "scalable backend systems",
@@ -421,7 +422,10 @@ export const skills = [
   { category: "Systems & Concurrency", name: "Java NIO" },
   { category: "Systems & Concurrency", name: "Virtual Threads (Java 21)" },
   { category: "Systems & Concurrency", name: "Lock-free Data Structures" },
-  { category: "Systems & Concurrency", name: "Memory Allocators (Arena, TLAB)" },
+  {
+    category: "Systems & Concurrency",
+    name: "Memory Allocators (Arena, TLAB)",
+  },
   { category: "Systems & Concurrency", name: "Epoch-based Reclamation" },
   { category: "Systems & Concurrency", name: "MVCC" },
   { category: "Systems & Concurrency", name: "Event-driven I/O" },

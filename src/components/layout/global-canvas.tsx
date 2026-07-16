@@ -2,10 +2,23 @@
 
 import { View } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import { useEffect, useState } from "react";
 
 export function GlobalCanvas() {
+  const [frameloop, setFrameloop] = useState<"always" | "never">("always");
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setFrameloop(document.hidden ? "never" : "always");
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
   return (
     <Canvas
+      frameloop={frameloop}
       style={{
         position: "fixed",
         top: 0,

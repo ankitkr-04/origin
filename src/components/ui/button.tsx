@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FlameIcon, CrystalIcon } from "@/components/icons";
+import { CrystalIcon, FlameIcon } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 type Variant = "ignite" | "frost" | "stats-ignite" | "stats-frost" | "custom";

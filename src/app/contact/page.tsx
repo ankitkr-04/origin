@@ -24,17 +24,20 @@ export default async function ContactPage() {
   return (
     <>
       <SiteNav githubUrl={identity.githubUrl} />
-      <main className="relative flex min-h-svh flex-col overflow-hidden pt-14">
-        <div className="hero-glow absolute inset-0" aria-hidden />
-        <div className="absolute inset-0 md:left-2/5" aria-hidden>
+      <main className="relative flex min-h-svh flex-col pt-14">
+        <div
+          className="hero-glow fixed inset-0 pointer-events-none"
+          aria-hidden
+        />
+        <div className="fixed inset-0 md:left-2/5" aria-hidden>
           <StrataCanvas />
         </div>
         <div
-          className="absolute inset-0 bg-linear-to-b from-void via-void/58 to-void/30 md:hidden"
+          className="fixed inset-0 pointer-events-none bg-linear-to-b from-void via-void/58 to-void/30 md:hidden"
           aria-hidden
         />
         <div
-          className="absolute inset-0 hidden bg-linear-to-r from-void via-void/68 to-transparent md:block"
+          className="fixed inset-0 pointer-events-none hidden bg-linear-to-r from-void via-void/68 to-transparent md:block"
           aria-hidden
         />
 

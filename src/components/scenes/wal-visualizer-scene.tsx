@@ -3,7 +3,7 @@
 import { Line, RoundedBox } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 const NUM_SLOTS = 16;
@@ -316,15 +316,35 @@ export default function WalVisualizerScene({
   appendCounter: number;
   onEpochChange: (epoch: number) => void;
 }) {
+  const [frameloop, setFrameloop] = useState<"always" | "never">("always");
+  const [isBudget, setIsBudget] = useState(false);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setFrameloop(document.hidden ? "never" : "always");
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    setIsBudget(
+      window.matchMedia("(pointer:coarse)").matches &&
+        (navigator.hardwareConcurrency <= 4 ||
+          (navigator as any).deviceMemory <= 4),
+    );
+
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
   return (
     <Canvas
+      frameloop={frameloop}
       camera={{ position: [0, 8, 12], fov: 45 }}
       gl={{
         antialias: false,
         powerPreference: "high-performance",
         alpha: true,
       }}
-      dpr={[1, 2]}
+      dpr={isBudget ? 1 : [1, 2]}
       style={{
         position: "absolute",
         top: 0,
@@ -339,9 +359,11 @@ export default function WalVisualizerScene({
 
       <RingBuffer appendCounter={appendCounter} onEpochChange={onEpochChange} />
 
-      <EffectComposer multisampling={0}>
-        <Bloom luminanceThreshold={0.2} mipmapBlur intensity={1.2} />
-      </EffectComposer>
+      {!isBudget && (
+        <EffectComposer multisampling={0}>
+          <Bloom luminanceThreshold={0.2} mipmapBlur intensity={1.2} />
+        </EffectComposer>
+      )}
     </Canvas>
   );
 }

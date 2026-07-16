@@ -1,6 +1,5 @@
-import { getIdentity, getSocialLinks } from "@/db/identity";
-
 import { CurrentYear } from "@/components/ui/current-year";
+import { getIdentity, getSocialLinks } from "@/db/identity";
 
 export async function SiteFooter() {
   // Cache component: lets the © year render at build/revalidate time,
@@ -11,7 +10,7 @@ export async function SiteFooter() {
   const socialLinks = await getSocialLinks();
 
   return (
-    <footer className="border-t border-line/60">
+    <footer className="relative z-10 border-t border-line/60">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-8 md:flex-row md:items-center md:justify-between md:px-8">
         <p className="font-mono text-xs text-faint">
           © <CurrentYear fallback={2026} /> {identity.name} ·{" "}

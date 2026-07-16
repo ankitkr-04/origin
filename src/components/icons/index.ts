@@ -1,13 +1,13 @@
 export { ChevronIcon } from "./chevron-icon";
 export { CloseIcon } from "./close-icon";
 export * from "./codeforces-icon";
+export * from "./crystal-icon";
 export { DownloadIcon } from "./download-icon";
 export { ExternalLinkIcon } from "./external-link-icon";
+export * from "./flame-icon";
 export { GithubIcon } from "./github-icon";
 export { HexagonIcon } from "./hexagon-icon";
 export { InfoIcon } from "./info-icon";
 export * from "./leetcode-icon";
 export { ListIcon } from "./list-icon";
 export { MenuIcon } from "./menu-icon";
-export * from "./flame-icon";
-export * from "./crystal-icon";
